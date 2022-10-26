@@ -507,7 +507,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Tutorial: Evaluate pyrococcus searches using uniprot and peptide shaker</h1>
+<h1 class="title toc-ignore">Tutorial: Evaluate pyrococcus searches
+using uniprot and peptide shaker</h1>
 <h4 class="author">Lieven Clement</h4>
 <address class="author_afil">
 Ghent University<br>
@@ -520,8 +521,10 @@ Ghent University<br>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RCurl)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mzID)</span></code></pre></div>
 </div>
-<div id="download-data-in-working-directory" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Download data in working directory</h1>
+<div id="download-data-in-working-directory" class="section level1"
+number="2">
+<h1><span class="header-section-number">2</span> Download data in
+working directory</h1>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>( </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">url =</span> <span class="st">&quot;https://raw.githubusercontent.com/statOmics/PDA22GTPB/data/identification/pyroUniprot.mzid&quot;</span>,</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">destfile =</span> <span class="st">&quot;pyroUniprot.mzid&quot;</span></span>
@@ -534,12 +537,16 @@ Ghent University<br>
 <pre><code>## reading pyroUniprot.mzid... DONE!</code></pre>
 </div>
 <div id="launch-the-shiny-gadget" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Launch the Shiny Gadget</h1>
-<p>Explore the results for search eninge scores to find correct names of search engine scores in the mzID.</p>
+<h1><span class="header-section-number">4</span> Launch the Shiny
+Gadget</h1>
+<p>Explore the results for search eninge scores to find correct names of
+search engine scores in the mzID.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evalTargetDecoys</span>(mzidUniprot)</span></code></pre></div>
 </div>
-<div id="evaluate-target-decoy-assumptions" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Evaluate target decoy assumptions</h1>
+<div id="evaluate-target-decoy-assumptions" class="section level1"
+number="5">
+<h1><span class="header-section-number">5</span> Evaluate target decoy
+assumptions</h1>
 <div id="peptide-shaker" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Peptide Shaker</h2>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evalTargetDecoys</span>(</span>
@@ -550,11 +557,22 @@ Ghent University<br>
 <p><img src="mzIDuniprotTutorial_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>We observe that</p>
 <ul>
-<li><p>the histogram shows that Peptide Shaker gives a very good separation between good targets and bad targets.</p></li>
-<li><p>the histogram and PP show that the distribution of bad target peptideshaker PSM scores have the same distribution of decoy peptideshaker PSM scores.</p></li>
-<li><p>The PP-plot shows that the ratio of decoys on targets is a good estimate of the expected fraction of bad target hits that are returned (<span class="math inline">\(\hat\pi_b=\frac{\# \text{decoys}}{\#\text{targets}}\)</span> is a good estimate of the fraction of bad target hits). We can thus assume that it is equaly likely that a bad PSM hit will match to a target sequence or a decoy sequence.</p></li>
-<li><p>It is not really required to assess the assumptions of the search engines used by peptide shaker because there are no problems.</p></li>
-<li><p>For completeness we still evaluate the different search engines used by peptide shaker.</p></li>
+<li><p>the histogram shows that Peptide Shaker gives a very good
+separation between good targets and bad targets.</p></li>
+<li><p>the histogram and PP show that the distribution of bad target
+peptideshaker PSM scores have the same distribution of decoy
+peptideshaker PSM scores.</p></li>
+<li><p>The PP-plot shows that the ratio of decoys on targets is a good
+estimate of the expected fraction of bad target hits that are returned
+(<span class="math inline">\(\hat\pi_b=\frac{\#
+\text{decoys}}{\#\text{targets}}\)</span> is a good estimate of the
+fraction of bad target hits). We can thus assume that it is equaly
+likely that a bad PSM hit will match to a target sequence or a decoy
+sequence.</p></li>
+<li><p>It is not really required to assess the assumptions of the search
+engines used by peptide shaker because there are no problems.</p></li>
+<li><p>For completeness we still evaluate the different search engines
+used by peptide shaker.</p></li>
 </ul>
 </div>
 <div id="msgf" class="section level2" number="5.2">
@@ -566,9 +584,13 @@ Ghent University<br>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">log10 =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="mzIDuniprotTutorial_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <ul>
-<li><p>The plots show that the distribution of the MSGF+ PSM scores are nicely bimodal.</p></li>
-<li><p>The separation between good target PSM scores and bad target PSM scores is less pronounced than for peptide shaker. So it is beneficial to include the other engines with peptideshaker.</p></li>
-<li><p>We do not see deviations from the target decoy assumptions.</p></li>
+<li><p>The plots show that the distribution of the MSGF+ PSM scores are
+nicely bimodal.</p></li>
+<li><p>The separation between good target PSM scores and bad target PSM
+scores is less pronounced than for peptide shaker. So it is beneficial
+to include the other engines with peptideshaker.</p></li>
+<li><p>We do not see deviations from the target decoy
+assumptions.</p></li>
 </ul>
 </div>
 <div id="omssa" class="section level2" number="5.3">
@@ -580,8 +602,11 @@ Ghent University<br>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">log10 =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="mzIDuniprotTutorial_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <ul>
-<li><p>The separation between good target PSM scores and bad target PSM scores is less pronounced for omssa than for peptide shaker. So it is beneficial to include the other engines with peptideshaker.</p></li>
-<li><p>We do not see deviations from the target decoy assumptions.</p></li>
+<li><p>The separation between good target PSM scores and bad target PSM
+scores is less pronounced for omssa than for peptide shaker. So it is
+beneficial to include the other engines with peptideshaker.</p></li>
+<li><p>We do not see deviations from the target decoy
+assumptions.</p></li>
 </ul>
 </div>
 <div id="xtandem" class="section level2" number="5.4">
@@ -593,9 +618,15 @@ Ghent University<br>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">log10 =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p><img src="mzIDuniprotTutorial_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <ul>
-<li><p>The separation between good target PSM scores and bad target PSM scores is less pronounced for X!Tandem than for peptide shaker. So it is beneficial to include the other engines with peptideshaker.</p></li>
-<li><p>The decoy PSM score distribution has the same shape as the PSM score distribution of bad targets.</p></li>
-<li><p>There seems to be some evidence that bad PSM hits are more likely to go to target than to decoy sequences. However, this does not lead to problems when combining X!tandem with other engines in peptide shaker.</p></li>
+<li><p>The separation between good target PSM scores and bad target PSM
+scores is less pronounced for X!Tandem than for peptide shaker. So it is
+beneficial to include the other engines with peptideshaker.</p></li>
+<li><p>The decoy PSM score distribution has the same shape as the PSM
+score distribution of bad targets.</p></li>
+<li><p>There seems to be some evidence that bad PSM hits are more likely
+to go to target than to decoy sequences. However, this does not lead to
+problems when combining X!tandem with other engines in peptide
+shaker.</p></li>
 </ul>
 </div>
 </div>

@@ -514,7 +514,8 @@ Ghent University<br>
 </div>
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(TargetDecoy)</span>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(TargetDecoy)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;ModSwissXT&quot;</span>)</span>
@@ -527,17 +528,57 @@ Ghent University<br>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>hlp <span class="ot">&lt;-</span> hlp <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">ms_gf_specevalue=</span><span class="fu">as.double</span>(ms_gf_specevalue))</span></code></pre></div>
 <div id="intro" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Intro</h1>
-<p>Shotgun proteomics relies on the assignment of a large number of spectra to theoretical peptides derived from a sequence database. Multiple search engines have been developed for this task, each with its own advantages and drawbacks. Most proteomics database searches are performed as so-called target/decoy searches. A crucial assumption of the target/decoy approach is that the decoy peptide-spectral match (PSM) hits have similar properties as bad target hits so that the decoys can be used to characterize the distribution of bad hits. In this tutorial we will introduce diagnostic plots that can be used to evaluate these assumptions.</p>
-<div id="basic-statistical-concepts" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Basic Statistical Concepts</h2>
-<p>We first introduce some notation. With x we denote the PSM score and we assume that larger score values indicate a better match to the theoretical spectrum. Then the scores will follow a mixture distribution:</p>
-<p><span class="math display">\[ f(x)=\pi_b f_b (x)+(1-\pi_b ) f_g(x), \]</span></p>
-<p>with <span class="math inline">\(f(x)\)</span> the target PSM score distribution, <span class="math inline">\(f_b(x)\)</span> the mixture component corresponding to incorrect PSMs, <span class="math inline">\(f_g(x)\)</span> the mixture component corresponding to the correct PSMs and <span class="math inline">\(\pi_b\)</span> the fraction of incorrect PSMs. Based on the mixture distribution we can calculate the posterior probability that a PSM with score x is a bad match:</p>
-<p><span class="math display">\[ P[\text{Bad hit} \vert \text{score }x]=\frac{\pi_b f_b (x)}{f(x)}, \]</span></p>
-<p>which is also referred to as the posterior error probability (PEP) in mass spectrometry based proteomics. Based on the mixture model, we can also calculate the posterior probability that a random PSM in the set of all PSMs with scores above a score threshold t is a bad hit (see e.g. Figure 1):</p>
-<p><span class="math display">\[ P[\text{Bad hit} \vert \text{score }x&gt;t]=\pi_b \frac{1-f_b (t)}{1-F(t)}, \]</span></p>
-<p>With <span class="math inline">\(F(t)\)</span> and <span class="math inline">\(F_b(t)\)</span> the cumulative distribution functions of all target PSMs and of the bad PSMs, respectively. Hence, <span class="math inline">\(1-F_b(t)\)</span> is the probability to observe a bad PSM hit above the threshold and, <span class="math inline">\(1-F(t)\)</span> the probability to observe a target PSM hit above the threshold. The probability <span class="math inline">\(P[\text{Bad hit} \vert \text{score }x&gt;t]\)</span> is also referred to as the false discovery rate (FDR) of the set of PSMs with scores above the threshold t. Hence, the FDR has the interpretation of the probability on a bad hit in the set of all target hits that are returned in the final PSM list.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcv)</span>
+<p>Shotgun proteomics relies on the assignment of a large number of
+spectra to theoretical peptides derived from a sequence database.
+Multiple search engines have been developed for this task, each with its
+own advantages and drawbacks. Most proteomics database searches are
+performed as so-called target/decoy searches. A crucial assumption of
+the target/decoy approach is that the decoy peptide-spectral match (PSM)
+hits have similar properties as bad target hits so that the decoys can
+be used to characterize the distribution of bad hits. In this tutorial
+we will introduce diagnostic plots that can be used to evaluate these
+assumptions.</p>
+<div id="basic-statistical-concepts" class="section level2"
+number="1.1">
+<h2><span class="header-section-number">1.1</span> Basic Statistical
+Concepts</h2>
+<p>We first introduce some notation. With x we denote the PSM score and
+we assume that larger score values indicate a better match to the
+theoretical spectrum. Then the scores will follow a mixture
+distribution:</p>
+<p><span class="math display">\[ f(x)=\pi_b f_b (x)+(1-\pi_b ) f_g(x),
+\]</span></p>
+<p>with <span class="math inline">\(f(x)\)</span> the target PSM score
+distribution, <span class="math inline">\(f_b(x)\)</span> the mixture
+component corresponding to incorrect PSMs, <span
+class="math inline">\(f_g(x)\)</span> the mixture component
+corresponding to the correct PSMs and <span
+class="math inline">\(\pi_b\)</span> the fraction of incorrect PSMs.
+Based on the mixture distribution we can calculate the posterior
+probability that a PSM with score x is a bad match:</p>
+<p><span class="math display">\[ P[\text{Bad hit} \vert \text{score
+}x]=\frac{\pi_b f_b (x)}{f(x)}, \]</span></p>
+<p>which is also referred to as the posterior error probability (PEP) in
+mass spectrometry based proteomics. Based on the mixture model, we can
+also calculate the posterior probability that a random PSM in the set of
+all PSMs with scores above a score threshold t is a bad hit (see
+e.g. Figure 1):</p>
+<p><span class="math display">\[ P[\text{Bad hit} \vert \text{score
+}x&gt;t]=\pi_b \frac{1-f_b (t)}{1-F(t)}, \]</span></p>
+<p>With <span class="math inline">\(F(t)\)</span> and <span
+class="math inline">\(F_b(t)\)</span> the cumulative distribution
+functions of all target PSMs and of the bad PSMs, respectively. Hence,
+<span class="math inline">\(1-F_b(t)\)</span> is the probability to
+observe a bad PSM hit above the threshold and, <span
+class="math inline">\(1-F(t)\)</span> the probability to observe a
+target PSM hit above the threshold. The probability <span
+class="math inline">\(P[\text{Bad hit} \vert \text{score
+}x&gt;t]\)</span> is also referred to as the false discovery rate (FDR)
+of the set of PSMs with scores above the threshold t. Hence, the FDR has
+the interpretation of the probability on a bad hit in the set of all
+target hits that are returned in the final PSM list.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode r fold-hide"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcv)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: nlme</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;nlme&#39;</span></span>
@@ -576,25 +617,56 @@ Ghent University<br>
 <span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(histDec<span class="sc">$</span>mids,histDec<span class="sc">$</span>counts,<span class="at">col=</span><span class="st">&quot;red&quot;</span>,<span class="at">type=</span><span class="st">&quot;h&quot;</span>)</span>
 <span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>,<span class="at">legend=</span><span class="fu">c</span>(<span class="st">&quot;targets&quot;</span>,<span class="st">&quot;decoys&quot;</span>),<span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;grey&quot;</span>,<span class="st">&quot;red&quot;</span>), <span class="at">lty =</span><span class="fu">rep</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span></code></pre></div>
 <p><img src="TargetDecoyTutorial_files/figure-html/unnamed-chunk-1-1.png" width="432" /></p>
-<p>We would like to calculate the FDR corresponding to the set op PSMs with a target score above the threshold t. In order to calculate the FDR, we thus have to characterize the distribution of the bad hits and of all PSMs. In proteomics this is done by the use of the target/decoy approach.</p>
+<p>We would like to calculate the FDR corresponding to the set op PSMs
+with a target score above the threshold t. In order to calculate the
+FDR, we thus have to characterize the distribution of the bad hits and
+of all PSMs. In proteomics this is done by the use of the target/decoy
+approach.</p>
 </div>
 <div id="target-decoy-approach" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Target Decoy Approach</h2>
-<p>When using a competitive target decoy search, the FDR of the set of returned PSMs is estimated by dividing the number of accepted decoys PSMs by the number of accepted target PSMs above a certain score cutoff [1].</p>
-<p><span class="math display">\[ \widehat{\text{FDR}}(t)=\frac{\# decoys | x&gt;t}{\#targets |x&gt;t} \]</span></p>
+<h2><span class="header-section-number">1.2</span> Target Decoy
+Approach</h2>
+<p>When using a competitive target decoy search, the FDR of the set of
+returned PSMs is estimated by dividing the number of accepted decoys
+PSMs by the number of accepted target PSMs above a certain score cutoff
+[1].</p>
+<p><span class="math display">\[ \widehat{\text{FDR}}(t)=\frac{\# decoys
+| x&gt;t}{\#targets |x&gt;t} \]</span></p>
 <p>This can be rewritten as:</p>
-<p><span class="math display">\[ \widehat{\text{FDR}}(t)=\frac{\#decoys}{\#targets}\frac{\frac{\# decoys | x&gt;t}{\#decoys}}{\frac{\#targets |x&gt;t}{\#targets}} \]</span></p>
-<p><span class="math display">\[ \widehat{\text{FDR}}(t)=\hat\pi_b\frac{1-\bar{F}_0(t)}{1-\bar{F}(t)} \]</span></p>
-<p>Hence, the proportion of bad hits \( _b \) is estimated as the number of decoys divided by the number of targets, and the competitive TDA assumes that it is equally likely that a bad hit matches to a bad target or to a decoy; the probability of a (bad) target PSM hit above the threshold is estimated based on the empirical cumulative distribution in the sample, i.e. as the fraction of targets (decoys) that are above the threshold. Hence, a second assumption is that the decoy matches provide a good simulation of the target matches. See e.g. [2]. These assumptions can be evaluated with our TargetDecoy R/Bioconductor package.</p>
+<p><span class="math display">\[
+\widehat{\text{FDR}}(t)=\frac{\#decoys}{\#targets}\frac{\frac{\# decoys
+| x&gt;t}{\#decoys}}{\frac{\#targets |x&gt;t}{\#targets}} \]</span></p>
+<p><span class="math display">\[
+\widehat{\text{FDR}}(t)=\hat\pi_b\frac{1-\bar{F}_0(t)}{1-\bar{F}(t)}
+\]</span></p>
+<p>Hence, the proportion of bad hits \( _b \) is estimated as the number
+of decoys divided by the number of targets, and the competitive TDA
+assumes that it is equally likely that a bad hit matches to a bad target
+or to a decoy; the probability of a (bad) target PSM hit above the
+threshold is estimated based on the empirical cumulative distribution in
+the sample, i.e. as the fraction of targets (decoys) that are above the
+threshold. Hence, a second assumption is that the decoy matches provide
+a good simulation of the target matches. See e.g. [2]. These assumptions
+can be evaluated with our TargetDecoy R/Bioconductor package.</p>
 </div>
 </div>
-<div id="example-msgf-search-on-swiss-prot" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Example: MSGF+ search on Swiss Prot</h1>
-<p>The Pyrococcus furiosus (strain ATCC 43587 / DSM 3638 / JCM 8422 / Vc1) reference proteome. The resulting database has 2,051 proteins in total (<a href="https://www.uniprot.org/uniprot/?query=taxonomy:186497">https://www.uniprot.org/uniprot/?query=taxonomy:186497</a>, taxonomy:“Pyrococcus furiosus (strain ATCC 43587 / DSM 3638 / JCM 8422 / Vc1) [186497]”).</p>
-<p>The data can be found on <a href="https://github.com/statOmics/PDA22GTPB/tree/data">https://github.com/statOmics/PDA22GTPB/tree/data</a>.</p>
-<p>We will use the mzid file for the pyrococcus example, which can be found at data/identification/pyrococcusMSGF+.mzid.</p>
+<div id="example-msgf-search-on-swiss-prot" class="section level1"
+number="2">
+<h1><span class="header-section-number">2</span> Example: MSGF+ search
+on Swiss Prot</h1>
+<p>The Pyrococcus furiosus (strain ATCC 43587 / DSM 3638 / JCM 8422 /
+Vc1) reference proteome. The resulting database has 2,051 proteins in
+total (<a
+href="https://www.uniprot.org/uniprot/?query=taxonomy:186497">https://www.uniprot.org/uniprot/?query=taxonomy:186497</a>,
+taxonomy:“Pyrococcus furiosus (strain ATCC 43587 / DSM 3638 / JCM 8422 /
+Vc1) [186497]”).</p>
+<p>The data can be found on <a
+href="https://github.com/statOmics/PDA22GTPB/tree/data">https://github.com/statOmics/PDA22GTPB/tree/data</a>.</p>
+<p>We will use the mzid file for the pyrococcus example, which can be
+found at data/identification/pyrococcusMSGF+.mzid.</p>
 <ol style="list-style-type: decimal">
-<li><p>Download the code of this vignette by clicking the code button in the top of this page and downloading.</p></li>
+<li><p>Download the code of this vignette by clicking the code button in
+the top of this page and downloading.</p></li>
 <li><p>Open the downloaded file in Rstudio</p></li>
 <li><p>Load libraries</p></li>
 </ol>
@@ -615,11 +687,13 @@ Ghent University<br>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     flatten</span></span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
-<li>Download data in your working directory. You can skip this step if you downloaded all data on your computer.</li>
+<li>Download data in your working directory. You can skip this step if
+you downloaded all data on your computer.</li>
 </ol>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">&quot;https://raw.githubusercontent.com/statOmics/PDA22GTPB/data/identification/pyrococcusMSGF%2B.mzid&quot;</span>,<span class="st">&quot;pyrococcusMSGF+.mzid&quot;</span>)</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
-<li>Set a path to your working directory and import the mzID file in R.</li>
+<li>Set a path to your working directory and import the mzID file in
+R.</li>
 </ol>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>path2File <span class="ot">&lt;-</span> <span class="st">&quot;pyrococcusMSGF+.mzid&quot;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>msgf <span class="ot">&lt;-</span> <span class="fu">mzID</span>(path2File)</span>
@@ -667,58 +741,143 @@ Ghent University<br>
 <span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; using TRUE</span></span>
 <span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  DONE!</span></span></code></pre></div>
 <ol start="6" style="list-style-type: decimal">
-<li>Launch the evalTargetDecoys Shiny Gadget. Note, that you have to erase the eval=FALSE option in order to run the code.</li>
+<li>Launch the evalTargetDecoys Shiny Gadget. Note, that you have to
+erase the eval=FALSE option in order to run the code.</li>
 </ol>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evalTargetDecoys</span>(msgf)</span></code></pre></div>
 <ol start="7" style="list-style-type: decimal">
-<li>You can immediately make the plots in the script using the code below</li>
+<li>You can immediately make the plots in the script using the code
+below</li>
 </ol>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evalTargetDecoys</span>(msgf,<span class="st">&quot;isdecoy&quot;</span>,<span class="st">&quot;ms-gf:evalue&quot;</span>)</span></code></pre></div>
 <p><img src="TargetDecoyTutorial_files/figure-html/unnamed-chunk-6-1.png" width="432" /></p>
-<p>Two diagnostic plots are generated. A histogram of target and decoy scores (top panels) and Probability-Probability plots (PP-plots). In the histogram the shape of the decoys (red) should be equal to that of bad target hits (first mode in the target distribution indicated in green). The height of the decoys can be slightly lower than the first mode in the target distribution because some good target hits also have a low score. Here, the histogram does not indicate problems with the TDA.</p>
-<p>Deviations from the assumptions of TDA can be better evaluated in the PP-plot (lower panel). The PP-plot displays the empirical cumulative distribution (ECDF) from the target distribution in function that of the decoy distribution. PP-plots have the property that they show a straight 45 degree line through the origin if and only if both distributions are equivalent. Any deviation from this straight line indicates that the distributions differ. For targets and decoys this is obviously the case. The target distribution is stochastically larger than the decoy distribution as larger scores indicate more reliable hits and as decoys are believed to behave similarly to bad target hits. Hence, the PP-plot for targets vs decoys will always lay below the 45 degree line. When the decoys are a good simulation for the bad target hits, however, the lower values in the PP-plot should lay on a straight line that is located around <span class="math inline">\(\hat{\pi}_b\)</span>. Indeed, at small target PSM scores are most likely bad hits. The slope of the black line in the p-plot is based on the estimate of <span class="math inline">\(\hat{\pi}_b\)</span>. The first part of the PP-plot for the pyrococcus example is linear with a slope that equals <span class="math inline">\(\hat{\pi}_0\)</span>. This indicates that the decoy distribution and the mixture component for incorrect PSMs of the target mixture distribution coincide. The second part of the plot deviates from the line towards higher percentiles because the upper tail of the mixture component for incorrect subset PSMs and the lower tail of the mixture component for correct subset PSMs overlap and therefore target PSMs occur at a higher probability at intermediate scores than in the decoy distribution. Finally, the PP-plot becomes vertical, because all the decoys have been observed (decoy percentile=1) before all the scores of the target PSMs are observed. If we see this profile in the PP-plot, we have a good indication that the set of decoys from the complete search is representative for the mixture component for incorrect PSMs of the target mixture distribution. Hence, the assumptions of the concatenated TDA approach are not violated for the Pyrococcus example.</p>
-<p>When the assumptions of the concatenated TDA approach are violated, the dots in the PP-plot at lower percentiles will deviate from the $ _b$ line. In case the PP-plot is still a straight line at lower percentiles, then the shape of the decoy distribution is correct, but there are less (or more) decoys than expected under the concatenated TDA assumption, which could occur if the decoy database is different in size than the target database or when a bad hit is less likely to match to a decoy than to a target. This would also be visible in the histograms: the decoy histogram would be considerably lower (higher) than the first mode of the target distribution. When the PP-plot at lower percentiles deviates from a straight line, the distribution of decoys and the bad target PSMs is not equivalent, indicating that the decoys are not a good simulation of bad target hits. Both type of deviations should be of concern as they indicate that the FDR returned by the conventional concatenated TDA is incorrect.</p>
+<p>Two diagnostic plots are generated. A histogram of target and decoy
+scores (top panels) and Probability-Probability plots (PP-plots). In the
+histogram the shape of the decoys (red) should be equal to that of bad
+target hits (first mode in the target distribution indicated in green).
+The height of the decoys can be slightly lower than the first mode in
+the target distribution because some good target hits also have a low
+score. Here, the histogram does not indicate problems with the TDA.</p>
+<p>Deviations from the assumptions of TDA can be better evaluated in the
+PP-plot (lower panel). The PP-plot displays the empirical cumulative
+distribution (ECDF) from the target distribution in function that of the
+decoy distribution. PP-plots have the property that they show a straight
+45 degree line through the origin if and only if both distributions are
+equivalent. Any deviation from this straight line indicates that the
+distributions differ. For targets and decoys this is obviously the case.
+The target distribution is stochastically larger than the decoy
+distribution as larger scores indicate more reliable hits and as decoys
+are believed to behave similarly to bad target hits. Hence, the PP-plot
+for targets vs decoys will always lay below the 45 degree line. When the
+decoys are a good simulation for the bad target hits, however, the lower
+values in the PP-plot should lay on a straight line that is located
+around <span class="math inline">\(\hat{\pi}_b\)</span>. Indeed, at
+small target PSM scores are most likely bad hits. The slope of the black
+line in the p-plot is based on the estimate of <span
+class="math inline">\(\hat{\pi}_b\)</span>. The first part of the
+PP-plot for the pyrococcus example is linear with a slope that equals
+<span class="math inline">\(\hat{\pi}_0\)</span>. This indicates that
+the decoy distribution and the mixture component for incorrect PSMs of
+the target mixture distribution coincide. The second part of the plot
+deviates from the line towards higher percentiles because the upper tail
+of the mixture component for incorrect subset PSMs and the lower tail of
+the mixture component for correct subset PSMs overlap and therefore
+target PSMs occur at a higher probability at intermediate scores than in
+the decoy distribution. Finally, the PP-plot becomes vertical, because
+all the decoys have been observed (decoy percentile=1) before all the
+scores of the target PSMs are observed. If we see this profile in the
+PP-plot, we have a good indication that the set of decoys from the
+complete search is representative for the mixture component for
+incorrect PSMs of the target mixture distribution. Hence, the
+assumptions of the concatenated TDA approach are not violated for the
+Pyrococcus example.</p>
+<p>When the assumptions of the concatenated TDA approach are violated,
+the dots in the PP-plot at lower percentiles will deviate from the $ _b$
+line. In case the PP-plot is still a straight line at lower percentiles,
+then the shape of the decoy distribution is correct, but there are less
+(or more) decoys than expected under the concatenated TDA assumption,
+which could occur if the decoy database is different in size than the
+target database or when a bad hit is less likely to match to a decoy
+than to a target. This would also be visible in the histograms: the
+decoy histogram would be considerably lower (higher) than the first mode
+of the target distribution. When the PP-plot at lower percentiles
+deviates from a straight line, the distribution of decoys and the bad
+target PSMs is not equivalent, indicating that the decoys are not a good
+simulation of bad target hits. Both type of deviations should be of
+concern as they indicate that the FDR returned by the conventional
+concatenated TDA is incorrect.</p>
 </div>
 <div id="exercises" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Exercises</h1>
 <ol style="list-style-type: decimal">
-<li><p>All data can be downloaded via this link: <a href="https://github.com/statOmics/PDA22GTPB/archive/refs/heads/data.zip">Download data</a>.</p></li>
+<li><p>All data can be downloaded via this link: <a
+href="https://github.com/statOmics/PDA22GTPB/archive/refs/heads/data.zip">Download
+data</a>.</p></li>
 <li><p>Unzip the data</p></li>
 </ol>
-<div id="assess-the-search-you-performed-in-tutorial-1.-peptide-and-protein-identification-at-httpscompomics.combioinformatics-for-proteomicsidentification" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Assess the search you performed in “Tutorial 1. Peptide and Protein Identification” at <a href="https://compomics.com/bioinformatics-for-proteomics/identification/">https://compomics.com/bioinformatics-for-proteomics/identification/</a></h2>
-<p>Open the search from tutorial 1.3. in Peptide Shaker (see your own results or resources for tutorial 1.4) and export the search to an mzid file by clicking export &gt; Peptide Shaker Project As &gt; mzIdentML. Evaluate the TDA for the ommsa, X!Tandem and the Peptide Shaker score.</p>
-<p>Evaluate the TDA for the X!Tandem, OMSSA and Peptide Shaker scores. What do you observe and try to explain. [1.4.a]</p>
+<div
+id="assess-the-search-you-performed-in-tutorial-1.-peptide-and-protein-identification-at-httpscompomics.combioinformatics-for-proteomicsidentification"
+class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Assess the search you
+performed in “Tutorial 1. Peptide and Protein Identification” at <a
+href="https://compomics.com/bioinformatics-for-proteomics/identification/">https://compomics.com/bioinformatics-for-proteomics/identification/</a></h2>
+<p>Open the search from tutorial 1.3. in Peptide Shaker (see your own
+results or resources for tutorial 1.4) and export the search to an mzid
+file by clicking export &gt; Peptide Shaker Project As &gt; mzIdentML.
+Evaluate the TDA for the ommsa, X!Tandem and the Peptide Shaker
+score.</p>
+<p>Evaluate the TDA for the X!Tandem, OMSSA and Peptide Shaker scores.
+What do you observe and try to explain. [1.4.a]</p>
 <ol style="list-style-type: decimal">
 <li>Complete the code below by filling out the path to your file.<br />
-Note, that you have to erase the eval=FALSE option in order to run the code.</li>
+Note, that you have to erase the eval=FALSE option in order to run the
+code.</li>
 </ol>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>path2File <span class="ot">&lt;-</span> <span class="st">&quot;...&quot;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>mzidTutorialCompomics <span class="ot">&lt;-</span> <span class="fu">mzID</span>(path2File)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
-<li>Launch the Shiny Gadget and explore the results for the different search engines in your mzID file. Note, do not forget to erase the eval=FALSE to run the code.</li>
+<li>Launch the Shiny Gadget and explore the results for the different
+search engines in your mzID file. Note, do not forget to erase the
+eval=FALSE to run the code.</li>
 </ol>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">evalTargetDecoys</span>(mzidTutorialCompomics)</span></code></pre></div>
 </div>
-<div id="pyrococcus---peptide-shaker---uniprot-search" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Pyrococcus - Peptide Shaker - Uniprot search</h2>
-<p>Do the analysis for the search MSGF+, X!Tandem, OMSSA and Peptide Shaker scores based on all Pyrococcus proteins in a search against all pyrococcus peptides in Uniprot (data/identification/pyroUniprot.mzid). What do you observe explain. [1.4.b]</p>
+<div id="pyrococcus---peptide-shaker---uniprot-search"
+class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Pyrococcus - Peptide
+Shaker - Uniprot search</h2>
+<p>Do the analysis for the search MSGF+, X!Tandem, OMSSA and Peptide
+Shaker scores based on all Pyrococcus proteins in a search against all
+pyrococcus peptides in Uniprot (data/identification/pyroUniprot.mzid).
+What do you observe explain. [1.4.b]</p>
 </div>
-<div id="pyrococcuspeptide-shaker---swiss-prot-search" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Pyrococcus/Peptide Shaker - Swiss prot search</h2>
-<p>Do the analysis for the search MSGF+, X!Tandem, OMSSA and Peptide Shaker scores for Pyrococcus based on the curated proteins from swissprot only (data/identification/pyroSwissprot.mzid). What do you observe. Try to explain. [1.4.c]</p>
+<div id="pyrococcuspeptide-shaker---swiss-prot-search"
+class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Pyrococcus/Peptide
+Shaker - Swiss prot search</h2>
+<p>Do the analysis for the search MSGF+, X!Tandem, OMSSA and Peptide
+Shaker scores for Pyrococcus based on the curated proteins from
+swissprot only (data/identification/pyroSwissprot.mzid). What do you
+observe. Try to explain. [1.4.c]</p>
 </div>
 <div id="fdr-elias-and-gygi-2007" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> FDR Elias and Gygi, 2007</h2>
-<p>Elias and Gygi, 2007, reported the following target decoy FDR estimation:</p>
-<p><span class="math display">\[\widehat{\text{FDR}}(t)=\frac {2 \times (\#decoys &gt;t)}{\#decoys &gt; t + \#targets &gt; t}\]</span></p>
+<h2><span class="header-section-number">3.4</span> FDR Elias and Gygi,
+2007</h2>
+<p>Elias and Gygi, 2007, reported the following target decoy FDR
+estimation:</p>
+<p><span class="math display">\[\widehat{\text{FDR}}(t)=\frac {2 \times
+(\#decoys &gt;t)}{\#decoys &gt; t + \#targets &gt; t}\]</span></p>
 <p>Do you agree with this expression? Why, why not? [1.4.d]</p>
 </div>
 </div>
 <div id="references" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> References</h1>
-<p>[1] Elias JE, Gygi SP. Target-decoy search strategy for increased confidence in large-scale protein identifications by mass spectrometry. Nat Methods. 2007; 4:207–214.</p>
-<p>[2] Sticker, A., Martens, L. and Clement, L. (2017). Mass spectrometrists should search for all peptides, but assess only the ones they care about. Nature Methods 14, 643–644.</p>
+<p>[1] Elias JE, Gygi SP. Target-decoy search strategy for increased
+confidence in large-scale protein identifications by mass spectrometry.
+Nat Methods. 2007; 4:207–214.</p>
+<p>[2] Sticker, A., Martens, L. and Clement, L. (2017). Mass
+spectrometrists should search for all peptides, but assess only the ones
+they care about. Nature Methods 14, 643–644.</p>
 </div>
 
 <div id="rmd-source-code">LS0tCnRpdGxlOiAiSW50cm9kdWN0aW9uIHRvIFRhcmdldERlY295IgphdXRob3I6IAogIC0gbmFtZTogTGlldmVuIENsZW1lbnQKICAgIGFmZmlsaWF0aW9uOgogICAgLSBHaGVudCBVbml2ZXJzaXR5Cm91dHB1dDogCiAgICBodG1sX2RvY3VtZW50OgogICAgICBjb2RlX2Rvd25sb2FkOiB0cnVlCiAgICAgIHRoZW1lOiBmbGF0bHkKICAgICAgdG9jOiB0cnVlCiAgICAgIHRvY19mbG9hdDogdHJ1ZQogICAgICBoaWdobGlnaHQ6IHRhbmdvCiAgICAgIG51bWJlcl9zZWN0aW9uczogdHJ1ZQpsaW5rY29sb3I6IGJsdWUKdXJsY29sb3I6IGJsdWUKY2l0ZWNvbG9yOiBibHVlCi0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0UsIGNsYXNzLnNvdXJjZSA9ICdmb2xkLWhpZGUnfQpsaWJyYXJ5KGtuaXRyKQpvcHRzX2NodW5rJHNldCgKICAgIGNvbGxhcHNlID0gVFJVRSwKICAgIGNvbW1lbnQgPSAiIz4iLAogICAgY3JvcCA9IE5VTEwsCiAgICBmaWcud2lkdGggPSA2LAogICAgZHBpID0gNzIKKQpgYGAKCmBgYHtyICJsaWJyYXJpZXMiLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFLCBjbGFzcy5zb3VyY2UgPSAnZm9sZC1oaWRlJ30KbGlicmFyeShUYXJnZXREZWNveSkKbGlicmFyeShnZ3Bsb3QyKQpsaWJyYXJ5KHRpZHl2ZXJzZSkKZGF0YSgiTW9kU3dpc3NYVCIpCmhscCA8LSBUYXJnZXREZWNveTo6Oi5nZXRERihNb2RTd2lzc1hUKSAKbmFtZXMoaGxwKSA8LSBuYW1lcyhobHApICU+JQogICAgc3RyX3JlcGxhY2UocGF0dGVybj0iOiIscmVwbGFjZW1lbnQ9Il8iKQpobHAgPC0gaGxwICU+JSAKbXV0YXRlKG9tc3NhX2V2YWx1ZT1hcy5kb3VibGUob21zc2FfZXZhbHVlKSkKbmFtZXMoaGxwKSA8LSBuYW1lcyhobHApICU+JSBzdHJfcmVwbGFjZShwYXR0ZXJuPSItIixyZXBsYWNlbWVudCA9ICJfIikKaGxwIDwtIGhscCAlPiUgbXV0YXRlKG1zX2dmX3NwZWNldmFsdWU9YXMuZG91YmxlKG1zX2dmX3NwZWNldmFsdWUpKQpgYGAKCgojIEludHJvCgoKU2hvdGd1biBwcm90ZW9taWNzIHJlbGllcyBvbiB0aGUgYXNzaWdubWVudCBvZiBhIGxhcmdlIG51bWJlciBvZiBzcGVjdHJhIHRvIHRoZW9yZXRpY2FsIHBlcHRpZGVzIGRlcml2ZWQgZnJvbSBhIHNlcXVlbmNlIGRhdGFiYXNlLiBNdWx0aXBsZSBzZWFyY2ggZW5naW5lcyBoYXZlIGJlZW4gZGV2ZWxvcGVkIGZvciB0aGlzIHRhc2ssIGVhY2ggd2l0aCBpdHMgb3duIGFkdmFudGFnZXMgYW5kIGRyYXdiYWNrcy4gTW9zdCBwcm90ZW9taWNzIGRhdGFiYXNlIHNlYXJjaGVzIGFyZSBwZXJmb3JtZWQgYXMgc28tY2FsbGVkIHRhcmdldC9kZWNveSBzZWFyY2hlcy4gQSBjcnVjaWFsIGFzc3VtcHRpb24gb2YgdGhlIHRhcmdldC9kZWNveSBhcHByb2FjaCBpcyB0aGF0IHRoZSBkZWNveSBwZXB0aWRlLXNwZWN0cmFsCm1hdGNoIChQU00pIGhpdHMgaGF2ZSBzaW1pbGFyIHByb3BlcnRpZXMgYXMgYmFkIHRhcmdldCBoaXRzIHNvIHRoYXQgdGhlIGRlY295cyBjYW4gYmUgdXNlZCB0byBjaGFyYWN0ZXJpemUgdGhlIGRpc3RyaWJ1dGlvbiBvZiBiYWQgaGl0cy4gSW4gdGhpcyB0dXRvcmlhbCB3ZSB3aWxsIGludHJvZHVjZSBkaWFnbm9zdGljIHBsb3RzIHRoYXQgY2FuIGJlIHVzZWQgdG8gZXZhbHVhdGUgdGhlc2UgYXNzdW1wdGlvbnMuCgoKIyMgQmFzaWMgU3RhdGlzdGljYWwgQ29uY2VwdHMKCldlIGZpcnN0IGludHJvZHVjZSBzb21lIG5vdGF0aW9uLiBXaXRoIHggd2UgZGVub3RlIHRoZSBQU00gc2NvcmUgYW5kIHdlIGFzc3VtZSB0aGF0IGxhcmdlciBzY29yZSB2YWx1ZXMgaW5kaWNhdGUgYSBiZXR0ZXIgbWF0Y2ggdG8gdGhlIHRoZW9yZXRpY2FsIHNwZWN0cnVtLiBUaGVuIHRoZSBzY29yZXMgd2lsbCBmb2xsb3cgYSBtaXh0dXJlIGRpc3RyaWJ1dGlvbjoKCiQkIGYoeCk9XHBpX2IgZl9iICh4KSsoMS1ccGlfYiApIGZfZyh4KSwgJCQKCndpdGggJGYoeCkkIHRoZSB0YXJnZXQgUFNNIHNjb3JlIGRpc3RyaWJ1dGlvbiwgJGZfYih4KSQgdGhlIG1peHR1cmUgY29tcG9uZW50IGNvcnJlc3BvbmRpbmcgdG8gaW5jb3JyZWN0IFBTTXMsICRmX2coeCkkICB0aGUgbWl4dHVyZSBjb21wb25lbnQgY29ycmVzcG9uZGluZyB0byB0aGUgY29ycmVjdCBQU01zIGFuZCAkXHBpX2IkIHRoZSBmcmFjdGlvbiBvZiBpbmNvcnJlY3QgUFNNcy4KQmFzZWQgb24gdGhlIG1peHR1cmUgZGlzdHJpYnV0aW9uIHdlIGNhbiBjYWxjdWxhdGUgdGhlIHBvc3RlcmlvciBwcm9iYWJpbGl0eSB0aGF0IGEgUFNNIHdpdGggc2NvcmUgeCBpcyBhIGJhZCBtYXRjaDoKCiQkIFBbXHRleHR7QmFkIGhpdH0gXHZlcnQgXHRleHR7c2NvcmUgfXhdPVxmcmFje1xwaV9iIGZfYiAoeCl9e2YoeCl9LCAkJAoKd2hpY2ggaXMgYWxzbyByZWZlcnJlZCB0byBhcyB0aGUgcG9zdGVyaW9yIGVycm9yIHByb2JhYmlsaXR5IChQRVApIGluIG1hc3Mgc3BlY3Ryb21ldHJ5IGJhc2VkIHByb3Rlb21pY3MuCkJhc2VkIG9uIHRoZSBtaXh0dXJlIG1vZGVsLCB3ZSBjYW4gYWxzbyBjYWxjdWxhdGUgdGhlIHBvc3RlcmlvciBwcm9iYWJpbGl0eSB0aGF0IGEgcmFuZG9tIFBTTSBpbiB0aGUgc2V0IG9mIGFsbCBQU01zIHdpdGggc2NvcmVzIGFib3ZlIGEgc2NvcmUgdGhyZXNob2xkIHQgaXMgYSBiYWQgaGl0IChzZWUgZS5nLiBGaWd1cmUgMSk6CgokJCBQW1x0ZXh0e0JhZCBoaXR9IFx2ZXJ0IFx0ZXh0e3Njb3JlIH14PnRdPVxwaV9iIFxmcmFjezEtZl9iICh0KX17MS1GKHQpfSwgJCQKCldpdGggJEYodCkkIGFuZCAkRl9iKHQpJCB0aGUgY3VtdWxhdGl2ZSBkaXN0cmlidXRpb24gZnVuY3Rpb25zIG9mIGFsbCB0YXJnZXQgUFNNcyBhbmQgb2YgdGhlIGJhZCBQU01zLCByZXNwZWN0aXZlbHkuIEhlbmNlLCAkMS1GX2IodCkkIGlzIHRoZSBwcm9iYWJpbGl0eSB0byBvYnNlcnZlIGEgYmFkIFBTTSBoaXQgYWJvdmUgdGhlIHRocmVzaG9sZCBhbmQsICQxLUYodCkkIHRoZSBwcm9iYWJpbGl0eSB0byBvYnNlcnZlIGEgdGFyZ2V0IFBTTSBoaXQgYWJvdmUgdGhlIHRocmVzaG9sZC4gVGhlIHByb2JhYmlsaXR5ICRQW1x0ZXh0e0JhZCBoaXR9IFx2ZXJ0IFx0ZXh0e3Njb3JlIH14PnRdJCBpcyBhbHNvIHJlZmVycmVkIHRvIGFzIHRoZSBmYWxzZSBkaXNjb3ZlcnkgcmF0ZSAoRkRSKSBvZiB0aGUgc2V0IG9mIFBTTXMgd2l0aCBzY29yZXMgYWJvdmUgdGhlIHRocmVzaG9sZCB0LiBIZW5jZSwgdGhlIEZEUiBoYXMgdGhlIGludGVycHJldGF0aW9uIG9mIHRoZSBwcm9iYWJpbGl0eSBvbiBhIGJhZCBoaXQgaW4gdGhlIHNldCBvZiBhbGwgdGFyZ2V0IGhpdHMgdGhhdCBhcmUgcmV0dXJuZWQgaW4gdGhlIGZpbmFsIFBTTSBsaXN0LgoKCmBgYHtyIGNsYXNzLnNvdXJjZSA9ICdmb2xkLWhpZGUnfQpsaWJyYXJ5KG1nY3YpCmRlYyA8LSAtbG9nMTAoaGxwJG1zX2dmX3NwZWNldmFsdWVbaGxwJGlzZGVjb3ldKSAlPiUgbmEuZXhjbHVkZSgpCnRhciA8LSAtbG9nMTAoaGxwJG1zX2dmX3NwZWNldmFsdWVbIWhscCRpc2RlY295XSkgJT4lIG5hLmV4Y2x1ZGUoKQoKYnJlYWtzIDwtIHNlcSgwLDMwLC41KQojYmluV2lkdGggPC0yCiNicmVha3MgPC0gc2VxKGZsb29yKG1pbihjKGRlYyx0YXIpKS9iaW5XaWR0aCkqYmluV2lkdGgsY2VpbGluZyhtYXgoYyhkZWMsdGFyKSkvYmluV2lkdGgpKmJpbldpZHRoLGJpbldpZHRoKQojY29kZSBpZiB3ZSByZWdpc3RlciB0aGUgbW9kZXMgYnkgc3Vic3RyYWN0aW5nIHRoZSBtb2RlIGZyb20gdGhlIHRhcmdldCBzY29yZXMgYW5kICB0aGUgZGVjb3kgc2NvcmVzLgojYnJlYWtzPXNlcSgtKGNlaWxpbmcoYWJzKG1pbihjKGRlYyx0YXIpKS9iaW5XaWR0aCkpKy41KSpiaW5XaWR0aCwoY2VpbGluZyhtYXgoYyhkZWMsdGFyKSkvYmluV2lkdGgpKy41KSpiaW5XaWR0aCxiaW5XaWR0aCkKaGlzdERlYyA8LSBoaXN0KGRlYyxicmVha3M9YnJlYWtzLHBsb3QgPSBGQUxTRSkKaGlzdFRhciA8LSBoaXN0KHRhcixicmVha3M9YnJlYWtzLHBsb3Q9RkFMU0UpCmhpc3RTYW0gPC0gaGlzdChjKGRlYyx0YXIpLGJyZWFrcz1icmVha3MsIHBsb3QgPSBGQUxTRSkKCmdyaWQ8LXNlcSgwLDMwLC4xKQpjb3VudHNUYXJHPC1kYXRhLmZyYW1lKHk9aGlzdFRhciRjb3VudHMtaGlzdERlYyRjb3VudHMseD1oaXN0VGFyJG1pZHMpCmNvdW50c1RhckckeVtjb3VudHNUYXJHJHk8MF08LTAKZml0VGFyRzwtZ2FtKHl+cyh4KSxkYXRhPWNvdW50c1RhckcsZmFtaWx5PXBvaXNzb24pCmZpdFRhckdyaWQ8LWV4cChwcmVkaWN0KGZpdFRhckcsbmV3ZGF0YT1kYXRhLmZyYW1lKHg9Z3JpZCkpKQoKY291bnRzRGVjPC1kYXRhLmZyYW1lKHk9aGlzdERlYyRjb3VudHMseD1oaXN0RGVjJG1pZHMpCmZpdERlYzwtZ2FtKHl+cyh4KSxkYXRhPWNvdW50c0RlYyxmYW1pbHk9cG9pc3NvbikKZml0QmFkPC1leHAocHJlZGljdChmaXREZWMsbmV3ZGF0YT1kYXRhLmZyYW1lKHg9Z3JpZCkpKQoKcGxvdChoaXN0VGFyLHhsYWI9Ik1TLUdGKyBTY29yZSIseWxhYj0iIyBQU01zIixtYWluPSJQeXJvY29jY3VzIFNlYXJjaCIsYm9yZGVyPSJ3aGl0ZSIsY29sPSJncmV5IixjZXguYXhpcz0xLjUsY2V4Lm1haW49MS41LGNleC5sYWI9MS41LHlsaW09YygwLDE1MDApLCBheGVzID1GQUxTRSkKYXhpcyhzaWRlPTIsYXQ9YygwLDc1MCwxNTAwKSkKYXhpcyhzaWRlPTEsYXQ9YygwLDEwLDIwLDMwKSkKbGluZXMoZ3JpZCxmaXRCYWQrZml0VGFyR3JpZCxjb2w9ImJsYWNrIixsd2Q9MikKbGluZXMoZ3JpZCxmaXRCYWQsY29sPSJyZWQiLGx3ZD0yKQpsaW5lcyhncmlkLGZpdFRhckdyaWQsY29sPSJibHVlIixsd2Q9MikKbGluZXMoaGlzdERlYyRtaWRzLGhpc3REZWMkY291bnRzLGNvbD0icmVkIix0eXBlPSJoIikKbGVnZW5kKCJ0b3ByaWdodCIsbGVnZW5kPWMoInRhcmdldHMiLCJkZWNveXMiKSxjb2w9YygiZ3JleSIsInJlZCIpLCBsdHkgPXJlcCgxLDIpKQpgYGAKCiBXZSB3b3VsZCBsaWtlIHRvIGNhbGN1bGF0ZSB0aGUgRkRSIGNvcnJlc3BvbmRpbmcgdG8gdGhlIHNldCBvcCBQU01zIHdpdGggYSB0YXJnZXQgc2NvcmUgYWJvdmUgdGhlIHRocmVzaG9sZCB0LgpJbiBvcmRlciB0byBjYWxjdWxhdGUgdGhlIEZEUiwgd2UgdGh1cyBoYXZlIHRvIGNoYXJhY3Rlcml6ZSB0aGUgZGlzdHJpYnV0aW9uIG9mIHRoZSBiYWQgaGl0cyBhbmQgb2YgYWxsIFBTTXMuCkluIHByb3Rlb21pY3MgdGhpcyBpcyBkb25lIGJ5IHRoZSB1c2Ugb2YgdGhlIHRhcmdldC9kZWNveSBhcHByb2FjaC4KCiMjIFRhcmdldCBEZWNveSBBcHByb2FjaAoKCldoZW4gdXNpbmcgYSBjb21wZXRpdGl2ZSB0YXJnZXQgZGVjb3kgc2VhcmNoLCB0aGUgRkRSIG9mIHRoZSBzZXQgb2YgcmV0dXJuZWQgUFNNcyBpcyBlc3RpbWF0ZWQgYnkgZGl2aWRpbmcgdGhlIG51bWJlciBvZiBhY2NlcHRlZCBkZWNveXMgUFNNcyBieSB0aGUgbnVtYmVyIG9mIGFjY2VwdGVkIHRhcmdldCBQU01zIGFib3ZlIGEgY2VydGFpbiBzY29yZSBjdXRvZmYgWzFdLgoKJCQgXHdpZGVoYXR7XHRleHR7RkRSfX0odCk9XGZyYWN7XCMgZGVjb3lzIHwgeD50fXtcI3RhcmdldHMgfHg+dH0gJCQKClRoaXMgY2FuIGJlIHJld3JpdHRlbiBhczoKCiQkIFx3aWRlaGF0e1x0ZXh0e0ZEUn19KHQpPVxmcmFje1wjZGVjb3lzfXtcI3RhcmdldHN9XGZyYWN7XGZyYWN7XCMgZGVjb3lzIHwgeD50fXtcI2RlY295c319e1xmcmFje1wjdGFyZ2V0cyB8eD50fXtcI3RhcmdldHN9fSAkJAoKJCQgXHdpZGVoYXR7XHRleHR7RkRSfX0odCk9XGhhdFxwaV9iXGZyYWN7MS1cYmFye0Z9XzAodCl9ezEtXGJhcntGfSh0KX0gJCQKCkhlbmNlLCB0aGUgcHJvcG9ydGlvbiBvZiBiYWQgaGl0cyBcXCggXHBpX2IgXFwpIGlzIGVzdGltYXRlZCBhcyB0aGUgbnVtYmVyIG9mIGRlY295cyBkaXZpZGVkIGJ5IHRoZSBudW1iZXIgb2YgdGFyZ2V0cywgYW5kIHRoZSBjb21wZXRpdGl2ZSBUREEgYXNzdW1lcyB0aGF0IGl0IGlzIGVxdWFsbHkgbGlrZWx5IHRoYXQgYSBiYWQgaGl0IG1hdGNoZXMgdG8gYSBiYWQgdGFyZ2V0IG9yIHRvIGEgZGVjb3k7IHRoZSBwcm9iYWJpbGl0eSBvZiAgYSAoYmFkKSB0YXJnZXQgUFNNIGhpdCBhYm92ZSB0aGUgdGhyZXNob2xkIGlzIGVzdGltYXRlZCBiYXNlZCBvbiB0aGUgZW1waXJpY2FsIGN1bXVsYXRpdmUgZGlzdHJpYnV0aW9uIGluIHRoZSBzYW1wbGUsIGkuZS4gYXMgdGhlIGZyYWN0aW9uIG9mIHRhcmdldHMgKGRlY295cykgdGhhdCBhcmUgYWJvdmUgdGhlIHRocmVzaG9sZC4gSGVuY2UsIGEgc2Vjb25kIGFzc3VtcHRpb24gaXMgdGhhdCB0aGUgZGVjb3kgbWF0Y2hlcyBwcm92aWRlIGEgZ29vZCBzaW11bGF0aW9uIG9mIHRoZSB0YXJnZXQgbWF0Y2hlcy4gU2VlIGUuZy4gWzJdLiBUaGVzZSBhc3N1bXB0aW9ucyBjYW4gYmUgZXZhbHVhdGVkIHdpdGggb3VyIFRhcmdldERlY295IFIvQmlvY29uZHVjdG9yIHBhY2thZ2UuCgojIEV4YW1wbGU6IE1TR0YrIHNlYXJjaCBvbiBTd2lzcyBQcm90IAoKVGhlIFB5cm9jb2NjdXMgZnVyaW9zdXMgKHN0cmFpbiBBVENDIDQzNTg3IC8gRFNNIDM2MzggLyBKQ00gODQyMiAvIFZjMSkgcmVmZXJlbmNlIHByb3Rlb21lLiBUaGUgcmVzdWx0aW5nIGRhdGFiYXNlIGhhcyAyLDA1MSBwcm90ZWlucyBpbiB0b3RhbCAoW2h0dHBzOi8vd3d3LnVuaXByb3Qub3JnL3VuaXByb3QvP3F1ZXJ5PXRheG9ub215OjE4NjQ5N10oaHR0cHM6Ly93d3cudW5pcHJvdC5vcmcvdW5pcHJvdC8/cXVlcnk9dGF4b25vbXk6MTg2NDk3KSwgdGF4b25vbXk6IlB5cm9jb2NjdXMgZnVyaW9zdXMgKHN0cmFpbiBBVENDIDQzNTg3IC8gRFNNIDM2MzggLyBKQ00gODQyMiAvIFZjMSkgWzE4NjQ5N10iKS4KClRoZSBkYXRhIGNhbiBiZSBmb3VuZCBvbiBbaHR0cHM6Ly9naXRodWIuY29tL3N0YXRPbWljcy9QREEyMkdUUEIvdHJlZS9kYXRhXShodHRwczovL2dpdGh1Yi5jb20vc3RhdE9taWNzL1BEQTIyR1RQQi90cmVlL2RhdGEpLgoKV2Ugd2lsbCB1c2UgdGhlIG16aWQgZmlsZSBmb3IgdGhlIHB5cm9jb2NjdXMgZXhhbXBsZSwgd2hpY2ggY2FuIGJlIGZvdW5kIGF0IGRhdGEvaWRlbnRpZmljYXRpb24vcHlyb2NvY2N1c01TR0YrLm16aWQuCgoxLiBEb3dubG9hZCB0aGUgY29kZSBvZiB0aGlzIHZpZ25ldHRlIGJ5IGNsaWNraW5nIHRoZSBjb2RlIGJ1dHRvbiBpbiB0aGUgdG9wIG9mIHRoaXMgcGFnZSBhbmQgZG93bmxvYWRpbmcuIAoKMi4gT3BlbiB0aGUgZG93bmxvYWRlZCBmaWxlIGluIFJzdHVkaW8gCgozLiBMb2FkIGxpYnJhcmllcwoKYGBge3J9CmxpYnJhcnkoVGFyZ2V0RGVjb3kpCmxpYnJhcnkoUkN1cmwpCmxpYnJhcnkobXpJRCkKYGBgCgoKNC4gRG93bmxvYWQgZGF0YSBpbiB5b3VyIHdvcmtpbmcgZGlyZWN0b3J5LiAgWW91IGNhbiBza2lwIHRoaXMgc3RlcCBpZiB5b3UgZG93bmxvYWRlZCBhbGwgZGF0YSBvbiB5b3VyIGNvbXB1dGVyLiAgCgpgYGB7cn0KZG93bmxvYWQuZmlsZSgiaHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3N0YXRPbWljcy9QREEyMkdUUEIvZGF0YS9pZGVudGlmaWNhdGlvbi9weXJvY29jY3VzTVNHRiUyQi5temlkIiwicHlyb2NvY2N1c01TR0YrLm16aWQiKQpgYGAKCjUuIFNldCBhIHBhdGggdG8geW91ciB3b3JraW5nIGRpcmVjdG9yeSBhbmQgaW1wb3J0IHRoZSBteklEIGZpbGUgaW4gUi4KCmBgYHtyfQpwYXRoMkZpbGUgPC0gInB5cm9jb2NjdXNNU0dGKy5temlkIgptc2dmIDwtIG16SUQocGF0aDJGaWxlKQpgYGAKCjYuIExhdW5jaCB0aGUgZXZhbFRhcmdldERlY295cyBTaGlueSBHYWRnZXQuIE5vdGUsIHRoYXQgeW91IGhhdmUgdG8gZXJhc2UgdGhlIGV2YWw9RkFMU0Ugb3B0aW9uIGluIG9yZGVyIHRvIHJ1biB0aGUgY29kZS4gCgpgYGB7ciBldmFsPUZBTFNFfQpldmFsVGFyZ2V0RGVjb3lzKG1zZ2YpCmBgYAo3LiBZb3UgY2FuIGltbWVkaWF0ZWx5IG1ha2UgdGhlIHBsb3RzIGluIHRoZSBzY3JpcHQgdXNpbmcgdGhlIGNvZGUgYmVsb3cKCmBgYHtyfQpldmFsVGFyZ2V0RGVjb3lzKG1zZ2YsImlzZGVjb3kiLCJtcy1nZjpldmFsdWUiKQpgYGAKClR3byBkaWFnbm9zdGljIHBsb3RzIGFyZSBnZW5lcmF0ZWQuIEEgaGlzdG9ncmFtIG9mIHRhcmdldCBhbmQgZGVjb3kgc2NvcmVzICh0b3AgcGFuZWxzKSBhbmQgUHJvYmFiaWxpdHktUHJvYmFiaWxpdHkgcGxvdHMgKFBQLXBsb3RzKS4gSW4gdGhlIGhpc3RvZ3JhbSB0aGUgc2hhcGUgb2YgdGhlIGRlY295cyAocmVkKSBzaG91bGQgYmUgZXF1YWwgdG8gdGhhdCBvZiBiYWQgdGFyZ2V0IGhpdHMgKGZpcnN0IG1vZGUgaW4gdGhlIHRhcmdldCBkaXN0cmlidXRpb24gaW5kaWNhdGVkIGluIGdyZWVuKS4gVGhlIGhlaWdodCBvZiB0aGUgZGVjb3lzIGNhbiBiZSBzbGlnaHRseSBsb3dlciB0aGFuIHRoZSBmaXJzdCBtb2RlIGluIHRoZSB0YXJnZXQgZGlzdHJpYnV0aW9uIGJlY2F1c2Ugc29tZSBnb29kIHRhcmdldCBoaXRzIGFsc28gaGF2ZSBhIGxvdyBzY29yZS4gSGVyZSwgdGhlIGhpc3RvZ3JhbSBkb2VzIG5vdCBpbmRpY2F0ZSBwcm9ibGVtcyB3aXRoIHRoZSBUREEuIAoKRGV2aWF0aW9ucyBmcm9tIHRoZSBhc3N1bXB0aW9ucyBvZiBUREEgY2FuIGJlIGJldHRlciBldmFsdWF0ZWQgaW4gdGhlIFBQLXBsb3QgKGxvd2VyIHBhbmVsKS4gVGhlIFBQLXBsb3QgZGlzcGxheXMgdGhlIGVtcGlyaWNhbCBjdW11bGF0aXZlIGRpc3RyaWJ1dGlvbiAoRUNERikgZnJvbSB0aGUgdGFyZ2V0IGRpc3RyaWJ1dGlvbiBpbiBmdW5jdGlvbiB0aGF0IG9mIHRoZSBkZWNveSBkaXN0cmlidXRpb24uIFBQLXBsb3RzIGhhdmUgdGhlIHByb3BlcnR5IHRoYXQgdGhleSBzaG93IGEgc3RyYWlnaHQgNDUgZGVncmVlIGxpbmUgdGhyb3VnaCB0aGUgb3JpZ2luIGlmIGFuZCBvbmx5IGlmIGJvdGggZGlzdHJpYnV0aW9ucyBhcmUgZXF1aXZhbGVudC4gQW55IGRldmlhdGlvbiBmcm9tIHRoaXMgc3RyYWlnaHQgbGluZSBpbmRpY2F0ZXMgdGhhdCB0aGUgZGlzdHJpYnV0aW9ucyBkaWZmZXIuIEZvciB0YXJnZXRzIGFuZCBkZWNveXMgdGhpcyBpcyBvYnZpb3VzbHkgdGhlIGNhc2UuIFRoZSB0YXJnZXQgZGlzdHJpYnV0aW9uIGlzIHN0b2NoYXN0aWNhbGx5IGxhcmdlciB0aGFuIHRoZSBkZWNveSBkaXN0cmlidXRpb24gYXMgbGFyZ2VyIHNjb3JlcyBpbmRpY2F0ZSBtb3JlIHJlbGlhYmxlIGhpdHMgYW5kIGFzIGRlY295cyBhcmUgYmVsaWV2ZWQgdG8gYmVoYXZlIHNpbWlsYXJseSB0byBiYWQgdGFyZ2V0IGhpdHMuIEhlbmNlLCB0aGUgUFAtcGxvdCBmb3IgdGFyZ2V0cyB2cyBkZWNveXMgd2lsbCBhbHdheXMgbGF5IGJlbG93IHRoZSA0NSBkZWdyZWUgbGluZS4gV2hlbiB0aGUgZGVjb3lzIGFyZSBhIGdvb2Qgc2ltdWxhdGlvbiBmb3IgdGhlIGJhZCB0YXJnZXQgaGl0cywgaG93ZXZlciwgdGhlIGxvd2VyIHZhbHVlcyBpbiB0aGUgUFAtcGxvdCBzaG91bGQgbGF5IG9uIGEgc3RyYWlnaHQgbGluZSB0aGF0IGlzIGxvY2F0ZWQgYXJvdW5kICRcaGF0e1xwaX1fYiQuIEluZGVlZCwgYXQgc21hbGwgdGFyZ2V0IFBTTSBzY29yZXMgYXJlIG1vc3QgbGlrZWx5IGJhZCBoaXRzLiAgVGhlIHNsb3BlIG9mIHRoZSBibGFjayBsaW5lIGluIHRoZSBwLXBsb3QgaXMgYmFzZWQgb24gdGhlIGVzdGltYXRlIG9mICRcaGF0e1xwaX1fYiQuIFRoZSBmaXJzdCBwYXJ0IG9mIHRoZSBQUC1wbG90IGZvciB0aGUgcHlyb2NvY2N1cyBleGFtcGxlIGlzIGxpbmVhciB3aXRoIGEgc2xvcGUgdGhhdCBlcXVhbHMgJFxoYXR7XHBpfV8wJC4gVGhpcyBpbmRpY2F0ZXMgdGhhdCB0aGUgZGVjb3kgZGlzdHJpYnV0aW9uIGFuZCB0aGUgbWl4dHVyZSBjb21wb25lbnQgZm9yIGluY29ycmVjdCBQU01zIG9mIHRoZSB0YXJnZXQgbWl4dHVyZSBkaXN0cmlidXRpb24gY29pbmNpZGUuIFRoZSBzZWNvbmQgcGFydCBvZiB0aGUgcGxvdCBkZXZpYXRlcyBmcm9tIHRoZSBsaW5lIHRvd2FyZHMgaGlnaGVyIHBlcmNlbnRpbGVzIGJlY2F1c2UgdGhlIHVwcGVyIHRhaWwgb2YgdGhlIG1peHR1cmUgY29tcG9uZW50IGZvciBpbmNvcnJlY3Qgc3Vic2V0IFBTTXMgYW5kIHRoZSBsb3dlciB0YWlsIG9mIHRoZSBtaXh0dXJlIGNvbXBvbmVudCBmb3IgY29ycmVjdCBzdWJzZXQgUFNNcyBvdmVybGFwIGFuZCB0aGVyZWZvcmUgdGFyZ2V0IFBTTXMgb2NjdXIgYXQgYSBoaWdoZXIgcHJvYmFiaWxpdHkgYXQgaW50ZXJtZWRpYXRlIHNjb3JlcyB0aGFuIGluIHRoZSBkZWNveSBkaXN0cmlidXRpb24uIEZpbmFsbHksIHRoZSBQUC1wbG90IGJlY29tZXMgdmVydGljYWwsIGJlY2F1c2UgYWxsIHRoZSBkZWNveXMgaGF2ZSBiZWVuIG9ic2VydmVkIChkZWNveSBwZXJjZW50aWxlPTEpIGJlZm9yZSBhbGwgdGhlIHNjb3JlcyBvZiB0aGUgdGFyZ2V0IFBTTXMgYXJlIG9ic2VydmVkLiBJZiB3ZSBzZWUgdGhpcyBwcm9maWxlIGluIHRoZSBQUC1wbG90LCB3ZSBoYXZlIGEgZ29vZCBpbmRpY2F0aW9uIHRoYXQgdGhlIHNldCBvZiBkZWNveXMgZnJvbSB0aGUgY29tcGxldGUgc2VhcmNoIGlzIHJlcHJlc2VudGF0aXZlIGZvciB0aGUgbWl4dHVyZSBjb21wb25lbnQgZm9yIGluY29ycmVjdCBQU01zIG9mIHRoZSB0YXJnZXQgbWl4dHVyZSBkaXN0cmlidXRpb24uIEhlbmNlLCB0aGUgYXNzdW1wdGlvbnMgb2YgdGhlIGNvbmNhdGVuYXRlZCBUREEgYXBwcm9hY2ggYXJlIG5vdCB2aW9sYXRlZCBmb3IgdGhlIFB5cm9jb2NjdXMgZXhhbXBsZS4KCldoZW4gdGhlIGFzc3VtcHRpb25zIG9mIHRoZSBjb25jYXRlbmF0ZWQgVERBIGFwcHJvYWNoIGFyZSB2aW9sYXRlZCwgdGhlIGRvdHMgaW4gdGhlIFBQLXBsb3QgYXQgbG93ZXIgcGVyY2VudGlsZXMgd2lsbCBkZXZpYXRlIGZyb20gdGhlICQgXGhhdHtccGl9X2IkIGxpbmUuIEluIGNhc2UgdGhlIFBQLXBsb3QgaXMgc3RpbGwgYSBzdHJhaWdodCBsaW5lIGF0IGxvd2VyIHBlcmNlbnRpbGVzLCB0aGVuIHRoZSBzaGFwZSBvZiB0aGUgZGVjb3kgZGlzdHJpYnV0aW9uIGlzIGNvcnJlY3QsIGJ1dCB0aGVyZSBhcmUgbGVzcyAob3IgbW9yZSkgZGVjb3lzIHRoYW4gZXhwZWN0ZWQgdW5kZXIgdGhlIGNvbmNhdGVuYXRlZCBUREEgYXNzdW1wdGlvbiwgd2hpY2ggY291bGQgb2NjdXIgaWYgdGhlIGRlY295IGRhdGFiYXNlIGlzIGRpZmZlcmVudCBpbiBzaXplIHRoYW4gdGhlIHRhcmdldCBkYXRhYmFzZSBvciB3aGVuIGEgYmFkIGhpdCBpcyBsZXNzIGxpa2VseSB0byBtYXRjaCB0byBhIGRlY295IHRoYW4gdG8gYSB0YXJnZXQuIFRoaXMgd291bGQgYWxzbyBiZSB2aXNpYmxlIGluIHRoZSBoaXN0b2dyYW1zOiB0aGUgZGVjb3kgaGlzdG9ncmFtIHdvdWxkIGJlIGNvbnNpZGVyYWJseSBsb3dlciAoaGlnaGVyKSB0aGFuIHRoZSBmaXJzdCBtb2RlIG9mIHRoZSB0YXJnZXQgZGlzdHJpYnV0aW9uLgpXaGVuIHRoZSBQUC1wbG90IGF0IGxvd2VyIHBlcmNlbnRpbGVzIGRldmlhdGVzIGZyb20gYSBzdHJhaWdodCBsaW5lLCB0aGUgZGlzdHJpYnV0aW9uIG9mIGRlY295cyBhbmQgdGhlIGJhZCB0YXJnZXQgUFNNcyBpcyBub3QgZXF1aXZhbGVudCwgaW5kaWNhdGluZyB0aGF0IHRoZSBkZWNveXMgYXJlIG5vdCBhIGdvb2Qgc2ltdWxhdGlvbiBvZiBiYWQgdGFyZ2V0IGhpdHMuCkJvdGggdHlwZSBvZiBkZXZpYXRpb25zIHNob3VsZCBiZSBvZiBjb25jZXJuIGFzIHRoZXkgaW5kaWNhdGUgdGhhdCB0aGUgRkRSIHJldHVybmVkIGJ5IHRoZSBjb252ZW50aW9uYWwgY29uY2F0ZW5hdGVkIFREQSBpcyBpbmNvcnJlY3QuCgojIEV4ZXJjaXNlcwoKMS4gQWxsIGRhdGEgY2FuIGJlIGRvd25sb2FkZWQgdmlhIHRoaXMgbGluazogW0Rvd25sb2FkIGRhdGFdKGh0dHBzOi8vZ2l0aHViLmNvbS9zdGF0T21pY3MvUERBMjJHVFBCL2FyY2hpdmUvcmVmcy9oZWFkcy9kYXRhLnppcCkuCgoyLiBVbnppcCB0aGUgZGF0YSAKCiMjIEFzc2VzcyB0aGUgc2VhcmNoIHlvdSBwZXJmb3JtZWQgaW4gIlR1dG9yaWFsIDEuIFBlcHRpZGUgYW5kIFByb3RlaW4gSWRlbnRpZmljYXRpb24iIGF0IFtodHRwczovL2NvbXBvbWljcy5jb20vYmlvaW5mb3JtYXRpY3MtZm9yLXByb3Rlb21pY3MvaWRlbnRpZmljYXRpb24vXShodHRwczovL2NvbXBvbWljcy5jb20vYmlvaW5mb3JtYXRpY3MtZm9yLXByb3Rlb21pY3MvaWRlbnRpZmljYXRpb24vKQpPcGVuIHRoZSBzZWFyY2ggZnJvbSB0dXRvcmlhbCAxLjMuIGluIFBlcHRpZGUgU2hha2VyIChzZWUgeW91ciBvd24gcmVzdWx0cyBvciByZXNvdXJjZXMgZm9yIHR1dG9yaWFsIDEuNCkgYW5kIGV4cG9ydCB0aGUgc2VhcmNoIHRvIGFuIG16aWQgZmlsZSBieSBjbGlja2luZyBleHBvcnQgPiBQZXB0aWRlIFNoYWtlciBQcm9qZWN0IEFzID4gbXpJZGVudE1MLiBFdmFsdWF0ZSB0aGUgVERBIGZvciB0aGUgb21tc2EsIFghVGFuZGVtIGFuZCB0aGUgUGVwdGlkZSBTaGFrZXIgc2NvcmUuCgpFdmFsdWF0ZSB0aGUgVERBIGZvciB0aGUgIFghVGFuZGVtLCBPTVNTQSBhbmQgUGVwdGlkZSBTaGFrZXIgc2NvcmVzLiBXaGF0IGRvIHlvdSBvYnNlcnZlIGFuZCB0cnkgdG8gZXhwbGFpbi4gWzEuNC5hXQoKMS4gQ29tcGxldGUgdGhlIGNvZGUgYmVsb3cgYnkgZmlsbGluZyBvdXQgdGhlIHBhdGggdG8geW91ciBmaWxlLiAgCk5vdGUsIHRoYXQgeW91IGhhdmUgdG8gZXJhc2UgdGhlIGV2YWw9RkFMU0Ugb3B0aW9uIGluIG9yZGVyIHRvIHJ1biB0aGUgY29kZS4gCgpgYGB7ciBldmFsPUZBTFNFfQpwYXRoMkZpbGUgPC0gIi4uLiIKbXppZFR1dG9yaWFsQ29tcG9taWNzIDwtIG16SUQocGF0aDJGaWxlKQpgYGAKCjIuIExhdW5jaCB0aGUgU2hpbnkgR2FkZ2V0IGFuZCBleHBsb3JlIHRoZSByZXN1bHRzIGZvciB0aGUgZGlmZmVyZW50IHNlYXJjaCBlbmdpbmVzIGluIHlvdXIgbXpJRCBmaWxlLiBOb3RlLCBkbyBub3QgZm9yZ2V0IHRvIGVyYXNlIHRoZSBldmFsPUZBTFNFIHRvIHJ1biB0aGUgY29kZS4gCgpgYGB7ciBldmFsPUZBTFNFfQpldmFsVGFyZ2V0RGVjb3lzKG16aWRUdXRvcmlhbENvbXBvbWljcykKYGBgCgojIyBQeXJvY29jY3VzIC0gUGVwdGlkZSBTaGFrZXIgLSBVbmlwcm90IHNlYXJjaAoKRG8gdGhlIGFuYWx5c2lzIGZvciB0aGUgc2VhcmNoIE1TR0YrLCBYIVRhbmRlbSwgT01TU0EgYW5kIFBlcHRpZGUgU2hha2VyIHNjb3JlcyBiYXNlZCBvbiBhbGwgUHlyb2NvY2N1cyBwcm90ZWlucyBpbiBhIHNlYXJjaCBhZ2FpbnN0IGFsbCBweXJvY29jY3VzIHBlcHRpZGVzIGluIFVuaXByb3QgKGRhdGEvaWRlbnRpZmljYXRpb24vcHlyb1VuaXByb3QubXppZCkuIFdoYXQgZG8geW91IG9ic2VydmUgZXhwbGFpbi4gWzEuNC5iXQoKIyMgUHlyb2NvY2N1cy9QZXB0aWRlIFNoYWtlciAtIFN3aXNzIHByb3Qgc2VhcmNoCkRvIHRoZSBhbmFseXNpcyBmb3IgdGhlIHNlYXJjaCBNU0dGKywgWCFUYW5kZW0sIE9NU1NBIGFuZCBQZXB0aWRlIFNoYWtlciBzY29yZXMgZm9yIFB5cm9jb2NjdXMgYmFzZWQgb24gdGhlIGN1cmF0ZWQgcHJvdGVpbnMgZnJvbSBzd2lzc3Byb3Qgb25seSAoZGF0YS9pZGVudGlmaWNhdGlvbi9weXJvU3dpc3Nwcm90Lm16aWQpLiBXaGF0IGRvIHlvdSBvYnNlcnZlLiBUcnkgdG8gZXhwbGFpbi4gWzEuNC5jXQoKIyMgRkRSIEVsaWFzIGFuZCBHeWdpLCAyMDA3CkVsaWFzIGFuZCBHeWdpLCAyMDA3LCByZXBvcnRlZCB0aGUgZm9sbG93aW5nIHRhcmdldCBkZWNveSBGRFIgZXN0aW1hdGlvbjoKCiQkXHdpZGVoYXR7XHRleHR7RkRSfX0odCk9XGZyYWMgezIgXHRpbWVzIChcI2RlY295cyA+dCl9e1wjZGVjb3lzID4gdCArIFwjdGFyZ2V0cyA+IHR9JCQKCkRvIHlvdSBhZ3JlZSB3aXRoIHRoaXMgZXhwcmVzc2lvbj8gV2h5LCB3aHkgbm90PyBbMS40LmRdCgoKIyBSZWZlcmVuY2VzCgpbMV0gRWxpYXMgSkUsIEd5Z2kgU1AuIFRhcmdldC1kZWNveSBzZWFyY2ggc3RyYXRlZ3kgZm9yIGluY3JlYXNlZCBjb25maWRlbmNlIGluIGxhcmdlLXNjYWxlIHByb3RlaW4gaWRlbnRpZmljYXRpb25zIGJ5IG1hc3Mgc3BlY3Ryb21ldHJ5LiBOYXQgTWV0aG9kcy4gMjAwNzsgNDoyMDctLTIxNC4KClsyXSBTdGlja2VyLCBBLiwgTWFydGVucywgTC4gYW5kIENsZW1lbnQsIEwuICgyMDE3KS4gTWFzcyBzcGVjdHJvbWV0cmlzdHMgc2hvdWxkIHNlYXJjaCBmb3IgYWxsIHBlcHRpZGVzLCBidXQgYXNzZXNzIG9ubHkgdGhlIG9uZXMgdGhleSBjYXJlIGFib3V0LiBOYXR1cmUgTWV0aG9kcyAxNCwgNjQzLS02NDQuCg==</div>

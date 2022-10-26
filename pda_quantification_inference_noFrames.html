@@ -508,16 +508,20 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Statistical Methods for Quantitative MS-based Proteomics: Part II. Differential Abundance Analysis</h1>
+<h1 class="title toc-ignore">Statistical Methods for Quantitative
+MS-based Proteomics: Part II. Differential Abundance Analysis</h1>
 <h4 class="author">Lieven Clement</h4>
-<h4 class="date"><a href="https://statomics.github.io">statOmics</a>, Ghent University</h4>
+<h4 class="date"><a href="https://statomics.github.io">statOmics</a>,
+Ghent University</h4>
 
 </div>
 
 
 <p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a></p>
 <ul>
-<li><a href="https://www.youtube.com/watch?v=1mhg3BCuEm8&amp;list=PLZH1hP8_LbJKqnPSS4hxTkn-tQolSCGjP">Playlist PDA Preprocessing</a></li>
+<li><a
+href="https://www.youtube.com/watch?v=1mhg3BCuEm8&amp;list=PLZH1hP8_LbJKqnPSS4hxTkn-tQolSCGjP">Playlist
+PDA Preprocessing</a></li>
 </ul>
 <div id="outline" class="section level1 unnumbered">
 <h1 class="unnumbered">Outline</h1>
@@ -528,23 +532,38 @@ div.tocify {
 <li>Moderated statistics</li>
 <li>Experimental design</li>
 </ul>
-<p>Note, that the R-code is included for learners who are aiming to develop R/markdown scripts to automate their quantitative proteomics data analyses. According to the target audience of the course we either work with a graphical user interface (GUI) in a R/shiny App msqrob2gui (e.g. Proteomics Bioinformatics course of the EBI and the Proteomics Data Analysis course at the Gulbenkian institute) or with R/markdowns scripts (e.g. Bioinformatics Summer School at UCLouvain or the Statistical Genomics Course at Ghent University).</p>
+<p>Note, that the R-code is included for learners who are aiming to
+develop R/markdown scripts to automate their quantitative proteomics
+data analyses. According to the target audience of the course we either
+work with a graphical user interface (GUI) in a R/shiny App msqrob2gui
+(e.g. Proteomics Bioinformatics course of the EBI and the Proteomics
+Data Analysis course at the Gulbenkian institute) or with R/markdowns
+scripts (e.g. Bioinformatics Summer School at UCLouvain or the
+Statistical Genomics Course at Ghent University).</p>
 <hr />
 </div>
-<div id="francisella-tularensis-experiment" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Francisella tularensis experiment</h1>
+<div id="francisella-tularensis-experiment" class="section level1"
+number="1">
+<h1><span class="header-section-number">1</span> Francisella tularensis
+experiment</h1>
 <p><img src="figures/francisella.jpg" width="50%" /></p>
 <p><img src="figures/tularemia_lesion.jpg" /><!-- --></p>
 <ul>
 <li>Pathogen: causes tularemia</li>
-<li>Metabolic adaptation key for intracellular life cycle of pathogenic microorganisms.</li>
-<li>Upon entry into host cells quick phasomal escape and active multiplication in cytosolic compartment.</li>
-<li>Franciscella is auxotroph for several amino acids, including arginine.</li>
-<li>Inactivation of arginine transporter delayed bacterial phagosomal escape and intracellular multiplication.</li>
-<li>Experiment to assess difference in proteome using 3 WT vs 3 ArgP KO mutants</li>
+<li>Metabolic adaptation key for intracellular life cycle of pathogenic
+microorganisms.</li>
+<li>Upon entry into host cells quick phasomal escape and active
+multiplication in cytosolic compartment.</li>
+<li>Franciscella is auxotroph for several amino acids, including
+arginine.</li>
+<li>Inactivation of arginine transporter delayed bacterial phagosomal
+escape and intracellular multiplication.</li>
+<li>Experiment to assess difference in proteome using 3 WT vs 3 ArgP KO
+mutants</li>
 </ul>
 <div id="import-the-data-in-r" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Import the data in R</h2>
+<h2><span class="header-section-number">1.1</span> Import the data in
+R</h2>
 <details>
 <summary>
 Click to see code
@@ -560,11 +579,14 @@ Click to see code
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
-<li>We use a peptides.txt file from MS-data quantified with maxquant that contains MS1 intensities summarized at the peptide level.</li>
+<li>We use a peptides.txt file from MS-data quantified with maxquant
+that contains MS1 intensities summarized at the peptide level.</li>
 </ol>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>peptidesFile <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/statOmics/PDA22GTPB/data/quantification/francisella/peptides.txt&quot;</span></span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
-<li>Maxquant stores the intensity data for the different samples in columnns that start with Intensity. We can retreive the column names with the intensity data with the code below:</li>
+<li>Maxquant stores the intensity data for the different samples in
+columnns that start with Intensity. We can retreive the column names
+with the intensity data with the code below:</li>
 </ol>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ecols <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;Intensity</span><span class="sc">\\</span><span class="st">.&quot;</span>, <span class="fu">names</span>(<span class="fu">read.delim</span>(peptidesFile)))</span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
@@ -611,7 +633,8 @@ Click to see code to log-transfrom the data
 </ul>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]])<span class="sc">$</span>nNonZero <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(<span class="fu">assay</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]]) <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code></pre></div>
 <ul>
-<li>Peptides with zero intensities are missing peptides and should be represent with a <code>NA</code> value rather than <code>0</code>.</li>
+<li>Peptides with zero intensities are missing peptides and should be
+represent with a <code>NA</code> value rather than <code>0</code>.</li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">zeroIsNA</span>(pe, <span class="st">&quot;peptideRaw&quot;</span>) <span class="co"># convert 0 to NA</span></span></code></pre></div>
 <ul>
@@ -626,7 +649,9 @@ Click to see code to log-transfrom the data
 </ul>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe, <span class="sc">~</span> Proteins <span class="sc">%in%</span> <span class="fu">smallestUniqueGroups</span>(<span class="fu">rowData</span>(pe[[<span class="st">&quot;peptideLog&quot;</span>]])<span class="sc">$</span>Proteins))</span></code></pre></div>
 <ul>
-<li>Remove reverse sequences (decoys) and contaminants. Note that this is indicated by the column names Reverse and depending on the version of maxQuant with Potential.contaminants or Contaminants.</li>
+<li>Remove reverse sequences (decoys) and contaminants. Note that this
+is indicated by the column names Reverse and depending on the version of
+maxQuant with Potential.contaminants or Contaminants.</li>
 </ul>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe,<span class="sc">~</span>Reverse <span class="sc">!=</span> <span class="st">&quot;+&quot;</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe,<span class="sc">~</span> Contaminant <span class="sc">!=</span> <span class="st">&quot;+&quot;</span>)</span></code></pre></div>
@@ -645,7 +670,8 @@ Click to see code to log-transfrom the data
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">name =</span> <span class="st">&quot;peptideNorm&quot;</span>, </span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;center.median&quot;</span>)</span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
-<li>Summarization. We use the standard sumarisation in aggregateFeatures, which is a robust summarisation method.</li>
+<li>Summarization. We use the standard sumarisation in
+aggregateFeatures, which is a robust summarisation method.</li>
 </ol>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">aggregateFeatures</span>(pe,</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">i =</span> <span class="st">&quot;peptideNorm&quot;</span>, </span>
@@ -680,7 +706,8 @@ Click to see code to log-transfrom the data
 </details>
 </div>
 <div id="summarized-data-structure" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Summarized data structure</h2>
+<h2><span class="header-section-number">1.3</span> Summarized data
+structure</h2>
 <div id="design" class="section level3" number="1.3.1">
 <h3><span class="header-section-number">1.3.1</span> Design</h3>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pe <span class="sc">%&gt;%</span> </span>
@@ -725,8 +752,10 @@ Click to see code to log-transfrom the data
 <li>3 vs 3 repeats</li>
 </ul>
 </div>
-<div id="summarized-intensity-matrix" class="section level3" number="1.3.2">
-<h3><span class="header-section-number">1.3.2</span> Summarized intensity matrix</h3>
+<div id="summarized-intensity-matrix" class="section level3"
+number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> Summarized
+intensity matrix</h3>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pe[[<span class="st">&quot;protein&quot;</span>]] <span class="sc">%&gt;%</span> <span class="fu">assay</span>() <span class="sc">%&gt;%</span> <span class="fu">head</span>() <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <colgroup>
@@ -810,13 +839,15 @@ Click to see code to log-transfrom the data
 <li>1115 proteins</li>
 </ul>
 </div>
-<div id="hypothesis-testing-a-single-protein" class="section level3" number="1.3.3">
-<h3><span class="header-section-number">1.3.3</span> Hypothesis testing: a single protein</h3>
+<div id="hypothesis-testing-a-single-protein" class="section level3"
+number="1.3.3">
+<h3><span class="header-section-number">1.3.3</span> Hypothesis testing:
+a single protein</h3>
 <p><img src="pda_quantification_inference_noFrames_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <div id="t-test" class="section level4" number="1.3.3.1">
 <h4><span class="header-section-number">1.3.3.1</span> T-test</h4>
 <p><span class="math display">\[
- \log_2 \text{FC} = \bar{y}_{p1}-\bar{y}_{p2}
+\log_2 \text{FC} = \bar{y}_{p1}-\bar{y}_{p2}
 \]</span></p>
 <p><span class="math display">\[
 T_g=\frac{\log_2 \text{FC}}{\text{se}_{\log_2 \text{FC}}}
@@ -842,23 +873,32 @@ t=\frac{\log_2\widehat{\text{FC}}}{\text{se}_{\log_2\widehat{\text{FC}}}}=\frac{
 \]</span></p>
 <ul>
 <li><p>Is t = -24.7 indicating that there is an effect?</p></li>
-<li><p>How likely is it to observe t = -24.7 when there is no effect of the argP KO on the protein expression?</p></li>
+<li><p>How likely is it to observe t = -24.7 when there is no effect of
+the argP KO on the protein expression?</p></li>
 </ul>
 </div>
-<div id="null-hypothesis-h_0-and-alternative-hypothesis-h_1" class="section level4" number="1.3.3.2">
-<h4><span class="header-section-number">1.3.3.2</span> Null hypothesis (<span class="math inline">\(H_0\)</span>) and alternative hypothesis (<span class="math inline">\(H_1\)</span>)</h4>
+<div id="null-hypothesis-h_0-and-alternative-hypothesis-h_1"
+class="section level4" number="1.3.3.2">
+<h4><span class="header-section-number">1.3.3.2</span> Null hypothesis
+(<span class="math inline">\(H_0\)</span>) and alternative hypothesis
+(<span class="math inline">\(H_1\)</span>)</h4>
 <ul>
-<li><p>With data we can never prove a hypothesis (falsification principle of Popper)</p></li>
+<li><p>With data we can never prove a hypothesis (falsification
+principle of Popper)</p></li>
 <li><p>With data we can only reject a hypothesis</p></li>
-<li><p>In general we start from <em>alternative hypothese</em> <span class="math inline">\(H_1\)</span>: we want to show an effect of the KO on a protein</p></li>
+<li><p>In general we start from <em>alternative hypothese</em> <span
+class="math inline">\(H_1\)</span>: we want to show an effect of the KO
+on a protein</p></li>
 </ul>
 <center>
-<span class="math inline">\(H_1\)</span>: On average the protein abundance in WT is different from that in KO
+<span class="math inline">\(H_1\)</span>: On average the protein
+abundance in WT is different from that in KO
 </center>
 <ul>
 <li>But, we will assess this by falsifying the opposite:
 <center>
-<span class="math inline">\(H_0\)</span>: On average the protein abundance in WT is equal to that in KO&lt;-
+<span class="math inline">\(H_0\)</span>: On average the protein
+abundance in WT is equal to that in KO&lt;-
 </center></li>
 </ul>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(intensity <span class="sc">~</span> genotype, <span class="at">data =</span> WP_003023392, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div>
@@ -874,94 +914,177 @@ t=\frac{\log_2\widehat{\text{FC}}}{\text{se}_{\log_2\widehat{\text{FC}}}}=\frac{
 ## mean in group WT mean in group D8 
 ##       -0.1821147       -1.6099769</code></pre>
 <ul>
-<li><p>How likely is it to observe an equal or more extreme effect than the one observed in the sample when the null hypothesis is true?</p></li>
-<li><p>When we make assumptions about the distribution of our test statistic we can quantify this probability: <em>p-value</em>. The p-value will only be calculated correctly if the underlying assumptions hold!</p></li>
-<li><p>When we repeat the experiment, the probability to observe a fold change for this gene that is more extreme than a 2.69 fold (<span class="math inline">\(\log_2 FC=-1.43\)</span>) down or up regulation by random change (if <span class="math inline">\(H_0\)</span> is true) is 16 out of 1 000 000.<br />
+<li><p>How likely is it to observe an equal or more extreme effect than
+the one observed in the sample when the null hypothesis is
+true?</p></li>
+<li><p>When we make assumptions about the distribution of our test
+statistic we can quantify this probability: <em>p-value</em>. The
+p-value will only be calculated correctly if the underlying assumptions
+hold!</p></li>
+<li><p>When we repeat the experiment, the probability to observe a fold
+change for this gene that is more extreme than a 2.69 fold (<span
+class="math inline">\(\log_2 FC=-1.43\)</span>) down or up regulation by
+random change (if <span class="math inline">\(H_0\)</span> is true) is
+16 out of 1 000 000.<br />
 </p></li>
-<li><p>If the p-value is below a significance threshold <span class="math inline">\(\alpha\)</span> we reject the null hypothesis. <em>We control the probability on a false positive result at the <span class="math inline">\(\alpha\)</span>-level (type I error)</em></p></li>
-<li><p>Note, that the p-values are uniform under the null hypothesis, i.e. when <span class="math inline">\(H_0\)</span> is true all p-values are equally likely.</p></li>
+<li><p>If the p-value is below a significance threshold <span
+class="math inline">\(\alpha\)</span> we reject the null hypothesis.
+<em>We control the probability on a false positive result at the <span
+class="math inline">\(\alpha\)</span>-level (type I error)</em></p></li>
+<li><p>Note, that the p-values are uniform under the null hypothesis,
+i.e. when <span class="math inline">\(H_0\)</span> is true all p-values
+are equally likely.</p></li>
 </ul>
 </div>
 </div>
 </div>
-<div id="multiple-hypothesis-testing" class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> Multiple hypothesis testing</h2>
+<div id="multiple-hypothesis-testing" class="section level2"
+number="1.4">
+<h2><span class="header-section-number">1.4</span> Multiple hypothesis
+testing</h2>
 <ul>
-<li><p>Consider testing DA for all <span class="math inline">\(m=1066\)</span> proteins simultaneously</p></li>
-<li><p>What if we assess each individual test at level <span class="math inline">\(\alpha\)</span>? <span class="math inline">\(\rightarrow\)</span> Probability to have a false positive (FP) among all m simultatenous test <span class="math inline">\(&gt;&gt;&gt; \alpha= 0.05\)</span></p></li>
-<li><p>Indeed for each non DA protein we have a probability of 5% to return a FP.</p></li>
-<li><p>In a typical experiment the majority of the proteins are non DA.</p></li>
-<li><p>So an upperbound of the expected FP is <span class="math inline">\(m \times \alpha\)</span> or <span class="math inline">\(1066 \times 0.05=53\)</span>.</p></li>
+<li><p>Consider testing DA for all <span
+class="math inline">\(m=1066\)</span> proteins simultaneously</p></li>
+<li><p>What if we assess each individual test at level <span
+class="math inline">\(\alpha\)</span>? <span
+class="math inline">\(\rightarrow\)</span> Probability to have a false
+positive (FP) among all m simultatenous test <span
+class="math inline">\(&gt;&gt;&gt; \alpha= 0.05\)</span></p></li>
+<li><p>Indeed for each non DA protein we have a probability of 5% to
+return a FP.</p></li>
+<li><p>In a typical experiment the majority of the proteins are non
+DA.</p></li>
+<li><p>So an upperbound of the expected FP is <span
+class="math inline">\(m \times \alpha\)</span> or <span
+class="math inline">\(1066 \times 0.05=53\)</span>.</p></li>
 </ul>
-<p><span class="math inline">\(\rightarrow\)</span> Hence, we are bound to call many false positive proteins each time we run the experiment.</p>
+<p><span class="math inline">\(\rightarrow\)</span> Hence, we are bound
+to call many false positive proteins each time we run the
+experiment.</p>
 <div id="multiple-testing" class="section level3" number="1.4.1">
-<h3><span class="header-section-number">1.4.1</span> Multiple testing</h3>
-<div id="family-wise-error-rate" class="section level4" number="1.4.1.1">
-<h4><span class="header-section-number">1.4.1.1</span> Family-wise error rate</h4>
-<p>The family-wise error rate (FWER) addresses the multiple testing issue by no longer controlling the individual type I error for each protein, instead it controls:</p>
+<h3><span class="header-section-number">1.4.1</span> Multiple
+testing</h3>
+<div id="family-wise-error-rate" class="section level4"
+number="1.4.1.1">
+<h4><span class="header-section-number">1.4.1.1</span> Family-wise error
+rate</h4>
+<p>The family-wise error rate (FWER) addresses the multiple testing
+issue by no longer controlling the individual type I error for each
+protein, instead it controls:</p>
 <p><span class="math display">\[
-   \text{FWER} = 
+   \text{FWER} =
    \text{P}\left[FP \geq 1 \right].
 \]</span></p>
 <p>The Bonferroni method is widely used to control the type I error:</p>
 <ul>
-<li>assess each test at <span class="math display">\[\alpha_\text{adj}=\frac{\alpha}{m}\]</span></li>
-<li>or use adjusted p-values and compare them to <span class="math inline">\(\alpha\)</span>: <span class="math display">\[p_\text{adj}=\text{min}\left(p \times m,1\right)\]</span></li>
+<li>assess each test at <span
+class="math display">\[\alpha_\text{adj}=\frac{\alpha}{m}\]</span></li>
+<li>or use adjusted p-values and compare them to <span
+class="math inline">\(\alpha\)</span>: <span
+class="math display">\[p_\text{adj}=\text{min}\left(p \times
+m,1\right)\]</span></li>
 </ul>
 <p>Problem, the method is very conservative!</p>
 </div>
 <div id="false-discovery-rate" class="section level4" number="1.4.1.2">
-<h4><span class="header-section-number">1.4.1.2</span> False discovery rate</h4>
+<h4><span class="header-section-number">1.4.1.2</span> False discovery
+rate</h4>
 <ul>
-<li>FDR: Expected proportion of false positives on the total number of positives you return.</li>
-<li>An FDR of 1% means that on average we expect 1% false positive proteins in the list of proteins that are called significant.</li>
+<li>FDR: Expected proportion of false positives on the total number of
+positives you return.</li>
+<li>An FDR of 1% means that on average we expect 1% false positive
+proteins in the list of proteins that are called significant.</li>
 </ul>
-<p>The <strong>False Discovery Proportion (FDP)</strong> is the fraction of false positives that are returned, i.e. </p>
+<p>The <strong>False Discovery Proportion (FDP)</strong> is the fraction
+of false positives that are returned, i.e. </p>
 <p><span class="math display">\[
 FDP = \frac{FP}{R}
 \]</span></p>
 <ul>
-<li>However, this quantity cannot be observed because in practice we only know the number of proteins for which we rejected <span class="math inline">\(H_0\)</span>, <span class="math inline">\(R\)</span>.</li>
-<li>But, we do not know the number of false positives, <span class="math inline">\(FP\)</span>.</li>
+<li>However, this quantity cannot be observed because in practice we
+only know the number of proteins for which we rejected <span
+class="math inline">\(H_0\)</span>, <span
+class="math inline">\(R\)</span>.</li>
+<li>But, we do not know the number of false positives, <span
+class="math inline">\(FP\)</span>.</li>
 </ul>
-<p>Therefore, Benjamini and Hochberg, 1995, defined The <strong>False Discovery Rate (FDR)</strong> as <span class="math display">\[
-   \text{FDR} = \text{E}\left[\frac{FP}{R}\right] =\text{E}\left[\text{FDP}\right]
+<p>Therefore, Benjamini and Hochberg, 1995, defined The <strong>False
+Discovery Rate (FDR)</strong> as <span class="math display">\[
+   \text{FDR} = \text{E}\left[\frac{FP}{R}\right]
+=\text{E}\left[\text{FDP}\right]
 \]</span> the expected FDP.</p>
 <ul>
-<li>Controlling the FDR allows for more discoveries (i.e. longer lists with significant results), while the fraction of false discoveries among the significant results in well controlled on average. As a consequence, more of the true positive hypotheses will be detected.</li>
+<li>Controlling the FDR allows for more discoveries (i.e. longer lists
+with significant results), while the fraction of false discoveries among
+the significant results in well controlled on average. As a consequence,
+more of the true positive hypotheses will be detected.</li>
 </ul>
 </div>
-<div id="intuition-of-bh-fdr-procedure" class="section level4" number="1.4.1.3">
-<h4><span class="header-section-number">1.4.1.3</span> Intuition of BH-FDR procedure</h4>
+<div id="intuition-of-bh-fdr-procedure" class="section level4"
+number="1.4.1.3">
+<h4><span class="header-section-number">1.4.1.3</span> Intuition of
+BH-FDR procedure</h4>
 <p>Consider <span class="math inline">\(m = 1000\)</span> tests</p>
 <ul>
-<li><p>Suppose that a researcher rejects all null hypotheses for which <span class="math inline">\(p &lt; 0.01\)</span>.</p></li>
-<li><p>If we use <span class="math inline">\(p &lt; 0.01\)</span>, we expect <span class="math inline">\(0.01 \times m_0\)</span> tests to return false positives.</p></li>
-<li><p>A conservative estimate of the number of false positives that we can expect can be obtained by considering that the null hypotheses are true for all features, <span class="math inline">\(m_0 = m = 1000\)</span>.</p></li>
-<li><p>We then would expect <span class="math inline">\(0.01 \times 1000 = 10\)</span> false positives (<span class="math inline">\(FP=10\)</span>).</p></li>
-<li><p>Suppose that the researcher found 200 genes with <span class="math inline">\(p&lt;0.01\)</span> (<span class="math inline">\(R=200\)</span>).</p></li>
-<li><p>The proportion of false positive results (FDP = false positive proportion) among the list of <span class="math inline">\(R=200\)</span> genes can then be estimated as <span class="math display">\[
- \widehat{\text{FDP}}=\frac{FP}{R}=\frac{10}{200}=\frac{0.01 \times 1000}{200} = 0.05.
- \]</span></p></li>
+<li><p>Suppose that a researcher rejects all null hypotheses for which
+<span class="math inline">\(p &lt; 0.01\)</span>.</p></li>
+<li><p>If we use <span class="math inline">\(p &lt; 0.01\)</span>, we
+expect <span class="math inline">\(0.01 \times m_0\)</span> tests to
+return false positives.</p></li>
+<li><p>A conservative estimate of the number of false positives that we
+can expect can be obtained by considering that the null hypotheses are
+true for all features, <span class="math inline">\(m_0 = m =
+1000\)</span>.</p></li>
+<li><p>We then would expect <span class="math inline">\(0.01 \times 1000
+= 10\)</span> false positives (<span
+class="math inline">\(FP=10\)</span>).</p></li>
+<li><p>Suppose that the researcher found 200 genes with <span
+class="math inline">\(p&lt;0.01\)</span> (<span
+class="math inline">\(R=200\)</span>).</p></li>
+<li><p>The proportion of false positive results (FDP = false positive
+proportion) among the list of <span class="math inline">\(R=200\)</span>
+genes can then be estimated as <span class="math display">\[
+\widehat{\text{FDP}}=\frac{FP}{R}=\frac{10}{200}=\frac{0.01 \times
+1000}{200} = 0.05.
+\]</span></p></li>
 </ul>
 </div>
-<div id="benjamini-and-hochberg-1995-procedure-for-controlling-the-fdr-at-alpha" class="section level4" number="1.4.1.4">
-<h4><span class="header-section-number">1.4.1.4</span> Benjamini and Hochberg (1995) procedure for controlling the FDR at <span class="math inline">\(\alpha\)</span></h4>
+<div
+id="benjamini-and-hochberg-1995-procedure-for-controlling-the-fdr-at-alpha"
+class="section level4" number="1.4.1.4">
+<h4><span class="header-section-number">1.4.1.4</span> Benjamini and
+Hochberg (1995) procedure for controlling the FDR at <span
+class="math inline">\(\alpha\)</span></h4>
 <ol style="list-style-type: decimal">
-<li><p>Let <span class="math inline">\(p_{(1)}\leq \ldots \leq p_{(m)}\)</span> denote the ordered <span class="math inline">\(p\)</span>-values.</p></li>
-<li><p>Find the largest integer <span class="math inline">\(k\)</span> so that <span class="math display">\[
+<li><p>Let <span class="math inline">\(p_{(1)}\leq \ldots \leq
+p_{(m)}\)</span> denote the ordered <span
+class="math inline">\(p\)</span>-values.</p></li>
+<li><p>Find the largest integer <span class="math inline">\(k\)</span>
+so that <span class="math display">\[
 \frac{p_{(k)} \times m}{k} \leq \alpha
-\]</span> <span class="math display">\[\text{or}\]</span> <span class="math display">\[
+\]</span> <span class="math display">\[\text{or}\]</span> <span
+class="math display">\[
 p_{(k)} \leq k \times \alpha/m
 \]</span></p></li>
-<li><p>If such a <span class="math inline">\(k\)</span> exists, reject the <span class="math inline">\(k\)</span> null hypotheses associated with <span class="math inline">\(p_{(1)}, \ldots, p_{(k)}\)</span>. Otherwise none of the null hypotheses is rejected.</p></li>
+<li><p>If such a <span class="math inline">\(k\)</span> exists, reject
+the <span class="math inline">\(k\)</span> null hypotheses associated
+with <span class="math inline">\(p_{(1)}, \ldots, p_{(k)}\)</span>.
+Otherwise none of the null hypotheses is rejected.</p></li>
 </ol>
-<p>The adjusted <span class="math inline">\(p\)</span>-value (also known as the <span class="math inline">\(q\)</span>-value in FDR literature): <span class="math display">\[
-   q_{(i)}=\tilde{p}_{(i)} = \min\left[\min_{j=i,\ldots, m}\left(m p_{(j)}/j\right), 1 \right].
- \]</span> In the hypothetical example above: <span class="math inline">\(k=200\)</span>, <span class="math inline">\(p_{(k)}=0.01\)</span>, <span class="math inline">\(m=1000\)</span> and <span class="math inline">\(\alpha=0.05\)</span>.</p>
+<p>The adjusted <span class="math inline">\(p\)</span>-value (also known
+as the <span class="math inline">\(q\)</span>-value in FDR literature):
+<span class="math display">\[
+   q_{(i)}=\tilde{p}_{(i)} = \min\left[\min_{j=i,\ldots, m}\left(m
+p_{(j)}/j\right), 1 \right].
+\]</span> In the hypothetical example above: <span
+class="math inline">\(k=200\)</span>, <span
+class="math inline">\(p_{(k)}=0.01\)</span>, <span
+class="math inline">\(m=1000\)</span> and <span
+class="math inline">\(\alpha=0.05\)</span>.</p>
 </div>
 <div id="francisella-example" class="section level4" number="1.4.1.5">
-<h4><span class="header-section-number">1.4.1.5</span> Francisella Example</h4>
+<h4><span class="header-section-number">1.4.1.5</span> Francisella
+Example</h4>
 <details>
 <summary>
 Click to see code
@@ -992,7 +1115,8 @@ Click to see code
 <span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>res<span class="sc">$</span><span class="st">&quot;adjPval &lt; alpha&quot;</span> <span class="ot">&lt;-</span> res<span class="sc">$</span>adjPval <span class="sc">&lt;</span> alpha </span></code></pre></div>
 </p>
 </details>
-<p>FWER: Bonferroni method:<span class="math inline">\(\alpha_\text{adj} = \alpha/m = 0.05 / 1066= 5\times 10^{-5}\)</span></p>
+<p>FWER: Bonferroni method:<span class="math inline">\(\alpha_\text{adj}
+= \alpha/m = 0.05 / 1066= 5\times 10^{-5}\)</span></p>
 <table>
 <colgroup>
 <col width="12%" />
@@ -1210,7 +1334,8 @@ Click to see code
 </div>
 </div>
 <div id="moderated-statistics" class="section level2" number="1.5">
-<h2><span class="header-section-number">1.5</span> Moderated Statistics</h2>
+<h2><span class="header-section-number">1.5</span> Moderated
+Statistics</h2>
 <p>Problems with ordinary t-test</p>
 <details>
 <summary>
@@ -1247,12 +1372,18 @@ Click to see code
 <pre><code>## 
 ## [[3]]</code></pre>
 <p><img src="pda_quantification_inference_noFrames_files/figure-html/unnamed-chunk-28-3.png" width="672" /></p>
-<p>A general class of moderated test statistics is given by <span class="math display">\[
+<p>A general class of moderated test statistics is given by <span
+class="math display">\[
    T_g^{mod} = \frac{\bar{Y}_{g1} - \bar{Y}_{g2}}{C \quad \tilde{S}_g} ,
- \]</span> where <span class="math inline">\(\tilde{S}_g\)</span> is a moderated standard deviation estimate.</p>
+\]</span> where <span class="math inline">\(\tilde{S}_g\)</span> is a
+moderated standard deviation estimate.</p>
 <ul>
-<li><span class="math inline">\(C\)</span> is a constant depending on the design e.g. <span class="math inline">\(\sqrt{1/{n_1}+1/n_2}\)</span> for a t-test and of another form for linear models.</li>
-<li><span class="math inline">\(\tilde{S}_g=S_g+S_0\)</span>: add small positive constant to denominator of t-statistic.</li>
+<li><span class="math inline">\(C\)</span> is a constant depending on
+the design e.g. <span
+class="math inline">\(\sqrt{1/{n_1}+1/n_2}\)</span> for a t-test and of
+another form for linear models.</li>
+<li><span class="math inline">\(\tilde{S}_g=S_g+S_0\)</span>: add small
+positive constant to denominator of t-statistic.</li>
 <li>This can be adopted in Perseus.</li>
 </ul>
 <details>
@@ -1294,28 +1425,36 @@ Click to see code
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>gridExtra<span class="sc">::</span><span class="fu">grid.arrange</span>(tstatSimPlot,tstatSimPerseus,<span class="at">nrow=</span><span class="dv">1</span>)</span></code></pre></div>
 <p><img src="pda_quantification_inference_noFrames_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <ul>
-<li>The choice of <span class="math inline">\(S_0\)</span> in Perseus is ad hoc and the t-statistic is no-longer t-distributed.</li>
+<li>The choice of <span class="math inline">\(S_0\)</span> in Perseus is
+ad hoc and the t-statistic is no-longer t-distributed.</li>
 <li>Permutation test, but is difficult for more complex designs.</li>
-<li>Allows for Data Dredging because user can choose <span class="math inline">\(S_0\)</span></li>
+<li>Allows for Data Dredging because user can choose <span
+class="math inline">\(S_0\)</span></li>
 </ul>
 <div id="empirical-bayes" class="section level3" number="1.5.1">
-<h3><span class="header-section-number">1.5.1</span> Empirical Bayes</h3>
+<h3><span class="header-section-number">1.5.1</span> Empirical
+Bayes</h3>
 <p><img src="figures/limmaShrinkage.png" width="50%" /></p>
 <p>Figure courtesy to Rafael Irizarry</p>
 <p><span class="math display">\[
    T_g^{mod} = \frac{\bar{Y}_{g1} - \bar{Y}_{g2}}{C \quad \tilde{S}_g} ,
- \]</span></p>
+\]</span></p>
 <ul>
-<li><strong>empirical Bayes</strong> theory provides formal framework for borrowing strength across proteins,</li>
-<li>Implemented in popular bioconductor package <strong>limma</strong> and <strong>msqrob2</strong></li>
+<li><strong>empirical Bayes</strong> theory provides formal framework
+for borrowing strength across proteins,</li>
+<li>Implemented in popular bioconductor package <strong>limma</strong>
+and <strong>msqrob2</strong></li>
 </ul>
 <p><span class="math display">\[
   \tilde{S}_g=\sqrt{\frac{d_gS_g^2+d_0S_0^2}{d_g+d_0}},
 \]</span></p>
 <ul>
-<li><span class="math inline">\(S_0^2\)</span>: common variance (over all proteins)</li>
-<li>Moderated t-statistic is t-distributed with <span class="math inline">\(d_0+d_g\)</span> degrees of freedom.</li>
-<li>Note that the degrees of freedom increase by borrowing strength across proteins!
+<li><span class="math inline">\(S_0^2\)</span>: common variance (over
+all proteins)</li>
+<li>Moderated t-statistic is t-distributed with <span
+class="math inline">\(d_0+d_g\)</span> degrees of freedom.</li>
+<li>Note that the degrees of freedom increase by borrowing strength
+across proteins!
 <details>
 <summary>
 Click to see the code
@@ -1323,31 +1462,52 @@ Click to see the code
 <p></li>
 </ul>
 <ol style="list-style-type: decimal">
-<li>We model the protein level expression values using the <code>msqrob</code> function. By default <code>msqrob2</code> estimates the model parameters using robust regression.</li>
+<li>We model the protein level expression values using the
+<code>msqrob</code> function. By default <code>msqrob2</code> estimates
+the model parameters using robust regression.</li>
 </ol>
-<p>We will model the data with a different group mean for every genotype. The group is incoded in the variable <code>genotype</code> of the colData. We can specify this model by using a formula with the factor <code>genotype</code> as its predictor: <code>formula = ~genotype</code>.</p>
+<p>We will model the data with a different group mean for every
+genotype. The group is incoded in the variable <code>genotype</code> of
+the colData. We can specify this model by using a formula with the
+factor <code>genotype</code> as its predictor:
+<code>formula = ~genotype</code>.</p>
 <p>Note, that a formula always starts with a symbol ‘~’.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">msqrob</span>(<span class="at">object =</span> pe, <span class="at">i =</span> <span class="st">&quot;protein&quot;</span>, <span class="at">formula =</span> <span class="sc">~</span>genotype)</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Inference</li>
 </ol>
-<p>We first explore the design of the model that we specified using the the package <code>ExploreModelMatrix</code></p>
+<p>We first explore the design of the model that we specified using the
+the package <code>ExploreModelMatrix</code></p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ExploreModelMatrix)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">VisualizeDesign</span>(<span class="fu">colData</span>(pe),<span class="sc">~</span>genotype)<span class="sc">$</span>plotlist[[<span class="dv">1</span>]]</span></code></pre></div>
 <p><img src="pda_quantification_inference_noFrames_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
-<p>We have two model parameters, the (Intercept) and genotypeD8. This results in a model with two group means:</p>
+<p>We have two model parameters, the (Intercept) and genotypeD8. This
+results in a model with two group means:</p>
 <ol style="list-style-type: decimal">
-<li>For the wild type (WT) the expected value (mean) of the log2 transformed intensity y for a protein will be modelled using</li>
+<li>For the wild type (WT) the expected value (mean) of the log2
+transformed intensity y for a protein will be modelled using</li>
 </ol>
-<p><span class="math display">\[\text{E}[Y\vert \text{genotype}=\text{WT}] = \text{(Intercept)}\]</span> 1. For the knockout genotype D8 the expected value (mean) of the log2 transformed intensity y for a protein will be modelled using</p>
-<p><span class="math display">\[\text{E}[Y\vert \text{genotype}=\text{D8}] = \text{(Intercept)} + \text{genotypeD8}\]</span></p>
-<p>The average log2FC between D8 and WT is thus <span class="math display">\[\log_2\text{FC}_{D8-WT}= \text{E}[Y\vert \text{genotype}=\text{D8}] - \text{E}[Y\vert \text{genotype}=\text{WT}] = \text{genotypeD8}
+<p><span class="math display">\[\text{E}[Y\vert
+\text{genotype}=\text{WT}] = \text{(Intercept)}\]</span> 1. For the
+knockout genotype D8 the expected value (mean) of the log2 transformed
+intensity y for a protein will be modelled using</p>
+<p><span class="math display">\[\text{E}[Y\vert
+\text{genotype}=\text{D8}] = \text{(Intercept)} +
+\text{genotypeD8}\]</span></p>
+<p>The average log2FC between D8 and WT is thus <span
+class="math display">\[\log_2\text{FC}_{D8-WT}= \text{E}[Y\vert
+\text{genotype}=\text{D8}] - \text{E}[Y\vert \text{genotype}=\text{WT}]
+= \text{genotypeD8}
 \]</span></p>
-<p>Hence, assessing the null hypothesis that there is no differential abundance between D8 and WT can be reformulated as</p>
-<p><span class="math display">\[H_0:  \text{genotypeD8}=0\]</span> We can implement a hypothesis test for each protein in msqrob2 using the code below:</p>
+<p>Hence, assessing the null hypothesis that there is no differential
+abundance between D8 and WT can be reformulated as</p>
+<p><span class="math display">\[H_0:  \text{genotypeD8}=0\]</span> We
+can implement a hypothesis test for each protein in msqrob2 using the
+code below:</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">makeContrast</span>(<span class="st">&quot;genotypeD8 = 0&quot;</span>, <span class="at">parameterNames =</span> <span class="fu">c</span>(<span class="st">&quot;genotypeD8&quot;</span>))</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">hypothesisTest</span>(<span class="at">object =</span> pe, <span class="at">i =</span> <span class="st">&quot;protein&quot;</span>, <span class="at">contrast =</span> L)</span></code></pre></div>
-<p>We can show the list with all significant DE proteins at the 5% FDR using</p>
+<p>We can show the list with all significant DE proteins at the 5% FDR
+using</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(pe[[<span class="st">&quot;protein&quot;</span>]])<span class="sc">$</span>genotypeD8 <span class="sc">%&gt;%</span> </span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(pval) <span class="sc">%&gt;%</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(adjPval<span class="sc">&lt;</span><span class="fl">0.05</span>)</span></code></pre></div>
@@ -1373,12 +1533,17 @@ Click to see the code
 <pre><code>## Warning: Removed 109 rows containing missing values (geom_point).</code></pre>
 <p><img src="pda_quantification_inference_noFrames_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 <ul>
-<li><p>The volcano plot opens up when using the EB variance estimator</p></li>
-<li><p>Borrowing strength to estimate the variance using empirical Bayes solves the issue of returning proteins with a low fold change as significant due to a low variance.</p></li>
+<li><p>The volcano plot opens up when using the EB variance
+estimator</p></li>
+<li><p>Borrowing strength to estimate the variance using empirical Bayes
+solves the issue of returning proteins with a low fold change as
+significant due to a low variance.</p></li>
 </ul>
 </div>
-<div id="shrinkage-of-the-variance-and-moderated-t-statistics" class="section level3" number="1.5.2">
-<h3><span class="header-section-number">1.5.2</span> Shrinkage of the variance and moderated t-statistics</h3>
+<div id="shrinkage-of-the-variance-and-moderated-t-statistics"
+class="section level3" number="1.5.2">
+<h3><span class="header-section-number">1.5.2</span> Shrinkage of the
+variance and moderated t-statistics</h3>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qplot</span>(</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sapply</span>(<span class="fu">rowData</span>(pe[[<span class="st">&quot;protein&quot;</span>]])<span class="sc">$</span>msqrobModels,getSigma),</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sapply</span>(<span class="fu">rowData</span>(pe[[<span class="st">&quot;protein&quot;</span>]])<span class="sc">$</span>msqrobModels,getSigmaPosterior)) <span class="sc">+</span></span>
@@ -1389,9 +1554,13 @@ Click to see the code
 <pre><code>## Warning: Removed 109 rows containing missing values (geom_point).</code></pre>
 <p><img src="pda_quantification_inference_noFrames_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <ul>
-<li>Small variances are shrunken towards the common variance resulting in large EB variance estimates</li>
-<li>Large variances are shrunken towards the common variance resulting in smaller EB variance estimates</li>
-<li>Pooled degrees of freedom of the EB variance estimator are larger because information is borrowed across proteins to estimate the variance</li>
+<li>Small variances are shrunken towards the common variance resulting
+in large EB variance estimates</li>
+<li>Large variances are shrunken towards the common variance resulting
+in smaller EB variance estimates</li>
+<li>Pooled degrees of freedom of the EB variance estimator are larger
+because information is borrowed across proteins to estimate the
+variance</li>
 </ul>
 </div>
 </div>
@@ -1441,11 +1610,12 @@ Click to see the code
 </div>
 </div>
 <div id="experimental-design" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Experimental Design</h1>
+<h1><span class="header-section-number">2</span> Experimental
+Design</h1>
 <div id="sample-size" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Sample size</h2>
 <p><span class="math display">\[
- \log_2 \text{FC} = \bar{y}_{p1}-\bar{y}_{p2}
+\log_2 \text{FC} = \bar{y}_{p1}-\bar{y}_{p2}
 \]</span></p>
 <p><span class="math display">\[
 T_g=\frac{\log_2 \text{FC}}{\text{se}_{\log_2 \text{FC}}}
@@ -1457,42 +1627,57 @@ T_g=\frac{\widehat{\text{signal}}}{\widehat{\text{Noise}}}
 <p><span class="math display">\[
 \text{se}_{\log_2 \text{FC}}=\text{SD}\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}
 \]</span></p>
-<p><span class="math inline">\(\rightarrow\)</span> if number of bio-repeats increases we have a higher power!</p>
+<p><span class="math inline">\(\rightarrow\)</span> if number of
+bio-repeats increases we have a higher power!</p>
 <ul>
-<li>cfr. Study of tamoxifen treated Estrogen Recepter (ER) positive breast cancer patients</li>
+<li>cfr. Study of tamoxifen treated Estrogen Recepter (ER) positive
+breast cancer patients</li>
 </ul>
 </div>
 <div id="blocking" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Blocking</h2>
-<p><span class="math display">\[\sigma^2= \sigma^2_{bio}+\sigma^2_\text{lab} +\sigma^2_\text{extraction} + \sigma^2_\text{run} + \ldots\]</span></p>
+<p><span class="math display">\[\sigma^2=
+\sigma^2_{bio}+\sigma^2_\text{lab} +\sigma^2_\text{extraction} +
+\sigma^2_\text{run} + \ldots\]</span></p>
 <ul>
-<li>Biological: fluctuations in protein level between mice, fluctations in protein level between cells, …</li>
-<li>Technical: cage effect, lab effect, week effect, plasma extraction, MS-run, …</li>
+<li>Biological: fluctuations in protein level between mice, fluctations
+in protein level between cells, …</li>
+<li>Technical: cage effect, lab effect, week effect, plasma extraction,
+MS-run, …</li>
 </ul>
 </div>
-<div id="nature-methods-points-of-significance---blocking" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Nature methods: Points of significance - Blocking</h2>
-<p><a href="https://www.nature.com/articles/nmeth.3005.pdf">https://www.nature.com/articles/nmeth.3005.pdf</a></p>
+<div id="nature-methods-points-of-significance---blocking"
+class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Nature methods:
+Points of significance - Blocking</h2>
+<p><a
+href="https://www.nature.com/articles/nmeth.3005.pdf">https://www.nature.com/articles/nmeth.3005.pdf</a></p>
 </div>
 <div id="mouse-example" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Mouse example</h2>
-<p><img src="figures/mouseTcell_RCB_design.png" width="50%" /> Duguet et al. (2017) MCP 16(8):1416-1432. doi: 10.1074/mcp.m116.062745</p>
+<p><img src="figures/mouseTcell_RCB_design.png" width="50%" /> Duguet
+et al. (2017) MCP 16(8):1416-1432. doi: 10.1074/mcp.m116.062745</p>
 <ul>
 <li>All treatments of interest are present within block!</li>
 <li>We can estimate the effect of the treatment within block!</li>
-<li>We can isolate the between block variability from the analysis using linear model: <span class="math display">\[ 
+<li>We can isolate the between block variability from the analysis using
+linear model: <span class="math display">\[
 y \sim \text{type} + \text{mouse}
 \]</span></li>
 <li>Not possible with Perseus!</li>
 </ul>
-<div id="assess-the-impact-of-blocking-in-the-tutorial-session" class="section level3" number="2.4.1">
-<h3><span class="header-section-number">2.4.1</span> Assess the impact of blocking in the tutorial session!</h3>
+<div id="assess-the-impact-of-blocking-in-the-tutorial-session"
+class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Assess the impact
+of blocking in the tutorial session!</h3>
 <ul>
-<li>Completely randomized design with only one cell type per mouse (Treg and Tconv)</li>
+<li>Completely randomized design with only one cell type per mouse (Treg
+and Tconv)</li>
 </ul>
 <p><span class="math display">\[\updownarrow\]</span></p>
 <ul>
-<li>Randomized complete block design assessing Treg and Tconv on each mouse</li>
+<li>Randomized complete block design assessing Treg and Tconv on each
+mouse</li>
 </ul>
 </div>
 </div>

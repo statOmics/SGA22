@@ -508,17 +508,23 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Statistical Methods for Quantitative MS-based Proteomics: Blocking - Wrap-up</h1>
+<h1 class="title toc-ignore">Statistical Methods for Quantitative
+MS-based Proteomics: Blocking - Wrap-up</h1>
 <h4 class="author">Lieven Clement</h4>
-<h4 class="date"><a href="https://statomics.github.io">statOmics</a>, Ghent University</h4>
+<h4 class="date"><a href="https://statomics.github.io">statOmics</a>,
+Ghent University</h4>
 
 </div>
 
 
 <p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a></p>
-<p>This is part of the online course <a href="https://statomics.github.io/PDA22GTPB/">Proteomics Data Analysis (PDA)</a></p>
-<div id="import-data-and-preprocessing" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Import Data and Preprocessing</h1>
+<p>This is part of the online course <a
+href="https://statomics.github.io/PDA22GTPB/">Proteomics Data Analysis
+(PDA)</a></p>
+<div id="import-data-and-preprocessing" class="section level1"
+number="1">
+<h1><span class="header-section-number">1</span> Import Data and
+Preprocessing</h1>
 <div id="data" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> Data</h2>
 <details>
@@ -610,7 +616,8 @@ Click to see code to log-transfrom the data
 </summary>
 <p>
 <ul>
-<li>We calculate how many non zero intensities we have for each peptide and this can be useful for filtering.</li>
+<li>We calculate how many non zero intensities we have for each peptide
+and this can be useful for filtering.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]])<span class="sc">$</span>nNonZero <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(<span class="fu">assay</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]]) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -618,7 +625,8 @@ Click to see code to log-transfrom the data
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(pe3[[<span class="st">&quot;peptideRaw&quot;</span>]])<span class="sc">$</span>nNonZero <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(<span class="fu">assay</span>(pe3[[<span class="st">&quot;peptideRaw&quot;</span>]]) <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code></pre></div>
 <ul>
-<li>Peptides with zero intensities are missing peptides and should be represent with a <code>NA</code> value rather than <code>0</code>.</li>
+<li>Peptides with zero intensities are missing peptides and should be
+represent with a <code>NA</code> value rather than <code>0</code>.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">zeroIsNA</span>(pe, <span class="st">&quot;peptideRaw&quot;</span>) <span class="co"># convert 0 to NA</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -646,7 +654,8 @@ Click to see details on filtering
 <ol style="list-style-type: decimal">
 <li>Handling overlapping protein groups</li>
 </ol>
-<p>In our approach a peptide can map to multiple proteins, as long as there is none of these proteins present in a smaller subgroup.</p>
+<p>In our approach a peptide can map to multiple proteins, as long as
+there is none of these proteins present in a smaller subgroup.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe, <span class="sc">~</span> Proteins <span class="sc">%in%</span> <span class="fu">smallestUniqueGroups</span>(<span class="fu">rowData</span>(pe[[<span class="st">&quot;peptideLog&quot;</span>]])<span class="sc">$</span>Proteins))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>pe2 <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe2, <span class="sc">~</span> Proteins <span class="sc">%in%</span> <span class="fu">smallestUniqueGroups</span>(<span class="fu">rowData</span>(pe2[[<span class="st">&quot;peptideLog&quot;</span>]])<span class="sc">$</span>Proteins))</span>
@@ -655,7 +664,9 @@ Click to see details on filtering
 <ol start="2" style="list-style-type: decimal">
 <li>Remove reverse sequences (decoys) and contaminants</li>
 </ol>
-<p>We now remove the contaminants, peptides that map to decoy sequences, and proteins which were only identified by peptides with modifications.</p>
+<p>We now remove the contaminants, peptides that map to decoy sequences,
+and proteins which were only identified by peptides with
+modifications.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe,<span class="sc">~</span>Reverse <span class="sc">!=</span> <span class="st">&quot;+&quot;</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe,<span class="sc">~</span> Potential.contaminant <span class="sc">!=</span> <span class="st">&quot;+&quot;</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -734,8 +745,10 @@ Click to see code to summarize the data
 </p>
 </details>
 </div>
-<div id="data-exploration-what-is-impact-of-blocking" class="section level2" number="1.5">
-<h2><span class="header-section-number">1.5</span> Data Exploration: what is impact of blocking?</h2>
+<div id="data-exploration-what-is-impact-of-blocking"
+class="section level2" number="1.5">
+<h2><span class="header-section-number">1.5</span> Data Exploration:
+what is impact of blocking?</h2>
 <details>
 <summary>
 Click to see code
@@ -867,12 +880,15 @@ Click to see code
 <p><img src="pda_blocking_wrapup_files/figure-html/unnamed-chunk-11-3.png" width="672" /></p>
 <ul>
 <li>We observe that the leading fold change is according to mouse</li>
-<li>In the second dimension we see a separation according to cell-type</li>
-<li>With the Randomized Complete Block design (RCB) we can remove the mouse effect from the analysis!</li>
+<li>In the second dimension we see a separation according to
+cell-type</li>
+<li>With the Randomized Complete Block design (RCB) we can remove the
+mouse effect from the analysis!</li>
 </ul>
 </div>
 <div id="modeling-and-inference" class="section level2" number="1.6">
-<h2><span class="header-section-number">1.6</span> Modeling and inference</h2>
+<h2><span class="header-section-number">1.6</span> Modeling and
+inference</h2>
 <div id="rcb-analysis" class="section level3" number="1.6.1">
 <h3><span class="header-section-number">1.6.1</span> RCB analysis</h3>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">msqrob</span>(</span>
@@ -881,7 +897,8 @@ Click to see code
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> <span class="sc">~</span> celltype <span class="sc">+</span> mouse)</span></code></pre></div>
 </div>
 <div id="rcb-wrong-analysis" class="section level3" number="1.6.2">
-<h3><span class="header-section-number">1.6.2</span> RCB wrong analysis</h3>
+<h3><span class="header-section-number">1.6.2</span> RCB wrong
+analysis</h3>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">msqrob</span>(</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">object =</span> pe,</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">i =</span> <span class="st">&quot;protein&quot;</span>,</span>
@@ -910,8 +927,10 @@ Click to see code
 </div>
 </div>
 </div>
-<div id="advantage-of-blocking-comparison-between-designs" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Advantage of Blocking: comparison between designs</h1>
+<div id="advantage-of-blocking-comparison-between-designs"
+class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Advantage of Blocking:
+comparison between designs</h1>
 <div id="volcano-plots" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Volcano plots</h2>
 <details>
@@ -959,12 +978,18 @@ Click to see code
 <pre><code>## Warning: Removed 262 rows containing missing values (geom_point).</code></pre>
 <p><img src="pda_blocking_wrapup_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 </div>
-<div id="anova-table-q7tpr4-alpha-actinin-1" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Anova table: Q7TPR4, Alpha-actinin-1</h2>
-<p>Disclaimer: the Anova analysis is only for didactical purposes. In practice we assess the hypotheses using msqrob2.</p>
+<div id="anova-table-q7tpr4-alpha-actinin-1" class="section level2"
+number="2.2">
+<h2><span class="header-section-number">2.2</span> Anova table: Q7TPR4,
+Alpha-actinin-1</h2>
+<p>Disclaimer: the Anova analysis is only for didactical purposes. In
+practice we assess the hypotheses using msqrob2.</p>
 <ul>
-<li><p>We illustrate the power gain of blocking using an Anova analysis on 1 protein.</p></li>
-<li><p>Note, that msqrob2 will perform a similar analysis, but, it uses robust regression and it uses an empirical Bayes estimator for the variance.</p></li>
+<li><p>We illustrate the power gain of blocking using an Anova analysis
+on 1 protein.</p></li>
+<li><p>Note, that msqrob2 will perform a similar analysis, but, it uses
+robust regression and it uses an empirical Bayes estimator for the
+variance.</p></li>
 </ul>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>prot <span class="ot">&lt;-</span> <span class="st">&quot;Q7TPR4&quot;</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>dataHlp <span class="ot">&lt;-</span> <span class="fu">colData</span>(pe) <span class="sc">%&gt;%</span> </span>
@@ -991,8 +1016,10 @@ Click to see code
   </script>
 </div>
 </div>
-<div id="comparison-empirical-bayes-standard-deviation-in-msqrob2" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Comparison Empirical Bayes standard deviation in msqrob2</h2>
+<div id="comparison-empirical-bayes-standard-deviation-in-msqrob2"
+class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Comparison Empirical
+Bayes standard deviation in msqrob2</h2>
 <details>
 <summary>
 Click to see code
@@ -1032,11 +1059,24 @@ Click to see code
 <pre><code>## Warning: Removed 743 rows containing missing values (geom_point).</code></pre>
 <p><img src="pda_blocking_wrapup_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <ul>
-<li><p>We clearly observe that the standard deviation of the protein expression in the RCB is smaller for the majority of the proteins than that obtained with the CRD</p></li>
-<li><p>The standard deviation of the protein expression RCB where we perform a wrong analysis without considering the blocking factor according to mouse is much larger for the marjority of the proteins than that obtained with the correct analysis.</p></li>
-<li><p>Indeed, when we ignore the blocking factor in the RCB design we do not remove the variability according to mouse from the analysis and the mouse effect is absorbed in the error term. The standard deviation than becomes very comparable to that observed in the completely randomised design where we could not remove the mouse effect from the analysis.</p></li>
-<li><p>Why are some of the standard deviations for the RCB with the correct analysis larger than than of the RCB with the incorrect analysis that ignored the mouse blocking factor?</p></li>
-<li><p>Can you think of a reason why it would not be useful to block on a particular factor?</p></li>
+<li><p>We clearly observe that the standard deviation of the protein
+expression in the RCB is smaller for the majority of the proteins than
+that obtained with the CRD</p></li>
+<li><p>The standard deviation of the protein expression RCB where we
+perform a wrong analysis without considering the blocking factor
+according to mouse is much larger for the marjority of the proteins than
+that obtained with the correct analysis.</p></li>
+<li><p>Indeed, when we ignore the blocking factor in the RCB design we
+do not remove the variability according to mouse from the analysis and
+the mouse effect is absorbed in the error term. The standard deviation
+than becomes very comparable to that observed in the completely
+randomised design where we could not remove the mouse effect from the
+analysis.</p></li>
+<li><p>Why are some of the standard deviations for the RCB with the
+correct analysis larger than than of the RCB with the incorrect analysis
+that ignored the mouse blocking factor?</p></li>
+<li><p>Can you think of a reason why it would not be useful to block on
+a particular factor?</p></li>
 </ul>
 </div>
 </div>

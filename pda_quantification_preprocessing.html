@@ -530,19 +530,25 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Statistical Methods for Quantitative MS-based Proteomics: Part I. Preprocessing</h1>
+<h1 class="title toc-ignore">Statistical Methods for Quantitative
+MS-based Proteomics: Part I. Preprocessing</h1>
 <h4 class="author">Lieven Clement</h4>
-<h4 class="date"><a href="https://statomics.github.io">statOmics</a>, Ghent University</h4>
+<h4 class="date"><a href="https://statomics.github.io">statOmics</a>,
+Ghent University</h4>
 
 </div>
 
 
 <p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a></p>
-<p>This is part of the online course <a href="https://statomics.github.io/PDA22GTPB/">Proteomics Data Analysis (PDA)</a></p>
+<p>This is part of the online course <a
+href="https://statomics.github.io/PDA22GTPB/">Proteomics Data Analysis
+(PDA)</a></p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/V6Ik-SORoKo" frameborder="0" style="display: block; margin: auto;" allow="autoplay; encrypted-media" allowfullscreen>
 </iframe>
 <ul>
-<li><a href="https://www.youtube.com/playlist?list=PLZH1hP8_LbJJXQeQ_KYDNoq-AXyFBG6nX">Playlist PDA Preprocessing</a></li>
+<li><a
+href="https://www.youtube.com/playlist?list=PLZH1hP8_LbJJXQeQ_KYDNoq-AXyFBG6nX">Playlist
+PDA Preprocessing</a></li>
 </ul>
 <div id="outline" class="section level1 unnumbered">
 <h1 class="unnumbered">Outline</h1>
@@ -556,15 +562,25 @@ div.tocify {
 <li>Summarization</li>
 </ul></li>
 </ol>
-<p>Note, that the R-code is included for learners who are aiming to develop R/markdown scripts to automate their quantitative proteomics data analyses. According to the target audience of the course we either work with a graphical user interface (GUI) in a R/shiny App msqrob2gui (e.g. Proteomics Bioinformatics course of the EBI and the Proteomics Data Analysis course at the Gulbenkian institute) or with R/markdowns scripts (e.g. Bioinformatics Summer School at UCLouvain or the Statistical Genomics Course at Ghent University).</p>
+<p>Note, that the R-code is included for learners who are aiming to
+develop R/markdown scripts to automate their quantitative proteomics
+data analyses. According to the target audience of the course we either
+work with a graphical user interface (GUI) in a R/shiny App msqrob2gui
+(e.g. Proteomics Bioinformatics course of the EBI and the Proteomics
+Data Analysis course at the Gulbenkian institute) or with R/markdowns
+scripts (e.g. Bioinformatics Summer School at UCLouvain or the
+Statistical Genomics Course at Ghent University).</p>
 <hr />
 </div>
-<div id="intro-challenges-in-label-free-quantitative-proteomics" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Intro: Challenges in Label-Free Quantitative Proteomics</h1>
+<div id="intro-challenges-in-label-free-quantitative-proteomics"
+class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Intro: Challenges in
+Label-Free Quantitative Proteomics</h1>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/3w_K4S_GUzE" frameborder="0" style="display: block; margin: auto;" allow="autoplay; encrypted-media" allowfullscreen>
 </iframe>
 <div id="ms-based-workflow" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> MS-based workflow</h2>
+<h2><span class="header-section-number">1.1</span> MS-based
+workflow</h2>
 <p><img src="figures/ProteomicsWorkflow.png" /><!-- --></p>
 <ul>
 <li><p>Peptide Characteristics</p>
@@ -573,18 +589,22 @@ div.tocify {
 <li>Ionisation Efficiency: huge variability</li>
 <li>Identification
 <ul>
-<li>Misidentification <span class="math inline">\(\rightarrow\)</span> outliers</li>
-<li>MS<span class="math inline">\(^2\)</span> selection on peptide abundance</li>
+<li>Misidentification <span class="math inline">\(\rightarrow\)</span>
+outliers</li>
+<li>MS<span class="math inline">\(^2\)</span> selection on peptide
+abundance</li>
 <li>Context depending missingness</li>
 <li>Non-random missingness</li>
 </ul></li>
 </ul></li>
 </ul>
-<p><span class="math inline">\(\rightarrow\)</span> Unbalanced pepide identifications across samples and messy data</p>
+<p><span class="math inline">\(\rightarrow\)</span> Unbalanced pepide
+identifications across samples and messy data</p>
 <hr />
 </div>
 <div id="level-of-quantification" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Level of quantification</h2>
+<h2><span class="header-section-number">1.2</span> Level of
+quantification</h2>
 <ul>
 <li>MS-based proteomics returns peptides: pieces of proteins</li>
 </ul>
@@ -595,27 +615,34 @@ div.tocify {
 <p><img src="figures/challenges_proteins.png" /><!-- --></p>
 <hr />
 </div>
-<div id="label-free-quantitative-proteomics-data-analysis-workflows" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Label-free Quantitative Proteomics Data Analysis Workflows</h2>
+<div id="label-free-quantitative-proteomics-data-analysis-workflows"
+class="section level2" number="1.3">
+<h2><span class="header-section-number">1.3</span> Label-free
+Quantitative Proteomics Data Analysis Workflows</h2>
 <p><img src="figures/proteomicsDataAnalysis.png" /><!-- --></p>
 <hr />
 </div>
 <div id="cptac-spike-in-study" class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> CPTAC Spike-in Study</h2>
+<h2><span class="header-section-number">1.4</span> CPTAC Spike-in
+Study</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6V5GiA4Cg2U" frameborder="0" style="display: block; margin: auto;" allow="autoplay; encrypted-media" allowfullscreen>
 </iframe>
 <p><img src="figures/cptacLayoutLudger.png" width="50%" /></p>
 <ul>
-<li><p>Same trypsin-digested yeast proteome background in each sample</p></li>
-<li><p>Trypsin-digested Sigma UPS1 standard: 48 different human proteins spiked in at 5 different concentrations (treatment A-E)</p></li>
-<li><p>Samples repeatedly run on different instruments in different labs</p></li>
+<li><p>Same trypsin-digested yeast proteome background in each
+sample</p></li>
+<li><p>Trypsin-digested Sigma UPS1 standard: 48 different human proteins
+spiked in at 5 different concentrations (treatment A-E)</p></li>
+<li><p>Samples repeatedly run on different instruments in different
+labs</p></li>
 <li><p>After MaxQuant search with match between runs option</p>
 <ul>
 <li>41% of all proteins are quantified in all samples</li>
 <li>6.6% of all peptides are quantified in all samples</li>
 </ul></li>
 </ul>
-<p><span class="math inline">\(\rightarrow\)</span> vast amount of missingness</p>
+<p><span class="math inline">\(\rightarrow\)</span> vast amount of
+missingness</p>
 </div>
 <div id="maxquant-output" class="section level2" number="1.5">
 <h2><span class="header-section-number">1.5</span> Maxquant output</h2>
@@ -624,29 +651,39 @@ div.tocify {
 </div>
 </div>
 <div id="import-the-data-in-r" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Import the data in R</h1>
+<h1><span class="header-section-number">2</span> Import the data in
+R</h1>
 <div id="data-infrastructure" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Data infrastructure</h2>
+<h2><span class="header-section-number">2.1</span> Data
+infrastructure</h2>
 <details>
 <summary>
-Click to see background on data infrastructure used in R to store proteomics data
+Click to see background on data infrastructure used in R to store
+proteomics data
 </summary>
 <p>
 <ul>
-<li>We use the <code>QFeatures</code> package that provides the infrastructure to
+<li>We use the <code>QFeatures</code> package that provides the
+infrastructure to
 <ul>
 <li>store,<br />
 </li>
 <li>process,</li>
 <li>manipulate and</li>
-<li>analyse quantitative data/features from mass spectrometry experiments.</li>
+<li>analyse quantitative data/features from mass spectrometry
+experiments.</li>
 </ul></li>
-<li>It is based on the <code>SummarizedExperiment</code> and <code>MultiAssayExperiment</code> classes.</li>
+<li>It is based on the <code>SummarizedExperiment</code> and
+<code>MultiAssayExperiment</code> classes.</li>
 </ul>
 <div class="figure">
 <img src="figures/SE.png" alt="Conceptual representation of a `SummarizedExperiment` object.  Assays contain information on the measured omics features (rows) for different samples (columns). The `rowData` contains information on the omics features, the `colData` contains information on the samples, i.e. experimental design etc." width="80%" />
 <p class="caption">
-Conceptual representation of a <code>SummarizedExperiment</code> object. Assays contain information on the measured omics features (rows) for different samples (columns). The <code>rowData</code> contains information on the omics features, the <code>colData</code> contains information on the samples, i.e. experimental design etc.
+Conceptual representation of a <code>SummarizedExperiment</code> object.
+Assays contain information on the measured omics features (rows) for
+different samples (columns). The <code>rowData</code> contains
+information on the omics features, the <code>colData</code> contains
+information on the samples, i.e. experimental design etc.
 </p>
 </div>
 <ul>
@@ -654,13 +691,15 @@ Conceptual representation of a <code>SummarizedExperiment</code> object. Assays 
 <ul>
 <li>proteins are composed of peptides,</li>
 <li>themselves produced by spectra</li>
-<li>relations between assays are tracked and recorded throughout data processing</li>
+<li>relations between assays are tracked and recorded throughout data
+processing</li>
 </ul></li>
 </ul>
 <div class="figure">
 <img src="pda_quantification_preprocessing_files/figure-html/featuresplot-1.png" alt="Conceptual representation of a `QFeatures` object and the aggregative relation between different assays." width="672" />
 <p class="caption">
-Conceptual representation of a <code>QFeatures</code> object and the aggregative relation between different assays.
+Conceptual representation of a <code>QFeatures</code> object and the
+aggregative relation between different assays.
 </p>
 </div>
 </p>
@@ -692,11 +731,14 @@ Click to see background and code
 </summary>
 <p>
 <ol style="list-style-type: decimal">
-<li>We use a peptides.txt file from MS-data quantified with maxquant that contains MS1 intensities summarized at the peptide level.</li>
+<li>We use a peptides.txt file from MS-data quantified with maxquant
+that contains MS1 intensities summarized at the peptide level.</li>
 </ol>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>peptidesFile <span class="ot">&lt;-</span> <span class="st">&quot;https://raw.githubusercontent.com/statOmics/PDA22GTPB/data/quantification/fullCptacDatasSetNotForTutorial/peptides.txt&quot;</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
-<li>Maxquant stores the intensity data for the different samples in columnns that start with Intensity. We can retreive the column names with the intensity data with the code below:</li>
+<li>Maxquant stores the intensity data for the different samples in
+columnns that start with Intensity. We can retreive the column names
+with the intensity data with the code below:</li>
 </ol>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ecols <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;Intensity</span><span class="sc">\\</span><span class="st">.&quot;</span>, <span class="fu">names</span>(<span class="fu">read.delim</span>(peptidesFile)))</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
@@ -718,7 +760,8 @@ Click to see background and code
 </summary>
 <p>
 <ul>
-<li>The rowData contains information on the features (peptides) in the assay. E.g. Sequence, protein, …</li>
+<li>The rowData contains information on the features (peptides) in the
+assay. E.g. Sequence, protein, …</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]])</span></code></pre></div>
 <pre><code>## DataFrame with 11466 rows and 143 columns
@@ -1384,7 +1427,8 @@ Click to see background and code
 <pre><code>## CharacterList of length 1
 ## [[&quot;peptideRaw&quot;]] Intensity.6A_1 Intensity.6A_2 ... Intensity.6E_9</code></pre>
 <ul>
-<li><p>Note, that the sample names include the spike-in condition.</p></li>
+<li><p>Note, that the sample names include the spike-in
+condition.</p></li>
 <li><p>They also end on a number.</p>
 <ul>
 <li>1-3 is from lab 1,</li>
@@ -1423,12 +1467,16 @@ Click to see background and code
 <div id="preprocessing" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Preprocessing</h1>
 <div id="log-transformation" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Log-transformation</h2>
+<h2><span class="header-section-number">3.1</span>
+Log-transformation</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/APsdSbu1RBM" frameborder="0" style="display: block; margin: auto;" allow="autoplay; encrypted-media" allowfullscreen>
 </iframe>
-<div id="explore-the-data-with-plots" class="section level3" number="3.1.1">
-<h3><span class="header-section-number">3.1.1</span> Explore the data with plots</h3>
-<p>Peptide AALEELVK from spiked-in UPS protein P12081. We only show data from lab1.</p>
+<div id="explore-the-data-with-plots" class="section level3"
+number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Explore the data
+with plots</h3>
+<p>Peptide AALEELVK from spiked-in UPS protein P12081. We only show data
+from lab1.</p>
 <details>
 <summary>
 Click to see code to make plot
@@ -1447,7 +1495,9 @@ Click to see code to make plot
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plotWhyLog</span></code></pre></div>
 <p><img src="pda_quantification_preprocessing_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <ul>
-<li>Variance increases with the mean <span class="math inline">\(\rightarrow\)</span> Multiplicative error structure</li>
+<li>Variance increases with the mean <span
+class="math inline">\(\rightarrow\)</span> Multiplicative error
+structure</li>
 </ul>
 <details>
 <summary>
@@ -1468,32 +1518,41 @@ Click to see code to make plot
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plotLog</span></code></pre></div>
 <p><img src="pda_quantification_preprocessing_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <ul>
-<li>Data seems to be homoscedastic on log-scale <span class="math inline">\(\rightarrow\)</span> log transformation of the intensity data</li>
-<li>In quantitative proteomics analysis on <span class="math inline">\(\log_2\)</span></li>
+<li>Data seems to be homoscedastic on log-scale <span
+class="math inline">\(\rightarrow\)</span> log transformation of the
+intensity data</li>
+<li>In quantitative proteomics analysis on <span
+class="math inline">\(\log_2\)</span></li>
 </ul>
-<p><span class="math inline">\(\rightarrow\)</span> Differences on a <span class="math inline">\(\log_2\)</span> scale: <span class="math inline">\(\log_2\)</span> fold changes</p>
+<p><span class="math inline">\(\rightarrow\)</span> Differences on a
+<span class="math inline">\(\log_2\)</span> scale: <span
+class="math inline">\(\log_2\)</span> fold changes</p>
 <p><span class="math display">\[
 \log_2 B - \log_2 A = \log_2 \frac{B}{A} = \log FC_\text{B - A}
-\]</span> <span class="math display">\[ 
+\]</span> <span class="math display">\[
 \begin{array} {l}
 log_2 FC = 1 \rightarrow FC = 2^1 =2\\
 log_2 FC = 2 \rightarrow FC = 2^2 = 4\\
 \end{array}
 \]</span></p>
 </div>
-<div id="log-transformation-of-the-data" class="section level3" number="3.1.2">
-<h3><span class="header-section-number">3.1.2</span> log-transformation of the data</h3>
+<div id="log-transformation-of-the-data" class="section level3"
+number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> log-transformation
+of the data</h3>
 <details>
 <summary>
 Click to see code to log-transfrom the data
 </summary>
 <p>
 <ul>
-<li>We calculate how many non zero intensities we have for each peptide and this can be useful for filtering.</li>
+<li>We calculate how many non zero intensities we have for each peptide
+and this can be useful for filtering.</li>
 </ul>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]])<span class="sc">$</span>nNonZero <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(<span class="fu">assay</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]]) <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code></pre></div>
 <ul>
-<li>Peptides with zero intensities are missing peptides and should be represent with a <code>NA</code> value rather than <code>0</code>.</li>
+<li>Peptides with zero intensities are missing peptides and should be
+represent with a <code>NA</code> value rather than <code>0</code>.</li>
 </ul>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">zeroIsNA</span>(pe, <span class="st">&quot;peptideRaw&quot;</span>) <span class="co"># convert 0 to NA</span></span></code></pre></div>
 <ul>
@@ -1511,13 +1570,16 @@ Click to see code to log-transfrom the data
 </iframe>
 <ul>
 <li>Reverse sequences</li>
-<li>Only identified by modification site (only modified peptides detected)</li>
-<li>Razor peptides: non-unique peptides assigned to the protein group with the most other peptides</li>
+<li>Only identified by modification site (only modified peptides
+detected)</li>
+<li>Razor peptides: non-unique peptides assigned to the protein group
+with the most other peptides</li>
 <li>Contaminants</li>
 <li>Peptides few identifications</li>
 <li>Proteins that are only identified with one or a few peptides</li>
 </ul>
-<p>Filtering does not induce bias if the criterion is independent from the downstream data analysis!</p>
+<p>Filtering does not induce bias if the criterion is independent from
+the downstream data analysis!</p>
 <details>
 <summary>
 Click to see code to filter the data
@@ -1526,12 +1588,15 @@ Click to see code to filter the data
 <ol style="list-style-type: decimal">
 <li>Handling overlapping protein groups</li>
 </ol>
-<p>In our approach a peptide can map to multiple proteins, as long as there is none of these proteins present in a smaller subgroup.</p>
+<p>In our approach a peptide can map to multiple proteins, as long as
+there is none of these proteins present in a smaller subgroup.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe, <span class="sc">~</span> Proteins <span class="sc">%in%</span> <span class="fu">smallestUniqueGroups</span>(<span class="fu">rowData</span>(pe[[<span class="st">&quot;peptideLog&quot;</span>]])<span class="sc">$</span>Proteins))</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Remove reverse sequences (decoys) and contaminants</li>
 </ol>
-<p>We now remove the contaminants, peptides that map to decoy sequences, and proteins which were only identified by peptides with modifications.</p>
+<p>We now remove the contaminants, peptides that map to decoy sequences,
+and proteins which were only identified by peptides with
+modifications.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe,<span class="sc">~</span>Reverse <span class="sc">!=</span> <span class="st">&quot;+&quot;</span>)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe,<span class="sc">~</span> Potential.contaminant <span class="sc">!=</span> <span class="st">&quot;+&quot;</span>)</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
@@ -1579,24 +1644,34 @@ Click to see code to make plot
 <p><img src="pda_quantification_preprocessing_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>densityLab2</span></code></pre></div>
 <pre><code>## Warning: Removed 44480 rows containing non-finite values (stat_density).</code></pre>
-<p><img src="pda_quantification_preprocessing_files/figure-html/unnamed-chunk-29-1.png" width="672" /> - Even in very clean synthetic dataset (same background, only 48 UPS proteins can be different) the marginal peptide intensity distribution across samples can be quite distinct</p>
+<p><img src="pda_quantification_preprocessing_files/figure-html/unnamed-chunk-29-1.png" width="672" />
+- Even in very clean synthetic dataset (same background, only 48 UPS
+proteins can be different) the marginal peptide intensity distribution
+across samples can be quite distinct</p>
 <ul>
-<li>Considerable effects between and within labs for replicate samples</li>
-<li>Considerable effects between samples with different spike-in concentration</li>
+<li>Considerable effects between and within labs for replicate
+samples</li>
+<li>Considerable effects between samples with different spike-in
+concentration</li>
 </ul>
-<p><span class="math inline">\(\rightarrow\)</span> Normalization is needed</p>
+<p><span class="math inline">\(\rightarrow\)</span> Normalization is
+needed</p>
 <hr />
 <div id="mean-or-median" class="section level3" number="3.3.1">
-<h3><span class="header-section-number">3.3.1</span> Mean or median?</h3>
+<h3><span class="header-section-number">3.3.1</span> Mean or
+median?</h3>
 <ul>
-<li>Miller and Fishkin (1997) reported that over a period of 30 years males would like to have on average 64.3 partners and females 2.8.</li>
+<li>Miller and Fishkin (1997) reported that over a period of 30 years
+males would like to have on average 64.3 partners and females 2.8.</li>
 </ul>
 <details>
 <summary>
 </summary>
 <p>
 <ul>
-<li>Miller and Fishkin (1997) reported that the median number of partners someone would like to have over a period of 30 years males is 1 for both males and females.</li>
+<li>Miller and Fishkin (1997) reported that the median number of
+partners someone would like to have over a period of 30 years males is 1
+for both males and females.</li>
 </ul>
 </p>
 </details>
@@ -1610,9 +1685,14 @@ Click to see code to make plot
 </details>
 <hr />
 </div>
-<div id="normalization-of-the-data-by-median-centering" class="section level3" number="3.3.2">
-<h3><span class="header-section-number">3.3.2</span> Normalization of the data by median centering</h3>
-<p><span class="math display">\[y_{ip}^\text{norm} = y_{ip} - \hat\mu_i\]</span> with <span class="math inline">\(\hat\mu_i\)</span> the median intensity over all observed peptides in sample <span class="math inline">\(i\)</span>.</p>
+<div id="normalization-of-the-data-by-median-centering"
+class="section level3" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Normalization of
+the data by median centering</h3>
+<p><span class="math display">\[y_{ip}^\text{norm} = y_{ip} -
+\hat\mu_i\]</span> with <span class="math inline">\(\hat\mu_i\)</span>
+the median intensity over all observed peptides in sample <span
+class="math inline">\(i\)</span>.</p>
 <details>
 <summary>
 Click to see R-code to normalize the data
@@ -1625,8 +1705,10 @@ Click to see R-code to normalize the data
 </p>
 </details>
 </div>
-<div id="plots-of-normalized-data" class="section level3" number="3.3.3">
-<h3><span class="header-section-number">3.3.3</span> Plots of normalized data</h3>
+<div id="plots-of-normalized-data" class="section level3"
+number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Plots of normalized
+data</h3>
 <details>
 <summary>
 Click to see code to make plot
@@ -1658,13 +1740,21 @@ Click to see code to make plot
 <pre><code>## Warning: Removed 44480 rows containing non-finite values (stat_density).</code></pre>
 <p><img src="pda_quantification_preprocessing_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <ul>
-<li>Upon normalization the marginal distributions of the peptide intensities across samples are much more comparable</li>
+<li>Upon normalization the marginal distributions of the peptide
+intensities across samples are much more comparable</li>
 <li>We still see deviations</li>
 <li>This can be due to technical variability</li>
-<li>In micro-array literature, quantile normalisation is used to force the median and all other quantiles to be equal across samples</li>
-<li>In proteomics quantile normalisation often introduces artifacts due to a difference in missing peptides across samples</li>
-<li>More advanced methods should be developed for normalizing proteomics data</li>
-<li>If there are differences in the width of the marginal distributions of the data across samples. They can also be standardized by using a robust estimator for location and scale, i.e.  <span class="math display">\[y_{ip}^\text{norm} = \frac{y_{ip} - \mu_i}{s_i}\]</span></li>
+<li>In micro-array literature, quantile normalisation is used to force
+the median and all other quantiles to be equal across samples</li>
+<li>In proteomics quantile normalisation often introduces artifacts due
+to a difference in missing peptides across samples</li>
+<li>More advanced methods should be developed for normalizing proteomics
+data</li>
+<li>If there are differences in the width of the marginal distributions
+of the data across samples. They can also be standardized by using a
+robust estimator for location and scale, i.e.  <span
+class="math display">\[y_{ip}^\text{norm} = \frac{y_{ip} -
+\mu_i}{s_i}\]</span></li>
 </ul>
 <hr />
 </div>
@@ -1674,7 +1764,8 @@ Click to see code to make plot
 <iframe width="560" height="315" src="https://www.youtube.com/embed/NUPJWPJgQUc" frameborder="0" style="display: block; margin: auto;" allow="autoplay; encrypted-media" allowfullscreen>
 </iframe>
 <ul>
-<li>We illustrate summarization issues using a subset of the cptac study (Lab 2, condition A and E) for a spiked protein (UPS P12081).</li>
+<li>We illustrate summarization issues using a subset of the cptac study
+(Lab 2, condition A and E) for a spiked protein (UPS P12081).</li>
 </ul>
 <details>
 <summary>
@@ -1706,9 +1797,13 @@ Click to see code to make plot
 <ul>
 <li>intensities from multiple peptides for each protein in a sample</li>
 <li>Strong peptide effect -Unbalanced peptide identification</li>
-<li>Pseudo-replication: peptide intensities from a particular protein in the same sample are correlated, i.e. they more alike than peptide intensities from a particular protein between samples.</li>
+<li>Pseudo-replication: peptide intensities from a particular protein in
+the same sample are correlated, i.e. they more alike than peptide
+intensities from a particular protein between samples.</li>
 </ul>
-<p><span class="math inline">\(\rightarrow\)</span> Summarize all peptide intensities from the same protein in a sample into a single protein expression value</p>
+<p><span class="math inline">\(\rightarrow\)</span> Summarize all
+peptide intensities from the same protein in a sample into a single
+protein expression value</p>
 <p>Commonly used methods are</p>
 <ul>
 <li><p>Mean summarization <span class="math display">\[
@@ -1725,7 +1820,8 @@ y_{ip}=\beta_i^\text{samp} + \beta_p^\text{pep} + \epsilon_{ip}
 Click to see R-code to normalize the data
 </summary>
 <p>
-<p>We use the standard sumarization in aggregateFeatures, which is robust model based summarization.</p>
+<p>We use the standard sumarization in aggregateFeatures, which is
+robust model based summarization.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">aggregateFeatures</span>(pe,</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">i =</span> <span class="st">&quot;peptideNorm&quot;</span>, </span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">fcol =</span> <span class="st">&quot;Proteins&quot;</span>, </span>
@@ -1734,13 +1830,21 @@ Click to see R-code to normalize the data
 <pre><code>## Your quantitative and row data contain missing values. Please read the
 ## relevant section(s) in the aggregateFeatures manual page regarding the
 ## effects of missing values on data aggregation.</code></pre>
-<p>Other summarization methods can be implemented by using the <code>fun</code> argument in the <code>aggregateFeatures</code> function.</p>
+<p>Other summarization methods can be implemented by using the
+<code>fun</code> argument in the <code>aggregateFeatures</code>
+function.</p>
 <ul>
-<li><p><code>fun = MsCoreUtils::medianPolish()</code> to fits an additive model (two way decomposition) using Tukey’s median polish_ procedure using stats::medpolish()</p></li>
-<li><p><code>fun = MsCoreUtils::robustSummary()</code> to calculate a robust aggregation using MASS::rlm() (default)</p></li>
-<li><p><code>fun = base::colMeans()</code> to use the mean of each column</p></li>
-<li><p><code>fun = matrixStats::colMedians()</code> to use the median of each column</p></li>
-<li><p><code>fun = base::colSums()</code> to use the sum of each column</p></li>
+<li><p><code>fun = MsCoreUtils::medianPolish()</code> to fits an
+additive model (two way decomposition) using Tukey’s median polish_
+procedure using stats::medpolish()</p></li>
+<li><p><code>fun = MsCoreUtils::robustSummary()</code> to calculate a
+robust aggregation using MASS::rlm() (default)</p></li>
+<li><p><code>fun = base::colMeans()</code> to use the mean of each
+column</p></li>
+<li><p><code>fun = matrixStats::colMedians()</code> to use the median of
+each column</p></li>
+<li><p><code>fun = base::colSums()</code> to use the sum of each
+column</p></li>
 </ul>
 </p>
 </details>
@@ -1750,18 +1854,34 @@ Click to see R-code to normalize the data
 <div id="exercise" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Exercise</h1>
 <ol style="list-style-type: decimal">
-<li>We will evaluate different summarization methods (Maxquant maxLFQ, median and robust model based) in the tutorial session before discussing on their advantages/disadvantages.</li>
-<li>Can you anticipate on potential problems related to the summarization?</li>
+<li>We will evaluate different summarization methods (Maxquant maxLFQ,
+median and robust model based) in the tutorial session before discussing
+on their advantages/disadvantages.</li>
+<li>Can you anticipate on potential problems related to the
+summarization?</li>
 </ol>
 <hr />
 </div>
 <div id="software-code" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Software &amp; code</h1>
+<h1><span class="header-section-number">5</span> Software &amp;
+code</h1>
 <ul>
-<li><p>Our R/Bioconductor package <a href="https://www.bioconductor.org/packages/release/bioc/html/msqrob2.html">msqrob2</a> can be used in R markdown scripts or with a GUI/shinyApp in the <a href="https://github.com/statOmics/msqrob2gui">msqrob2gui</a> package.</p></li>
-<li><p>The GUI is intended as a introduction to the key concepts of proteomics data analysis for users who have no experience in R.</p></li>
-<li><p>However, learning how to code data analyses in R markdown scripts is key for open en reproducible science and for reporting your proteomics data analyses and interpretation in a reproducible way.</p></li>
-<li><p>More information on our tools can be found in our papers <span class="citation">(L. J. Goeminne, Gevaert, and Clement 2016)</span>, <span class="citation">(L. J. E. Goeminne et al. 2020)</span> and <span class="citation">(Sticker et al. 2020)</span>. Please refer to our work when using our tools.</p></li>
+<li><p>Our R/Bioconductor package <a
+href="https://www.bioconductor.org/packages/release/bioc/html/msqrob2.html">msqrob2</a>
+can be used in R markdown scripts or with a GUI/shinyApp in the <a
+href="https://github.com/statOmics/msqrob2gui">msqrob2gui</a>
+package.</p></li>
+<li><p>The GUI is intended as a introduction to the key concepts of
+proteomics data analysis for users who have no experience in R.</p></li>
+<li><p>However, learning how to code data analyses in R markdown scripts
+is key for open en reproducible science and for reporting your
+proteomics data analyses and interpretation in a reproducible
+way.</p></li>
+<li><p>More information on our tools can be found in our papers <span
+class="citation">(L. J. Goeminne, Gevaert, and Clement 2016)</span>,
+<span class="citation">(L. J. E. Goeminne et al. 2020)</span> and <span
+class="citation">(Sticker et al. 2020)</span>. Please refer to our work
+when using our tools.</p></li>
 </ul>
 <div id="code" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Code</h2>
@@ -1801,8 +1921,10 @@ allow="autoplay; encrypted-media" allowfullscreen></iframe></p></li>
 </ul></li>
 </ol>
 </div>
-<div id="data-analysis-with-the-guishinyapp-msqrob2gui" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Data analysis with the GUI/shinyApp msqrob2gui</h2>
+<div id="data-analysis-with-the-guishinyapp-msqrob2gui"
+class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Data analysis with
+the GUI/shinyApp msqrob2gui</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/F5d0E-U4rOM" frameborder="0" style="display: block; margin: auto;" allow="autoplay; encrypted-media" allowfullscreen>
 </iframe>
 </div>
@@ -1811,13 +1933,31 @@ allow="autoplay; encrypted-media" allowfullscreen></iframe></p></li>
 <h1 class="unnumbered">References</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-goeminne2020" class="csl-entry">
-Goeminne, L. J. E., A. Sticker, L. Martens, K. Gevaert, and L. Clement. 2020. <span>“<span class="nocase"><span>M</span><span>S</span>q<span>R</span>ob <span>T</span>akes the <span>M</span>issing <span>H</span>urdle: <span>U</span>niting <span>I</span>ntensity- and <span>C</span>ount-<span>B</span>ased <span>P</span>roteomics</span>.”</span> <em>Anal Chem</em> 92 (9): 6278–87.
+Goeminne, L. J. E., A. Sticker, L. Martens, K. Gevaert, and L. Clement.
+2020. <span>“<span
+class="nocase"><span>M</span><span>S</span>q<span>R</span>ob
+<span>T</span>akes the <span>M</span>issing <span>H</span>urdle:
+<span>U</span>niting <span>I</span>ntensity- and
+<span>C</span>ount-<span>B</span>ased
+<span>P</span>roteomics</span>.”</span> <em>Anal Chem</em> 92 (9):
+6278–87.
 </div>
 <div id="ref-goeminne2016" class="csl-entry">
-Goeminne, L. J., K. Gevaert, and L. Clement. 2016. <span>“<span class="nocase"><span>P</span>eptide-level <span>R</span>obust <span>R</span>idge <span>R</span>egression <span>I</span>mproves <span>E</span>stimation, <span>S</span>ensitivity, and <span>S</span>pecificity in <span>D</span>ata-dependent <span>Q</span>uantitative <span>L</span>abel-free <span>S</span>hotgun <span>P</span>roteomics</span>.”</span> <em>Mol Cell Proteomics</em> 15 (2): 657–68.
+Goeminne, L. J., K. Gevaert, and L. Clement. 2016. <span>“<span
+class="nocase"><span>P</span>eptide-level <span>R</span>obust
+<span>R</span>idge <span>R</span>egression <span>I</span>mproves
+<span>E</span>stimation, <span>S</span>ensitivity, and
+<span>S</span>pecificity in <span>D</span>ata-dependent
+<span>Q</span>uantitative <span>L</span>abel-free <span>S</span>hotgun
+<span>P</span>roteomics</span>.”</span> <em>Mol Cell Proteomics</em> 15
+(2): 657–68.
 </div>
 <div id="ref-sticker2020" class="csl-entry">
-Sticker, A., L. Goeminne, L. Martens, and L. Clement. 2020. <span>“<span class="nocase"><span>R</span>obust <span>S</span>ummarization and <span>I</span>nference in <span>P</span>roteome-wide <span>L</span>abel-free <span>Q</span>uantification</span>.”</span> <em>Mol Cell Proteomics</em> 19 (7): 1209–19.
+Sticker, A., L. Goeminne, L. Martens, and L. Clement. 2020. <span>“<span
+class="nocase"><span>R</span>obust <span>S</span>ummarization and
+<span>I</span>nference in <span>P</span>roteome-wide
+<span>L</span>abel-free <span>Q</span>uantification</span>.”</span>
+<em>Mol Cell Proteomics</em> 19 (7): 1209–19.
 </div>
 </div>
 </div>

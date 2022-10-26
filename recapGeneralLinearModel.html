@@ -517,18 +517,26 @@ div.tocify {
 
 <h1 class="title toc-ignore">Recap general linear model</h1>
 <h4 class="author">Lieven Clement</h4>
-<h4 class="date">statOmics, Ghent University (<a href="https://statomics.github.io" class="uri">https://statomics.github.io</a>)</h4>
+<h4 class="date">statOmics, Ghent University (<a
+href="https://statomics.github.io"
+class="uri">https://statomics.github.io</a>)</h4>
 
 </div>
 
 
 <p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a></p>
-<p>This is part of the online course <a href="https://statomics.github.io/SGA/">Statistical Genomics 2022 (SGA)</a></p>
+<p>This is part of the online course <a
+href="https://statomics.github.io/SGA/">Statistical Genomics 2022
+(SGA)</a></p>
 <div id="breast-cancer-example" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Breast cancer example</h1>
+<h1><span class="header-section-number">1</span> Breast cancer
+example</h1>
 <ul>
-<li>part of study <a href="https://doi.org/10.1093/jnci/djj052" class="uri">https://doi.org/10.1093/jnci/djj052</a>)</li>
-<li>Histologic grade in breast cancer clinically prognostic. Association of histologic grade on expression of KPNA2 gene that is known to be associated with poor BC prognosis.</li>
+<li>part of study <a href="https://doi.org/10.1093/jnci/djj052"
+class="uri">https://doi.org/10.1093/jnci/djj052</a>)</li>
+<li>Histologic grade in breast cancer clinically prognostic. Association
+of histologic grade on expression of KPNA2 gene that is known to be
+associated with poor BC prognosis.</li>
 <li>Population: all current and future breast cancer patients</li>
 </ul>
 <hr />
@@ -569,7 +577,8 @@ div.tocify {
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>gene<span class="sc">$</span>node <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(gene<span class="sc">$</span>node)</span></code></pre></div>
 </div>
 <div id="summary-statistics" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Summary statistics</h2>
+<h2><span class="header-section-number">2.2</span> Summary
+statistics</h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>geneSum <span class="ot">&lt;-</span> gene <span class="sc">%&gt;%</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(grade) <span class="sc">%&gt;%</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(gene),</span>
@@ -609,13 +618,17 @@ div.tocify {
 <p><img src="recapGeneralLinearModel_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
 </div>
 <div id="research-questions" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Research questions</h2>
-<p>Researchers want to assess the association of the histological grade on KPNA2 gene expression</p>
+<h2><span class="header-section-number">2.4</span> Research
+questions</h2>
+<p>Researchers want to assess the association of the histological grade
+on KPNA2 gene expression</p>
 <p><img src="figures/statGenomicsGent201718-6.jpeg" /></p>
 <hr />
 </div>
-<div id="estimation-of-effect-size-and-standard-error" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Estimation of effect size and standard error</h2>
+<div id="estimation-of-effect-size-and-standard-error"
+class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Estimation of effect
+size and standard error</h2>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>effectSize <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">delta =</span> geneSum<span class="sc">$</span>mean[<span class="dv">2</span>]<span class="sc">-</span> geneSum<span class="sc">$</span>mean[<span class="dv">1</span>],</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">seDelta =</span> geneSum <span class="sc">%&gt;%</span></span>
@@ -633,35 +646,51 @@ div.tocify {
 </div>
 </div>
 <div id="statistical-inference" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Statistical Inference</h1>
+<h1><span class="header-section-number">3</span> Statistical
+Inference</h1>
 <ul>
-<li>Researchers want to assess the association of histological grade on KPNA2 gene expression</li>
+<li>Researchers want to assess the association of histological grade on
+KPNA2 gene expression</li>
 <li>Inference?</li>
 </ul>
 <hr />
 <p><img src="figures/statGenomicsGent201718-7.jpeg" /></p>
 <hr />
 <ul>
-<li>Researchers want to assess the association of histological grade on KPNA2 gene expression</li>
+<li>Researchers want to assess the association of histological grade on
+KPNA2 gene expression</li>
 <li>Inference?</li>
 <li>testing + CI $ $ Assumptions</li>
 </ul>
 <hr />
 <ul>
-<li><p>In general we start from <strong>alternative hypothese</strong> <span class="math inline">\(H_A\)</span>: we want to show an association</p></li>
-<li><p>Gene expression of grade 1 and grade 3 patients is on average different</p></li>
+<li><p>In general we start from <strong>alternative hypothese</strong>
+<span class="math inline">\(H_A\)</span>: we want to show an
+association</p></li>
+<li><p>Gene expression of grade 1 and grade 3 patients is on average
+different</p></li>
 <li><p>But, we will assess it by falsifying the opposite:</p></li>
-<li><p>The average KPNA2 gene expression of grade 1 and grade 3 patients is equal</p></li>
+<li><p>The average KPNA2 gene expression of grade 1 and grade 3 patients
+is equal</p></li>
 </ul>
 <hr />
 <ul>
-<li><p>How likely is it to observe an equal or more extreme association than the one observed in the sample when the null hypothesis is true?</p></li>
-<li><p>When we make assumptions about the distribution of our test statistic we can quantify this probability: <strong>p-value</strong>.</p></li>
-<li><p>If the p-value is below a significance threshold <span class="math inline">\(\alpha\)</span> we reject the null hypothesis</p></li>
+<li><p>How likely is it to observe an equal or more extreme association
+than the one observed in the sample when the null hypothesis is
+true?</p></li>
+<li><p>When we make assumptions about the distribution of our test
+statistic we can quantify this probability:
+<strong>p-value</strong>.</p></li>
+<li><p>If the p-value is below a significance threshold <span
+class="math inline">\(\alpha\)</span> we reject the null
+hypothesis</p></li>
 </ul>
-<p><em>We control the probability on a false positive result at the <span class="math inline">\(\alpha\)</span>-level (type I error)</em></p>
+<p><em>We control the probability on a false positive result at the
+<span class="math inline">\(\alpha\)</span>-level (type I
+error)</em></p>
 <ul>
-<li>The p-value will only be calculated correctly if the underlying assumptions hold!</li>
+<li>The p-value will only be calculated correctly if the underlying
+assumptions hold!</li>
 </ul>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span></code></pre></div>
 <pre><code>## 
@@ -696,7 +725,8 @@ div.tocify {
   </script>
 </div>
 <ul>
-<li>Intensities are often not normally distributed and have a mean variance relation</li>
+<li>Intensities are often not normally distributed and have a mean
+variance relation</li>
 <li>Commonly log2-transformed</li>
 <li>Differences on log scale:</li>
 </ul>
@@ -706,7 +736,8 @@ div.tocify {
 <p><img src="figures/statGenomicsGent201718-8.jpeg" /></p>
 <hr />
 <div id="log-transformation" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Log transformation</h2>
+<h2><span class="header-section-number">3.1</span> Log
+transformation</h2>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>gene <span class="ot">&lt;-</span> gene <span class="sc">%&gt;%</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lgene =</span> <span class="fu">log2</span>(gene))</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -749,31 +780,45 @@ div.tocify {
 </div>
 <div id="conclusion" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Conclusion</h2>
-<p>There is a extremely significant association of the histological grade on the gene expression in tumor tissue. On average, the gene expression for the grade 3 patients is 2.43 times higher than the gene expression in grade 1 patients (95% CI [1.93, 3.05], <span class="math inline">\(p&lt;&lt;0.001\)</span>).</p>
+<p>There is a extremely significant association of the histological
+grade on the gene expression in tumor tissue. On average, the gene
+expression for the grade 3 patients is 2.43 times higher than the gene
+expression in grade 1 patients (95% CI [1.93, 3.05], <span
+class="math inline">\(p&lt;&lt;0.001\)</span>).</p>
 <p><img src="figures/statGenomicsGent201718-10.jpeg" /></p>
 <hr />
 <p><img src="figures/statGenomicsGent201718-11.jpeg" /></p>
 <hr />
-<p>The patients also differ in the their lymph node status. Hence, we have a two factorial design: grade x lymph node status!!!</p>
+<p>The patients also differ in the their lymph node status. Hence, we
+have a two factorial design: grade x lymph node status!!!</p>
 <p>Solution??</p>
 <p><img src="figures/statGenomicsGent201718-12.jpeg" /></p>
 <hr />
 </div>
 </div>
 <div id="general-linear-model" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> General Linear Model</h1>
-<p>How can we integrate multiple factors and continuous covariates in linear model.</p>
+<h1><span class="header-section-number">4</span> General Linear
+Model</h1>
+<p>How can we integrate multiple factors and continuous covariates in
+linear model.</p>
 <p><span class="math display">\[
-y_i= \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \beta_{12}x_{i,1}x_{i,2}+\epsilon_i,
+y_i= \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} +
+\beta_{12}x_{i,1}x_{i,2}+\epsilon_i,
 \]</span> with</p>
 <ul>
-<li><span class="math inline">\(x_{i,1}\)</span> a dummy variable for histological grade: <span class="math inline">\(x_{i,1}=\begin{cases} 0&amp; \text{grade 1}\\ 1&amp; \text{grade 3} \end{cases}\)</span></li>
-<li><span class="math inline">\(x_{i,2}\)</span> a dummy variable for : <span class="math inline">\(x_{i,2}=\begin{cases} 0&amp; \text{lymph nodes were not removed}\\ 1&amp; \text{lymph nodes were removed} \end{cases}\)</span></li>
+<li><span class="math inline">\(x_{i,1}\)</span> a dummy variable for
+histological grade: <span class="math inline">\(x_{i,1}=\begin{cases}
+0&amp; \text{grade 1}\\ 1&amp; \text{grade 3} \end{cases}\)</span></li>
+<li><span class="math inline">\(x_{i,2}\)</span> a dummy variable for :
+<span class="math inline">\(x_{i,2}=\begin{cases} 0&amp; \text{lymph
+nodes were not removed}\\ 1&amp; \text{lymph nodes were removed}
+\end{cases}\)</span></li>
 <li><span class="math inline">\(\epsilon_i\)</span>?</li>
 </ul>
 <hr />
 <div id="implementation-in-r" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Implementation in R</h2>
+<h2><span class="header-section-number">4.1</span> Implementation in
+R</h2>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gene<span class="sc">~</span>grade<span class="sc">*</span>node,<span class="at">data=</span>gene)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span></code></pre></div>
 <pre><code>## 
@@ -805,11 +850,23 @@ y_i= \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \beta_{12}x_{i,1}x_{i,2}+\eps
 <hr />
 </div>
 <div id="breast-cancer-example-1" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Breast cancer example</h2>
+<h2><span class="header-section-number">4.3</span> Breast cancer
+example</h2>
 <ul>
-<li>Paper: <a href="https://doi.org/10.1093/jnci/djj052" class="uri">https://doi.org/10.1093/jnci/djj052</a></li>
-<li>Histologic grade in breast cancer provides clinically important prognostic information. Two factors have to be concidered: Histologic grade (grade 1 and grade 3) and lymph node status (0 vs 1). The researchers assessed gene expression of the KPNA2 gene a protein-coding gene associated with breast cancer and are mainly interested in the association of histological grade. Note, that the gene variable consists of background corrected normalized intensities obtained with a microarray platform. Upon log-transformation, they are known to be a good proxy for the <span class="math inline">\(\log\)</span> transformed concentration of gene expression product of the KPNA2 gene.</li>
-<li>Research questions and translate them towards model parameters (contrasts)?</li>
+<li>Paper: <a href="https://doi.org/10.1093/jnci/djj052"
+class="uri">https://doi.org/10.1093/jnci/djj052</a></li>
+<li>Histologic grade in breast cancer provides clinically important
+prognostic information. Two factors have to be concidered: Histologic
+grade (grade 1 and grade 3) and lymph node status (0 vs 1). The
+researchers assessed gene expression of the KPNA2 gene a protein-coding
+gene associated with breast cancer and are mainly interested in the
+association of histological grade. Note, that the gene variable consists
+of background corrected normalized intensities obtained with a
+microarray platform. Upon log-transformation, they are known to be a
+good proxy for the <span class="math inline">\(\log\)</span> transformed
+concentration of gene expression product of the KPNA2 gene.</li>
+<li>Research questions and translate them towards model parameters
+(contrasts)?</li>
 <li>Make an R markdown file to answer the research questions</li>
 </ul>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ExploreModelMatrix)</span>
@@ -822,36 +879,65 @@ y_i= \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \beta_{12}x_{i,1}x_{i,2}+\eps
 <hr />
 </div>
 </div>
-<div id="linear-regression-in-matrix-form" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Linear regression in matrix form</h1>
+<div id="linear-regression-in-matrix-form" class="section level1"
+number="5">
+<h1><span class="header-section-number">5</span> Linear regression in
+matrix form</h1>
 <div id="scalar-form" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Scalar form</h2>
 <ul>
-<li>Consider a vector of predictors <span class="math inline">\(\mathbf{x}=(x_1,\ldots,x_p)^T\)</span> and</li>
+<li>Consider a vector of predictors <span
+class="math inline">\(\mathbf{x}=(x_1,\ldots,x_p)^T\)</span> and</li>
 <li>a real-valued response <span class="math inline">\(Y\)</span></li>
-<li>then the linear regression model can be written as <span class="math display">\[
-Y=f(\mathbf{x}) +\epsilon=\beta_0+\sum\limits_{j=1}^p x_j\beta_j + \epsilon
-\]</span> with i.i.d. <span class="math inline">\(\epsilon\sim N(0,\sigma^2)\)</span></li>
+<li>then the linear regression model can be written as <span
+class="math display">\[
+Y=f(\mathbf{x}) +\epsilon=\beta_0+\sum\limits_{j=1}^p x_j\beta_j +
+\epsilon
+\]</span> with i.i.d. <span class="math inline">\(\epsilon\sim
+N(0,\sigma^2)\)</span></li>
 </ul>
 </div>
 <div id="matrix-form" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Matrix form</h2>
 <ul>
-<li><span class="math inline">\(n\)</span> observations <span class="math inline">\((\mathbf{x}_1,y_1) \ldots (\mathbf{x}_n,y_n)\)</span></li>
-<li>Regression in matrix notation <span class="math display">\[\mathbf{Y}=\mathbf{X\beta} + \mathbf{\epsilon}\]</span> with <span class="math inline">\(\mathbf{Y}=\left[\begin{array}{c}y_1\\ \vdots\\y_n\end{array}\right]\)</span>, <span class="math inline">\(\mathbf{X}=\left[\begin{array}{cccc} 1&amp;x_{11}&amp;\ldots&amp;x_{1p}\\ \vdots&amp;\vdots&amp;&amp;\vdots\\ 1&amp;x_{n1}&amp;\ldots&amp;x_{np} \end{array}\right]\)</span>, <span class="math inline">\(\mathbf{\beta}=\left[\begin{array}{c}\beta_0\\ \vdots\\ \beta_p\end{array}\right]\)</span> and <span class="math inline">\(\mathbf{\epsilon}=\left[\begin{array}{c} \epsilon_1 \\ \vdots \\ \epsilon_n\end{array}\right]\)</span></li>
+<li><span class="math inline">\(n\)</span> observations <span
+class="math inline">\((\mathbf{x}_1,y_1) \ldots
+(\mathbf{x}_n,y_n)\)</span></li>
+<li>Regression in matrix notation <span
+class="math display">\[\mathbf{Y}=\mathbf{X\beta} +
+\mathbf{\epsilon}\]</span> with <span
+class="math inline">\(\mathbf{Y}=\left[\begin{array}{c}y_1\\
+\vdots\\y_n\end{array}\right]\)</span>, <span
+class="math inline">\(\mathbf{X}=\left[\begin{array}{cccc}
+1&amp;x_{11}&amp;\ldots&amp;x_{1p}\\ \vdots&amp;\vdots&amp;&amp;\vdots\\
+1&amp;x_{n1}&amp;\ldots&amp;x_{np} \end{array}\right]\)</span>, <span
+class="math inline">\(\mathbf{\beta}=\left[\begin{array}{c}\beta_0\\
+\vdots\\ \beta_p\end{array}\right]\)</span> and <span
+class="math inline">\(\mathbf{\epsilon}=\left[\begin{array}{c}
+\epsilon_1 \\ \vdots \\ \epsilon_n\end{array}\right]\)</span></li>
 </ul>
 </div>
 <div id="least-squares-ls" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Least Squares (LS)</h2>
+<h2><span class="header-section-number">5.3</span> Least Squares
+(LS)</h2>
 <ul>
-<li>Minimize the residual sum of squares <span class="math display">\[\begin{eqnarray*}
+<li>Minimize the residual sum of squares <span
+class="math display">\[\begin{eqnarray*}
 RSS(\mathbf{\beta})&amp;=&amp;\sum\limits_{i=1}^n e^2_i\\
-&amp;=&amp;\sum\limits_{i=1}^n \left(y_i-\beta_0-\sum\limits_{j=1}^p x_{ij}\beta_j\right)^2
+&amp;=&amp;\sum\limits_{i=1}^n \left(y_i-\beta_0-\sum\limits_{j=1}^p
+x_{ij}\beta_j\right)^2
 \end{eqnarray*}\]</span></li>
 <li>or in matrix notation <span class="math display">\[\begin{eqnarray*}
 RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{X\beta})\\
 &amp;=&amp;\Vert \mathbf{Y}-\mathbf{X\beta}\Vert^2_2
-\end{eqnarray*}\]</span> with the <span class="math inline">\(L_2\)</span>-norm of a <span class="math inline">\(p\)</span>-dim. vector <span class="math inline">\(v\)</span> <span class="math inline">\(\Vert \mathbf{v} \Vert=\sqrt{v_1^2+\ldots+v_p^2}\)</span> <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(\hat{\mathbf{\beta}}=\text{argmin}_\beta \Vert \mathbf{Y}-\mathbf{X\beta}\Vert^2_2\)</span></li>
+\end{eqnarray*}\]</span> with the <span
+class="math inline">\(L_2\)</span>-norm of a <span
+class="math inline">\(p\)</span>-dim. vector <span
+class="math inline">\(v\)</span> <span class="math inline">\(\Vert
+\mathbf{v} \Vert=\sqrt{v_1^2+\ldots+v_p^2}\)</span> <span
+class="math inline">\(\rightarrow\)</span> <span
+class="math inline">\(\hat{\mathbf{\beta}}=\text{argmin}_\beta \Vert
+\mathbf{Y}-\mathbf{X\beta}\Vert^2_2\)</span></li>
 </ul>
 <hr />
 <div id="minimize-rss" class="section level3" number="5.3.1">
@@ -859,7 +945,8 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 <p><span class="math display">\[
 \begin{array}{ccc}
 \frac{\partial RSS}{\partial \mathbf{\beta}}&amp;=&amp;\mathbf{0}\\\\
-\frac{(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{X\beta})}{\partial \mathbf{\beta}}&amp;=&amp;\mathbf{0}\\\\
+\frac{(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{X\beta})}{\partial
+\mathbf{\beta}}&amp;=&amp;\mathbf{0}\\\\
 -2\mathbf{X}^T(\mathbf{Y}-\mathbf{X\beta})&amp;=&amp;\mathbf{0}\\\\
 \mathbf{X}^T\mathbf{X\beta}&amp;=&amp;\mathbf{X}^T\mathbf{Y}\\\\
 \hat{\mathbf{\beta}}&amp;=&amp;(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}
@@ -867,8 +954,10 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 \]</span></p>
 <hr />
 </div>
-<div id="geometric-interpretation" class="section level3" number="5.3.2">
-<h3><span class="header-section-number">5.3.2</span> Geometric Interpretation</h3>
+<div id="geometric-interpretation" class="section level3"
+number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> Geometric
+Interpretation</h3>
 <div id="toy-dataset" class="section level4" number="5.3.2.1">
 <h4><span class="header-section-number">5.3.2.1</span> Toy dataset</h4>
 <p>We will illustrate this on a toy dataset</p>
@@ -881,8 +970,10 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
   </script>
 </div>
 </div>
-<div id="matrix-form-for-toy-dataset" class="section level4" number="5.3.2.2">
-<h4><span class="header-section-number">5.3.2.2</span> Matrix form for toy dataset</h4>
+<div id="matrix-form-for-toy-dataset" class="section level4"
+number="5.3.2.2">
+<h4><span class="header-section-number">5.3.2.2</span> Matrix form for
+toy dataset</h4>
 <p>We can also write this in matrix form</p>
 <p><span class="math display">\[
 \mathbf{Y} = \mathbf{X}\boldsymbol{\beta}+\boldsymbol{\epsilon}
@@ -922,8 +1013,10 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 \right]
 \]</span></p>
 </div>
-<div id="classical-interpretation" class="section level4" number="5.3.2.3">
-<h4><span class="header-section-number">5.3.2.3</span> Classical interpretation</h4>
+<div id="classical-interpretation" class="section level4"
+number="5.3.2.3">
+<h4><span class="header-section-number">5.3.2.3</span> Classical
+interpretation</h4>
 <p>Model fit and predictions based on the toy dataset</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y<span class="sc">~</span>x,data)</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>yhat <span class="ot">&lt;-</span> lm1<span class="sc">$</span>fitted</span>
@@ -946,52 +1039,88 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 <h3><span class="header-section-number">5.3.3</span> Projection</h3>
 <p>There is also another picture to regression:</p>
 <ul>
-<li><p>Instead of plotting each observation <span class="math inline">\(i= 1 \ldots n\)</span> as a data-point in <span class="math inline">\(\mathbb{R}^p\)</span> with dimensions <span class="math inline">\(1 \ldots p\)</span> for every variable/feature that is recorded for each observation</p></li>
-<li><p>We can also plot <span class="math inline">\(\mathbf{Y}\)</span>, <span class="math inline">\(\hat{\mathbf{Y}}\)</span> and each column of <span class="math inline">\(\mathbf{X}\)</span>: <span class="math inline">\(\mathbf{X}_j\)</span> with <span class="math inline">\(j=1 \ldots p\)</span> as a vector in <span class="math inline">\(\mathbb{R}^n\)</span> with dimensions <span class="math inline">\(1 \ldots n\)</span> for every observation.</p></li>
-<li><p>In this representation linear regression can be interpreted as a projection of the vector <span class="math inline">\(\mathbf{Y}\)</span> onto the subspace of <span class="math inline">\(\mathbb{R}^n\)</span> that is spanned by the vectors for the predictors <span class="math inline">\(\mathbf{X}_1 \ldots \mathbf{X}_p\)</span>.</p></li>
-<li><p>The space <span class="math inline">\(\mathbf{X}_1 \ldots \mathbf{X}_p\)</span> is also referred to as the column space of <span class="math inline">\(\mathbf{X}\)</span>, the space that consists of all linear combinations of the vectors of the predictors or columns <span class="math inline">\(\mathbf{X}_1 \ldots \mathbf{X}_p\)</span>.</p></li>
+<li><p>Instead of plotting each observation <span
+class="math inline">\(i= 1 \ldots n\)</span> as a data-point in <span
+class="math inline">\(\mathbb{R}^p\)</span> with dimensions <span
+class="math inline">\(1 \ldots p\)</span> for every variable/feature
+that is recorded for each observation</p></li>
+<li><p>We can also plot <span class="math inline">\(\mathbf{Y}\)</span>,
+<span class="math inline">\(\hat{\mathbf{Y}}\)</span> and each column of
+<span class="math inline">\(\mathbf{X}\)</span>: <span
+class="math inline">\(\mathbf{X}_j\)</span> with <span
+class="math inline">\(j=1 \ldots p\)</span> as a vector in <span
+class="math inline">\(\mathbb{R}^n\)</span> with dimensions <span
+class="math inline">\(1 \ldots n\)</span> for every
+observation.</p></li>
+<li><p>In this representation linear regression can be interpreted as a
+projection of the vector <span class="math inline">\(\mathbf{Y}\)</span>
+onto the subspace of <span class="math inline">\(\mathbb{R}^n\)</span>
+that is spanned by the vectors for the predictors <span
+class="math inline">\(\mathbf{X}_1 \ldots
+\mathbf{X}_p\)</span>.</p></li>
+<li><p>The space <span class="math inline">\(\mathbf{X}_1 \ldots
+\mathbf{X}_p\)</span> is also referred to as the column space of <span
+class="math inline">\(\mathbf{X}\)</span>, the space that consists of
+all linear combinations of the vectors of the predictors or columns
+<span class="math inline">\(\mathbf{X}_1 \ldots
+\mathbf{X}_p\)</span>.</p></li>
 </ul>
-<div id="intermezzo-projection-of-vector-on-x-and-y-axis" class="section level4" number="5.3.3.1">
-<h4><span class="header-section-number">5.3.3.1</span> Intermezzo: Projection of vector on X and Y axis</h4>
+<div id="intermezzo-projection-of-vector-on-x-and-y-axis"
+class="section level4" number="5.3.3.1">
+<h4><span class="header-section-number">5.3.3.1</span> Intermezzo:
+Projection of vector on X and Y axis</h4>
 <p><span class="math display">\[
-\mathbf{e}=\left[\begin{array}{c} e_1\\e_2\end{array}\right], \mathbf{u}_1 =  \left[\begin{array}{c} 1\\0\end{array}\right], \mathbf{u}_2 =  \left[\begin{array}{c} 0\\1\end{array}\right]
+\mathbf{e}=\left[\begin{array}{c} e_1\\e_2\end{array}\right],
+\mathbf{u}_1 =  \left[\begin{array}{c} 1\\0\end{array}\right],
+\mathbf{u}_2 =  \left[\begin{array}{c} 0\\1\end{array}\right]
 \]</span></p>
 <p><img src="recapGeneralLinearModel_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <ol style="list-style-type: decimal">
 <li>Projection of error on x-axis</li>
 </ol>
 <p><span class="math display">\[\begin{eqnarray*}
-\mathbf{u}_1^T \mathbf{e} &amp;=&amp; \Vert \mathbf{u}_1\Vert_2  \Vert \mathbf{e}_1\Vert_2 \cos &lt;\mathbf{u}_1,\mathbf{e}_1&gt;\\
-&amp;=&amp;\left[\begin{array}{cc} 1&amp;0\end{array}\right] \left[\begin{array}{c} e_1\\e_2\end{array}\right]\\ &amp;=&amp; 1\times e_1 + 0 \times e_2 \\
+\mathbf{u}_1^T \mathbf{e} &amp;=&amp; \Vert \mathbf{u}_1\Vert_2  \Vert
+\mathbf{e}_1\Vert_2 \cos &lt;\mathbf{u}_1,\mathbf{e}_1&gt;\\
+&amp;=&amp;\left[\begin{array}{cc} 1&amp;0\end{array}\right]
+\left[\begin{array}{c} e_1\\e_2\end{array}\right]\\ &amp;=&amp; 1\times
+e_1 + 0 \times e_2 \\
 &amp;=&amp; e_1\\
 \end{eqnarray*}\]</span></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Projection of error on y-axis</li>
 </ol>
 <p><span class="math display">\[\begin{eqnarray*}
-\mathbf{u}_2^T \mathbf{e} &amp;=&amp; \left[\begin{array}{cc} 1&amp;0\end{array}\right] \left[\begin{array}{c} e_1\\e_2\end{array}\right]\\ &amp;=&amp; 0\times e_1 + 1 \times e_2 \\
+\mathbf{u}_2^T \mathbf{e} &amp;=&amp; \left[\begin{array}{cc}
+1&amp;0\end{array}\right] \left[\begin{array}{c}
+e_1\\e_2\end{array}\right]\\ &amp;=&amp; 0\times e_1 + 1 \times e_2 \\
 &amp;=&amp; e_2
 \end{eqnarray*}\]</span></p>
 <ol start="3" style="list-style-type: decimal">
 <li>Projection of error on itself</li>
 </ol>
 <p><span class="math display">\[\begin{eqnarray*}
-\mathbf{e}^T \mathbf{e} &amp;=&amp;\left[\begin{array}{cc} e_1&amp;e_2\end{array}\right] \left[\begin{array}{c} e_1\\e_2\end{array}\right]\\
+\mathbf{e}^T \mathbf{e} &amp;=&amp;\left[\begin{array}{cc}
+e_1&amp;e_2\end{array}\right] \left[\begin{array}{c}
+e_1\\e_2\end{array}\right]\\
 &amp;=&amp;e_1^2+e_2^2\\
 &amp;=&amp;\Vert e \Vert^2_2 \rightarrow \text{ Pythagorean theorem}
 \end{eqnarray*}\]</span></p>
 <hr />
 </div>
-<div id="interpretation-of-least-squares-as-a-projection" class="section level4" number="5.3.3.2">
-<h4><span class="header-section-number">5.3.3.2</span> Interpretation of least squares as a projection</h4>
+<div id="interpretation-of-least-squares-as-a-projection"
+class="section level4" number="5.3.3.2">
+<h4><span class="header-section-number">5.3.3.2</span> Interpretation of
+least squares as a projection</h4>
 <p>Fitted values:</p>
 <p><span class="math display">\[
 \begin{array}{lcl}
 \hat{\mathbf{Y}} &amp;=&amp; \mathbf{X}\hat{\boldsymbol{\beta}}\\
-&amp;=&amp; \mathbf{X} (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\\
+&amp;=&amp; \mathbf{X}
+(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\\
 &amp;=&amp; \mathbf{HY}
 \end{array}
-\]</span> with <span class="math inline">\(\mathbf{H}\)</span> the projection matrix also referred to as the hat matrix.</p>
+\]</span> with <span class="math inline">\(\mathbf{H}\)</span> the
+projection matrix also referred to as the hat matrix.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span>x,data)</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>X</span></code></pre></div>
 <pre><code>##   (Intercept) x
@@ -1024,12 +1153,25 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 ## 2 1.666667
 ## 3 2.166667</code></pre>
 <ul>
-<li><p>We can also interpret the fit as the projection of the <span class="math inline">\(n\times 1\)</span> vector <span class="math inline">\(\mathbf{Y}\)</span> on the column space of the matrix <span class="math inline">\(\mathbf{X}\)</span>.</p></li>
-<li><p>So each column in <span class="math inline">\(\mathbf{X}\)</span> is also an <span class="math inline">\(n\times 1\)</span> vector.</p></li>
-<li><p>For the toy example n=3 and p=2. The other picture to linear regression is to consider <span class="math inline">\(X_0\)</span>, <span class="math inline">\(X_1\)</span> and <span class="math inline">\(Y\)</span> as vectors in the space of the data <span class="math inline">\(\mathbb{R}^n\)</span>, here <span class="math inline">\(\mathbb{R}^3\)</span> because we have three data points. So the column space of X is a plane in the three dimensional space.</p></li>
+<li><p>We can also interpret the fit as the projection of the <span
+class="math inline">\(n\times 1\)</span> vector <span
+class="math inline">\(\mathbf{Y}\)</span> on the column space of the
+matrix <span class="math inline">\(\mathbf{X}\)</span>.</p></li>
+<li><p>So each column in <span class="math inline">\(\mathbf{X}\)</span>
+is also an <span class="math inline">\(n\times 1\)</span>
+vector.</p></li>
+<li><p>For the toy example n=3 and p=2. The other picture to linear
+regression is to consider <span class="math inline">\(X_0\)</span>,
+<span class="math inline">\(X_1\)</span> and <span
+class="math inline">\(Y\)</span> as vectors in the space of the data
+<span class="math inline">\(\mathbb{R}^n\)</span>, here <span
+class="math inline">\(\mathbb{R}^3\)</span> because we have three data
+points. So the column space of X is a plane in the three dimensional
+space.</p></li>
 </ul>
 <p><span class="math display">\[
-\hat{\mathbf{Y}} = \mathbf{X} (\mathbf{X}^T\mathbf{X})^{-1} \mathbf{X}^T \mathbf{Y}
+\hat{\mathbf{Y}} = \mathbf{X} (\mathbf{X}^T\mathbf{X})^{-1} \mathbf{X}^T
+\mathbf{Y}
 \]</span></p>
 <ol style="list-style-type: decimal">
 <li>Plane spanned by column space:</li>
@@ -1104,8 +1246,8 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 <span id="cb51-52"><a href="#cb51-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">type=</span><span class="st">&quot;scatter3d&quot;</span>,</span>
 <span id="cb51-53"><a href="#cb51-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;X2&quot;</span>)</span>
 <span id="cb51-54"><a href="#cb51-54" aria-hidden="true" tabindex="-1"></a>p1</span></code></pre></div>
-<div id="htmlwidget-fa237a07e9ed93c9a975" style="width:672px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fa237a07e9ed93c9a975">{"x":{"visdat":{"324c3b10dc48":["function () ","plotlyVisDat"]},"cur_data":"324c3b10dc48","attrs":{"324c3b10dc48":{"x":{},"y":{},"z":{},"name":"origin","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true},"324c3b10dc48.1":{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.2":{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.3":{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.4":{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"324c3b10dc48.5":{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"cube","xaxis":{"range":[-4,4],"title":"X1"},"yaxis":{"range":[-4,4],"title":"X2"},"zaxis":{"range":[-4,4],"title":"X3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0],"y":[0],"z":[0],"name":"origin","type":"scatter3d","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-491f1985baef47c0f07d" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-491f1985baef47c0f07d">{"x":{"visdat":{"344874dcc3a6":["function () ","plotlyVisDat"]},"cur_data":"344874dcc3a6","attrs":{"344874dcc3a6":{"x":{},"y":{},"z":{},"name":"origin","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true},"344874dcc3a6.1":{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.2":{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.3":{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.4":{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"344874dcc3a6.5":{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"cube","xaxis":{"range":[-4,4],"title":"X1"},"yaxis":{"range":[-4,4],"title":"X2"},"zaxis":{"range":[-4,4],"title":"X3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0],"y":[0],"z":[0],"name":"origin","type":"scatter3d","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <ol start="2" style="list-style-type: decimal">
 <li>Vector of Y:</li>
 </ol>
@@ -1129,12 +1271,13 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 <span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">type=</span><span class="st">&quot;scatter3d&quot;</span>,</span>
 <span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;Y&quot;</span>) </span>
 <span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a>p2</span></code></pre></div>
-<div id="htmlwidget-afc9c7217c8515a86e8a" style="width:672px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-afc9c7217c8515a86e8a">{"x":{"visdat":{"324c3b10dc48":["function () ","plotlyVisDat"]},"cur_data":"324c3b10dc48","attrs":{"324c3b10dc48":{"x":{},"y":{},"z":{},"name":"origin","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true},"324c3b10dc48.1":{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.2":{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.3":{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.4":{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"324c3b10dc48.5":{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"324c3b10dc48.6":{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red"},"type":"scatter3d","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"cube","xaxis":{"range":[-4,4],"title":"X1"},"yaxis":{"range":[-4,4],"title":"X2"},"zaxis":{"range":[-4,4],"title":"X3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0],"y":[0],"z":[0],"name":"origin","type":"scatter3d","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","mode":"lines","line":{"color":"red","width":5},"type":"scatter3d","marker":{"color":"rgba(227,119,194,1)","line":{"color":"rgba(227,119,194,1)"}},"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2c7734859c3fec70cfdc" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2c7734859c3fec70cfdc">{"x":{"visdat":{"344874dcc3a6":["function () ","plotlyVisDat"]},"cur_data":"344874dcc3a6","attrs":{"344874dcc3a6":{"x":{},"y":{},"z":{},"name":"origin","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true},"344874dcc3a6.1":{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.2":{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.3":{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.4":{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"344874dcc3a6.5":{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"344874dcc3a6.6":{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red"},"type":"scatter3d","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"cube","xaxis":{"range":[-4,4],"title":"X1"},"yaxis":{"range":[-4,4],"title":"X2"},"zaxis":{"range":[-4,4],"title":"X3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0],"y":[0],"z":[0],"name":"origin","type":"scatter3d","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","mode":"lines","line":{"color":"red","width":5},"type":"scatter3d","marker":{"color":"rgba(227,119,194,1)","line":{"color":"rgba(227,119,194,1)"}},"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <ol start="3" style="list-style-type: decimal">
 <li>Projection of Y onto column space</li>
 </ol>
-<p>Actual values of fitted values <span class="math inline">\(\mathbf{\hat{Y}}\)</span>:</p>
+<p>Actual values of fitted values <span
+class="math inline">\(\mathbf{\hat{Y}}\)</span>:</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>yhat</span></code></pre></div>
 <pre><code>## [1] 1.166667 1.666667 2.166667</code></pre>
 <p><span class="math display">\[
@@ -1163,28 +1306,40 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 <span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">name=</span><span class="st">&quot;Y -&gt; Yhat&quot;</span></span>
 <span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a>p2</span></code></pre></div>
-<div id="htmlwidget-1134e53319c8a673bcd4" style="width:672px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1134e53319c8a673bcd4">{"x":{"visdat":{"324c3b10dc48":["function () ","plotlyVisDat"]},"cur_data":"324c3b10dc48","attrs":{"324c3b10dc48":{"x":{},"y":{},"z":{},"name":"origin","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true},"324c3b10dc48.1":{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.2":{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.3":{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.4":{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"324c3b10dc48.5":{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"324c3b10dc48.6":{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red"},"type":"scatter3d","inherit":true},"324c3b10dc48.7":{"x":[0,1.16666666666667],"y":[0,1.66666666666667],"z":[0,2.16666666666667],"name":"Yhat","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"orange"},"type":"scatter3d","inherit":true},"324c3b10dc48.8":{"x":[1,1.16666666666667],"y":[2,1.66666666666667],"z":[2,2.16666666666667],"name":"Y -> Yhat","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"cube","xaxis":{"range":[-4,4],"title":"X1"},"yaxis":{"range":[-4,4],"title":"X2"},"zaxis":{"range":[-4,4],"title":"X3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0],"y":[0],"z":[0],"name":"origin","type":"scatter3d","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","mode":"lines","line":{"color":"red","width":5},"type":"scatter3d","marker":{"color":"rgba(227,119,194,1)","line":{"color":"rgba(227,119,194,1)"}},"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"frame":null},{"x":[0,1.16666666666667],"y":[0,1.66666666666667],"z":[0,2.16666666666667],"name":"Yhat","mode":"lines","line":{"color":"orange","width":5},"type":"scatter3d","marker":{"color":"rgba(127,127,127,1)","line":{"color":"rgba(127,127,127,1)"}},"error_y":{"color":"rgba(127,127,127,1)"},"error_x":{"color":"rgba(127,127,127,1)"},"frame":null},{"x":[1,1.16666666666667],"y":[2,1.66666666666667],"z":[2,2.16666666666667],"name":"Y -> Yhat","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(188,189,34,1)","line":{"color":"rgba(188,189,34,1)"}},"error_y":{"color":"rgba(188,189,34,1)"},"error_x":{"color":"rgba(188,189,34,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-<p><span class="math inline">\(\mathbf{Y}\)</span> is projected in the column space of <span class="math inline">\(\mathbf{X}\)</span>! spanned by the columns.</p>
+<div id="htmlwidget-fe87ec7cea2a64a4168d" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fe87ec7cea2a64a4168d">{"x":{"visdat":{"344874dcc3a6":["function () ","plotlyVisDat"]},"cur_data":"344874dcc3a6","attrs":{"344874dcc3a6":{"x":{},"y":{},"z":{},"name":"origin","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true},"344874dcc3a6.1":{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.2":{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.3":{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.4":{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"344874dcc3a6.5":{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"344874dcc3a6.6":{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red"},"type":"scatter3d","inherit":true},"344874dcc3a6.7":{"x":[0,1.16666666666667],"y":[0,1.66666666666667],"z":[0,2.16666666666667],"name":"Yhat","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"orange"},"type":"scatter3d","inherit":true},"344874dcc3a6.8":{"x":[1,1.16666666666667],"y":[2,1.66666666666667],"z":[2,2.16666666666667],"name":"Y -> Yhat","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"cube","xaxis":{"range":[-4,4],"title":"X1"},"yaxis":{"range":[-4,4],"title":"X2"},"zaxis":{"range":[-4,4],"title":"X3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0],"y":[0],"z":[0],"name":"origin","type":"scatter3d","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","mode":"lines","line":{"color":"red","width":5},"type":"scatter3d","marker":{"color":"rgba(227,119,194,1)","line":{"color":"rgba(227,119,194,1)"}},"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"frame":null},{"x":[0,1.16666666666667],"y":[0,1.66666666666667],"z":[0,2.16666666666667],"name":"Yhat","mode":"lines","line":{"color":"orange","width":5},"type":"scatter3d","marker":{"color":"rgba(127,127,127,1)","line":{"color":"rgba(127,127,127,1)"}},"error_y":{"color":"rgba(127,127,127,1)"},"error_x":{"color":"rgba(127,127,127,1)"},"frame":null},{"x":[1,1.16666666666667],"y":[2,1.66666666666667],"z":[2,2.16666666666667],"name":"Y -> Yhat","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(188,189,34,1)","line":{"color":"rgba(188,189,34,1)"}},"error_y":{"color":"rgba(188,189,34,1)"},"error_x":{"color":"rgba(188,189,34,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p><span class="math inline">\(\mathbf{Y}\)</span> is projected in the
+column space of <span class="math inline">\(\mathbf{X}\)</span>! spanned
+by the columns.</p>
 </div>
-<div id="how-does-this-projection-works" class="section level4" number="5.3.3.3">
-<h4><span class="header-section-number">5.3.3.3</span> How does this projection works?</h4>
+<div id="how-does-this-projection-works" class="section level4"
+number="5.3.3.3">
+<h4><span class="header-section-number">5.3.3.3</span> How does this
+projection works?</h4>
 <p><span class="math display">\[
 \begin{array}{lcl}
-\hat{\mathbf{Y}} &amp;=&amp; \mathbf{X} (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\\
-&amp;=&amp; \mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1/2}(\mathbf{X}^T\mathbf{X})^{-1/2}\mathbf{X}^T\mathbf{Y}\\
+\hat{\mathbf{Y}} &amp;=&amp; \mathbf{X}
+(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{Y}\\
+&amp;=&amp;
+\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1/2}(\mathbf{X}^T\mathbf{X})^{-1/2}\mathbf{X}^T\mathbf{Y}\\
 &amp;=&amp; \mathbf{U}\mathbf{U}^T\mathbf{Y}
 \end{array}
 \]</span></p>
 <ul>
-<li><p><span class="math inline">\(\mathbf{U}\)</span> is a new orthonormal basis in <span class="math inline">\(\mathbb{R}^2\)</span>, a subspace of <span class="math inline">\(\mathbb{R}^3\)</span></p></li>
-<li><p>The space spanned by U and X is the column space of X, e.g. it contains all possible linear combinantions of X. <span class="math inline">\(\mathbf{U}^t\mathbf{Y}\)</span> is the projection of Y on this new orthonormal basis</p></li>
+<li><p><span class="math inline">\(\mathbf{U}\)</span> is a new
+orthonormal basis in <span class="math inline">\(\mathbb{R}^2\)</span>,
+a subspace of <span class="math inline">\(\mathbb{R}^3\)</span></p></li>
+<li><p>The space spanned by U and X is the column space of X, e.g. it
+contains all possible linear combinantions of X. <span
+class="math inline">\(\mathbf{U}^t\mathbf{Y}\)</span> is the projection
+of Y on this new orthonormal basis</p></li>
 </ul>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>eigenXtX <span class="ot">&lt;-</span> <span class="fu">eigen</span>(XtX)</span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>XtXinvSqrt <span class="ot">&lt;-</span> eigenXtX<span class="sc">$</span>vectors <span class="sc">%*%</span><span class="fu">diag</span>(<span class="dv">1</span><span class="sc">/</span>eigenXtX<span class="sc">$</span>values<span class="sc">^</span>.<span class="dv">5</span>)<span class="sc">%*%</span><span class="fu">t</span>(eigenXtX<span class="sc">$</span>vectors)</span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>U <span class="ot">&lt;-</span> X <span class="sc">%*%</span> XtXinvSqrt</span></code></pre></div>
 <ul>
-<li><span class="math inline">\(\mathbf{U}\)</span> orthonormal basis</li>
+<li><span class="math inline">\(\mathbf{U}\)</span> orthonormal
+basis</li>
 </ul>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>U</span></code></pre></div>
 <pre><code>##         [,1]        [,2]
@@ -1196,7 +1351,8 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 ## [1,] 1.000000e+00 4.163336e-16
 ## [2,] 4.163336e-16 1.000000e+00</code></pre>
 <ul>
-<li><span class="math inline">\(\mathbf{UU}^T\)</span> equals projection matrix</li>
+<li><span class="math inline">\(\mathbf{UU}^T\)</span> equals projection
+matrix</li>
 </ul>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>U<span class="sc">%*%</span><span class="fu">t</span>(U)</span></code></pre></div>
 <pre><code>##            1         2          3
@@ -1227,11 +1383,14 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 <span id="cb67-17"><a href="#cb67-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;U2&quot;</span>)</span>
 <span id="cb67-18"><a href="#cb67-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb67-19"><a href="#cb67-19" aria-hidden="true" tabindex="-1"></a>p3</span></code></pre></div>
-<div id="htmlwidget-da74d2d3b97597a20691" style="width:672px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-da74d2d3b97597a20691">{"x":{"visdat":{"324c3b10dc48":["function () ","plotlyVisDat"]},"cur_data":"324c3b10dc48","attrs":{"324c3b10dc48":{"x":{},"y":{},"z":{},"name":"origin","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true},"324c3b10dc48.1":{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.2":{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.3":{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.4":{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"324c3b10dc48.5":{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"324c3b10dc48.6":{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true},"324c3b10dc48.7":{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"cube","xaxis":{"range":[-4,4],"title":"X1"},"yaxis":{"range":[-4,4],"title":"X2"},"zaxis":{"range":[-4,4],"title":"X3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0],"y":[0],"z":[0],"name":"origin","type":"scatter3d","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null},{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(227,119,194,1)","line":{"color":"rgba(227,119,194,1)"}},"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"frame":null},{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(127,127,127,1)","line":{"color":"rgba(127,127,127,1)"}},"error_y":{"color":"rgba(127,127,127,1)"},"error_x":{"color":"rgba(127,127,127,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-40ca4918c67bb5aaed83" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-40ca4918c67bb5aaed83">{"x":{"visdat":{"344874dcc3a6":["function () ","plotlyVisDat"]},"cur_data":"344874dcc3a6","attrs":{"344874dcc3a6":{"x":{},"y":{},"z":{},"name":"origin","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true},"344874dcc3a6.1":{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.2":{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.3":{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.4":{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"344874dcc3a6.5":{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"344874dcc3a6.6":{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true},"344874dcc3a6.7":{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"cube","xaxis":{"range":[-4,4],"title":"X1"},"yaxis":{"range":[-4,4],"title":"X2"},"zaxis":{"range":[-4,4],"title":"X3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0],"y":[0],"z":[0],"name":"origin","type":"scatter3d","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null},{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(227,119,194,1)","line":{"color":"rgba(227,119,194,1)"}},"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"frame":null},{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(127,127,127,1)","line":{"color":"rgba(127,127,127,1)"}},"error_y":{"color":"rgba(127,127,127,1)"},"error_x":{"color":"rgba(127,127,127,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <ul>
-<li><span class="math inline">\(\mathbf{U}^T\mathbf{Y}\)</span> is the projection of <span class="math inline">\(\mathbf{Y}\)</span> in the space spanned by <span class="math inline">\(\mathbf{U}\)</span>.</li>
-<li>Indeed <span class="math inline">\(\mathbf{U}_1^T\mathbf{Y}\)</span></li>
+<li><span class="math inline">\(\mathbf{U}^T\mathbf{Y}\)</span> is the
+projection of <span class="math inline">\(\mathbf{Y}\)</span> in the
+space spanned by <span class="math inline">\(\mathbf{U}\)</span>.</li>
+<li>Indeed <span
+class="math inline">\(\mathbf{U}_1^T\mathbf{Y}\)</span></li>
 </ul>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> p3 <span class="sc">%&gt;%</span></span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_trace</span>(</span>
@@ -1258,10 +1417,11 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 <span id="cb68-23"><a href="#cb68-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">type=</span><span class="st">&quot;scatter3d&quot;</span>,</span>
 <span id="cb68-24"><a href="#cb68-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">name=</span><span class="st">&quot;Y -&gt; U1&quot;</span>)</span>
 <span id="cb68-25"><a href="#cb68-25" aria-hidden="true" tabindex="-1"></a>p4</span></code></pre></div>
-<div id="htmlwidget-b92bc6799af3b52a6217" style="width:672px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b92bc6799af3b52a6217">{"x":{"visdat":{"324c3b10dc48":["function () ","plotlyVisDat"]},"cur_data":"324c3b10dc48","attrs":{"324c3b10dc48":{"x":{},"y":{},"z":{},"name":"origin","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true},"324c3b10dc48.1":{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.2":{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.3":{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.4":{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"324c3b10dc48.5":{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"324c3b10dc48.6":{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true},"324c3b10dc48.7":{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true},"324c3b10dc48.8":{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red"},"type":"scatter3d","inherit":true},"324c3b10dc48.9":{"x":[0,1.29212679213629],"y":[0,0.550199583855897],"z":[0,-0.191727624424499],"name":"Y -> U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"324c3b10dc48.10":{"x":[1,1.29212679213629],"y":[2,0.550199583855897],"z":[2,-0.191727624424499],"name":"Y -> U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"cube","xaxis":{"range":[-4,4],"title":"X1"},"yaxis":{"range":[-4,4],"title":"X2"},"zaxis":{"range":[-4,4],"title":"X3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0],"y":[0],"z":[0],"name":"origin","type":"scatter3d","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null},{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(227,119,194,1)","line":{"color":"rgba(227,119,194,1)"}},"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"frame":null},{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(127,127,127,1)","line":{"color":"rgba(127,127,127,1)"}},"error_y":{"color":"rgba(127,127,127,1)"},"error_x":{"color":"rgba(127,127,127,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","mode":"lines","line":{"color":"red","width":5},"type":"scatter3d","marker":{"color":"rgba(188,189,34,1)","line":{"color":"rgba(188,189,34,1)"}},"error_y":{"color":"rgba(188,189,34,1)"},"error_x":{"color":"rgba(188,189,34,1)"},"frame":null},{"x":[0,1.29212679213629],"y":[0,0.550199583855897],"z":[0,-0.191727624424499],"name":"Y -> U1","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(23,190,207,1)","line":{"color":"rgba(23,190,207,1)"}},"error_y":{"color":"rgba(23,190,207,1)"},"error_x":{"color":"rgba(23,190,207,1)"},"frame":null},{"x":[1,1.29212679213629],"y":[2,0.550199583855897],"z":[2,-0.191727624424499],"name":"Y -> U1","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c39c6d76b90dd21c92d9" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c39c6d76b90dd21c92d9">{"x":{"visdat":{"344874dcc3a6":["function () ","plotlyVisDat"]},"cur_data":"344874dcc3a6","attrs":{"344874dcc3a6":{"x":{},"y":{},"z":{},"name":"origin","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true},"344874dcc3a6.1":{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.2":{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.3":{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.4":{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"344874dcc3a6.5":{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"344874dcc3a6.6":{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true},"344874dcc3a6.7":{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true},"344874dcc3a6.8":{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red"},"type":"scatter3d","inherit":true},"344874dcc3a6.9":{"x":[0,1.29212679213629],"y":[0,0.550199583855897],"z":[0,-0.191727624424499],"name":"Y -> U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"344874dcc3a6.10":{"x":[1,1.29212679213629],"y":[2,0.550199583855897],"z":[2,-0.191727624424499],"name":"Y -> U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"cube","xaxis":{"range":[-4,4],"title":"X1"},"yaxis":{"range":[-4,4],"title":"X2"},"zaxis":{"range":[-4,4],"title":"X3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0],"y":[0],"z":[0],"name":"origin","type":"scatter3d","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null},{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(227,119,194,1)","line":{"color":"rgba(227,119,194,1)"}},"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"frame":null},{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(127,127,127,1)","line":{"color":"rgba(127,127,127,1)"}},"error_y":{"color":"rgba(127,127,127,1)"},"error_x":{"color":"rgba(127,127,127,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","mode":"lines","line":{"color":"red","width":5},"type":"scatter3d","marker":{"color":"rgba(188,189,34,1)","line":{"color":"rgba(188,189,34,1)"}},"error_y":{"color":"rgba(188,189,34,1)"},"error_x":{"color":"rgba(188,189,34,1)"},"frame":null},{"x":[0,1.29212679213629],"y":[0,0.550199583855897],"z":[0,-0.191727624424499],"name":"Y -> U1","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(23,190,207,1)","line":{"color":"rgba(23,190,207,1)"}},"error_y":{"color":"rgba(23,190,207,1)"},"error_x":{"color":"rgba(23,190,207,1)"},"frame":null},{"x":[1,1.29212679213629],"y":[2,0.550199583855897],"z":[2,-0.191727624424499],"name":"Y -> U1","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <ul>
-<li>and <span class="math inline">\(\mathbf{U}_2^T\mathbf{Y}\)</span></li>
+<li>and <span
+class="math inline">\(\mathbf{U}_2^T\mathbf{Y}\)</span></li>
 </ul>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> p4 <span class="sc">%&gt;%</span></span>
 <span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_trace</span>(</span>
@@ -1280,10 +1440,14 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 <span id="cb69-15"><a href="#cb69-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">type=</span><span class="st">&quot;scatter3d&quot;</span>,</span>
 <span id="cb69-16"><a href="#cb69-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">name=</span><span class="st">&quot;Y -&gt; U2&quot;</span>)</span>
 <span id="cb69-17"><a href="#cb69-17" aria-hidden="true" tabindex="-1"></a>p5</span></code></pre></div>
-<div id="htmlwidget-ec1347316f7dfe5e21ec" style="width:672px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ec1347316f7dfe5e21ec">{"x":{"visdat":{"324c3b10dc48":["function () ","plotlyVisDat"]},"cur_data":"324c3b10dc48","attrs":{"324c3b10dc48":{"x":{},"y":{},"z":{},"name":"origin","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true},"324c3b10dc48.1":{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.2":{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.3":{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.4":{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"324c3b10dc48.5":{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"324c3b10dc48.6":{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true},"324c3b10dc48.7":{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true},"324c3b10dc48.8":{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red"},"type":"scatter3d","inherit":true},"324c3b10dc48.9":{"x":[0,1.29212679213629],"y":[0,0.550199583855897],"z":[0,-0.191727624424499],"name":"Y -> U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"324c3b10dc48.10":{"x":[1,1.29212679213629],"y":[2,0.550199583855897],"z":[2,-0.191727624424499],"name":"Y -> U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"324c3b10dc48.11":{"x":[0,-0.125460125469624],"y":[0,1.11646708281077],"z":[0,2.35839429109116],"name":"Y -> U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"324c3b10dc48.12":{"x":[1,-0.125460125469624],"y":[2,1.11646708281077],"z":[2,2.35839429109116],"name":"Y -> U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"cube","xaxis":{"range":[-4,4],"title":"X1"},"yaxis":{"range":[-4,4],"title":"X2"},"zaxis":{"range":[-4,4],"title":"X3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0],"y":[0],"z":[0],"name":"origin","type":"scatter3d","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null},{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(227,119,194,1)","line":{"color":"rgba(227,119,194,1)"}},"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"frame":null},{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(127,127,127,1)","line":{"color":"rgba(127,127,127,1)"}},"error_y":{"color":"rgba(127,127,127,1)"},"error_x":{"color":"rgba(127,127,127,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","mode":"lines","line":{"color":"red","width":5},"type":"scatter3d","marker":{"color":"rgba(188,189,34,1)","line":{"color":"rgba(188,189,34,1)"}},"error_y":{"color":"rgba(188,189,34,1)"},"error_x":{"color":"rgba(188,189,34,1)"},"frame":null},{"x":[0,1.29212679213629],"y":[0,0.550199583855897],"z":[0,-0.191727624424499],"name":"Y -> U1","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(23,190,207,1)","line":{"color":"rgba(23,190,207,1)"}},"error_y":{"color":"rgba(23,190,207,1)"},"error_x":{"color":"rgba(23,190,207,1)"},"frame":null},{"x":[1,1.29212679213629],"y":[2,0.550199583855897],"z":[2,-0.191727624424499],"name":"Y -> U1","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,-0.125460125469624],"y":[0,1.11646708281077],"z":[0,2.35839429109116],"name":"Y -> U2","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[1,-0.125460125469624],"y":[2,1.11646708281077],"z":[2,2.35839429109116],"name":"Y -> U2","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8caf41e97d54a682eac4" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8caf41e97d54a682eac4">{"x":{"visdat":{"344874dcc3a6":["function () ","plotlyVisDat"]},"cur_data":"344874dcc3a6","attrs":{"344874dcc3a6":{"x":{},"y":{},"z":{},"name":"origin","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true},"344874dcc3a6.1":{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.2":{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.3":{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.4":{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"344874dcc3a6.5":{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"344874dcc3a6.6":{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true},"344874dcc3a6.7":{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true},"344874dcc3a6.8":{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red"},"type":"scatter3d","inherit":true},"344874dcc3a6.9":{"x":[0,1.29212679213629],"y":[0,0.550199583855897],"z":[0,-0.191727624424499],"name":"Y -> U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"344874dcc3a6.10":{"x":[1,1.29212679213629],"y":[2,0.550199583855897],"z":[2,-0.191727624424499],"name":"Y -> U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"344874dcc3a6.11":{"x":[0,-0.125460125469624],"y":[0,1.11646708281077],"z":[0,2.35839429109116],"name":"Y -> U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"344874dcc3a6.12":{"x":[1,-0.125460125469624],"y":[2,1.11646708281077],"z":[2,2.35839429109116],"name":"Y -> U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"cube","xaxis":{"range":[-4,4],"title":"X1"},"yaxis":{"range":[-4,4],"title":"X2"},"zaxis":{"range":[-4,4],"title":"X3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0],"y":[0],"z":[0],"name":"origin","type":"scatter3d","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null},{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(227,119,194,1)","line":{"color":"rgba(227,119,194,1)"}},"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"frame":null},{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(127,127,127,1)","line":{"color":"rgba(127,127,127,1)"}},"error_y":{"color":"rgba(127,127,127,1)"},"error_x":{"color":"rgba(127,127,127,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","mode":"lines","line":{"color":"red","width":5},"type":"scatter3d","marker":{"color":"rgba(188,189,34,1)","line":{"color":"rgba(188,189,34,1)"}},"error_y":{"color":"rgba(188,189,34,1)"},"error_x":{"color":"rgba(188,189,34,1)"},"frame":null},{"x":[0,1.29212679213629],"y":[0,0.550199583855897],"z":[0,-0.191727624424499],"name":"Y -> U1","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(23,190,207,1)","line":{"color":"rgba(23,190,207,1)"}},"error_y":{"color":"rgba(23,190,207,1)"},"error_x":{"color":"rgba(23,190,207,1)"},"frame":null},{"x":[1,1.29212679213629],"y":[2,0.550199583855897],"z":[2,-0.191727624424499],"name":"Y -> U1","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,-0.125460125469624],"y":[0,1.11646708281077],"z":[0,2.35839429109116],"name":"Y -> U2","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[1,-0.125460125469624],"y":[2,1.11646708281077],"z":[2,2.35839429109116],"name":"Y -> U2","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <ul>
-<li><span class="math inline">\(\hat{\mathbf{Y}}\)</span> is the resulting vector that lies in the plane spanned by <span class="math inline">\(\mathbf{U}_1\)</span> and <span class="math inline">\(\mathbf{U}_2\)</span> and thus also in the column space of <span class="math inline">\(\mathbf{X}\)</span>.</li>
+<li><span class="math inline">\(\hat{\mathbf{Y}}\)</span> is the
+resulting vector that lies in the plane spanned by <span
+class="math inline">\(\mathbf{U}_1\)</span> and <span
+class="math inline">\(\mathbf{U}_2\)</span> and thus also in the column
+space of <span class="math inline">\(\mathbf{X}\)</span>.</li>
 </ul>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>p6 <span class="ot">&lt;-</span> p5 <span class="sc">%&gt;%</span></span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_trace</span>(</span>
@@ -1319,21 +1483,24 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 <span id="cb70-32"><a href="#cb70-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">type=</span><span class="st">&quot;scatter3d&quot;</span>,</span>
 <span id="cb70-33"><a href="#cb70-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;Y -&gt; U&quot;</span>)</span>
 <span id="cb70-34"><a href="#cb70-34" aria-hidden="true" tabindex="-1"></a>p6</span></code></pre></div>
-<div id="htmlwidget-1aeb308f057073e672a4" style="width:672px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1aeb308f057073e672a4">{"x":{"visdat":{"324c3b10dc48":["function () ","plotlyVisDat"]},"cur_data":"324c3b10dc48","attrs":{"324c3b10dc48":{"x":{},"y":{},"z":{},"name":"origin","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true},"324c3b10dc48.1":{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.2":{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.3":{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"324c3b10dc48.4":{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"324c3b10dc48.5":{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"324c3b10dc48.6":{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true},"324c3b10dc48.7":{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true},"324c3b10dc48.8":{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red"},"type":"scatter3d","inherit":true},"324c3b10dc48.9":{"x":[0,1.29212679213629],"y":[0,0.550199583855897],"z":[0,-0.191727624424499],"name":"Y -> U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"324c3b10dc48.10":{"x":[1,1.29212679213629],"y":[2,0.550199583855897],"z":[2,-0.191727624424499],"name":"Y -> U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"324c3b10dc48.11":{"x":[0,-0.125460125469624],"y":[0,1.11646708281077],"z":[0,2.35839429109116],"name":"Y -> U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"324c3b10dc48.12":{"x":[1,-0.125460125469624],"y":[2,1.11646708281077],"z":[2,2.35839429109116],"name":"Y -> U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"324c3b10dc48.13":{"x":[0,1.16666666666667],"y":[0,1.66666666666667],"z":[0,2.16666666666667],"name":"Yhat","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"orange"},"type":"scatter3d","inherit":true},"324c3b10dc48.14":{"x":[1,1.16666666666667],"y":[2,1.66666666666667],"z":[2,2.16666666666667],"name":"e","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"maroon2"},"type":"scatter3d","inherit":true},"324c3b10dc48.15":{"x":[1.29212679213629,1.16666666666667],"y":[0.550199583855897,1.66666666666667],"z":[-0.191727624424499,2.16666666666667],"name":"Y -> U","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"orange","dash":"dash"},"type":"scatter3d","inherit":true},"324c3b10dc48.16":{"x":[-0.125460125469624,1.16666666666667],"y":[1.11646708281077,1.66666666666667],"z":[2.35839429109116,2.16666666666667],"name":"Y -> U","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"orange","dash":"dash"},"type":"scatter3d","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"cube","xaxis":{"range":[-4,4],"title":"X1"},"yaxis":{"range":[-4,4],"title":"X2"},"zaxis":{"range":[-4,4],"title":"X3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0],"y":[0],"z":[0],"name":"origin","type":"scatter3d","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null},{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(227,119,194,1)","line":{"color":"rgba(227,119,194,1)"}},"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"frame":null},{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(127,127,127,1)","line":{"color":"rgba(127,127,127,1)"}},"error_y":{"color":"rgba(127,127,127,1)"},"error_x":{"color":"rgba(127,127,127,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","mode":"lines","line":{"color":"red","width":5},"type":"scatter3d","marker":{"color":"rgba(188,189,34,1)","line":{"color":"rgba(188,189,34,1)"}},"error_y":{"color":"rgba(188,189,34,1)"},"error_x":{"color":"rgba(188,189,34,1)"},"frame":null},{"x":[0,1.29212679213629],"y":[0,0.550199583855897],"z":[0,-0.191727624424499],"name":"Y -> U1","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(23,190,207,1)","line":{"color":"rgba(23,190,207,1)"}},"error_y":{"color":"rgba(23,190,207,1)"},"error_x":{"color":"rgba(23,190,207,1)"},"frame":null},{"x":[1,1.29212679213629],"y":[2,0.550199583855897],"z":[2,-0.191727624424499],"name":"Y -> U1","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,-0.125460125469624],"y":[0,1.11646708281077],"z":[0,2.35839429109116],"name":"Y -> U2","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[1,-0.125460125469624],"y":[2,1.11646708281077],"z":[2,2.35839429109116],"name":"Y -> U2","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,1.16666666666667],"y":[0,1.66666666666667],"z":[0,2.16666666666667],"name":"Yhat","mode":"lines","line":{"color":"orange","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[1,1.16666666666667],"y":[2,1.66666666666667],"z":[2,2.16666666666667],"name":"e","mode":"lines","line":{"color":"maroon2","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[1.29212679213629,1.16666666666667],"y":[0.550199583855897,1.66666666666667],"z":[-0.191727624424499,2.16666666666667],"name":"Y -> U","mode":"lines","line":{"color":"orange","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null},{"x":[-0.125460125469624,1.16666666666667],"y":[1.11646708281077,1.66666666666667],"z":[2.35839429109116,2.16666666666667],"name":"Y -> U","mode":"lines","line":{"color":"orange","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(227,119,194,1)","line":{"color":"rgba(227,119,194,1)"}},"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2c5c14a8853dca905e03" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2c5c14a8853dca905e03">{"x":{"visdat":{"344874dcc3a6":["function () ","plotlyVisDat"]},"cur_data":"344874dcc3a6","attrs":{"344874dcc3a6":{"x":{},"y":{},"z":{},"name":"origin","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter3d","mode":"markers","inherit":true},"344874dcc3a6.1":{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.2":{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.3":{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"grey"},"type":"scatter3d","inherit":true},"344874dcc3a6.4":{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"344874dcc3a6.5":{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"black"},"type":"scatter3d","inherit":true},"344874dcc3a6.6":{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true},"344874dcc3a6.7":{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"blue"},"type":"scatter3d","inherit":true},"344874dcc3a6.8":{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red"},"type":"scatter3d","inherit":true},"344874dcc3a6.9":{"x":[0,1.29212679213629],"y":[0,0.550199583855897],"z":[0,-0.191727624424499],"name":"Y -> U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"344874dcc3a6.10":{"x":[1,1.29212679213629],"y":[2,0.550199583855897],"z":[2,-0.191727624424499],"name":"Y -> U1","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"344874dcc3a6.11":{"x":[0,-0.125460125469624],"y":[0,1.11646708281077],"z":[0,2.35839429109116],"name":"Y -> U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"344874dcc3a6.12":{"x":[1,-0.125460125469624],"y":[2,1.11646708281077],"z":[2,2.35839429109116],"name":"Y -> U2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"red","dash":"dash"},"type":"scatter3d","inherit":true},"344874dcc3a6.13":{"x":[0,1.16666666666667],"y":[0,1.66666666666667],"z":[0,2.16666666666667],"name":"Yhat","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"orange"},"type":"scatter3d","inherit":true},"344874dcc3a6.14":{"x":[1,1.16666666666667],"y":[2,1.66666666666667],"z":[2,2.16666666666667],"name":"e","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"maroon2"},"type":"scatter3d","inherit":true},"344874dcc3a6.15":{"x":[1.29212679213629,1.16666666666667],"y":[0.550199583855897,1.66666666666667],"z":[-0.191727624424499,2.16666666666667],"name":"Y -> U","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"orange","dash":"dash"},"type":"scatter3d","inherit":true},"344874dcc3a6.16":{"x":[-0.125460125469624,1.16666666666667],"y":[1.11646708281077,1.66666666666667],"z":[2.35839429109116,2.16666666666667],"name":"Y -> U","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"mode":"lines","line":{"width":5,"color":"orange","dash":"dash"},"type":"scatter3d","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"scene":{"aspectmode":"cube","xaxis":{"range":[-4,4],"title":"X1"},"yaxis":{"range":[-4,4],"title":"X2"},"zaxis":{"range":[-4,4],"title":"X3"}},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0],"y":[0],"z":[0],"name":"origin","type":"scatter3d","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,1],"y":[0,0],"z":[0,0],"name":"obs1","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[0,0],"y":[0,1],"z":[0,0],"name":"obs2","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,0],"y":[0,0],"z":[0,1],"name":"obs3","mode":"lines","line":{"color":"grey","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[0,1],"y":[0,1],"z":[0,1],"name":"X1","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,3],"name":"X2","mode":"lines","line":{"color":"black","width":5},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null},{"x":[0,0.911606725190993],"y":[0,0.388170606702671],"z":[0,-0.13526551178565],"name":"U1","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(227,119,194,1)","line":{"color":"rgba(227,119,194,1)"}},"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"frame":null},{"x":[0,-0.0480261587042634],"y":[0,0.427383801079795],"z":[0,0.902793760863853],"name":"U2","mode":"lines","line":{"color":"blue","width":5},"type":"scatter3d","marker":{"color":"rgba(127,127,127,1)","line":{"color":"rgba(127,127,127,1)"}},"error_y":{"color":"rgba(127,127,127,1)"},"error_x":{"color":"rgba(127,127,127,1)"},"frame":null},{"x":[0,1],"y":[0,2],"z":[0,2],"name":"Y","mode":"lines","line":{"color":"red","width":5},"type":"scatter3d","marker":{"color":"rgba(188,189,34,1)","line":{"color":"rgba(188,189,34,1)"}},"error_y":{"color":"rgba(188,189,34,1)"},"error_x":{"color":"rgba(188,189,34,1)"},"frame":null},{"x":[0,1.29212679213629],"y":[0,0.550199583855897],"z":[0,-0.191727624424499],"name":"Y -> U1","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(23,190,207,1)","line":{"color":"rgba(23,190,207,1)"}},"error_y":{"color":"rgba(23,190,207,1)"},"error_x":{"color":"rgba(23,190,207,1)"},"frame":null},{"x":[1,1.29212679213629],"y":[2,0.550199583855897],"z":[2,-0.191727624424499],"name":"Y -> U1","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"frame":null},{"x":[0,-0.125460125469624],"y":[0,1.11646708281077],"z":[0,2.35839429109116],"name":"Y -> U2","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"frame":null},{"x":[1,-0.125460125469624],"y":[2,1.11646708281077],"z":[2,2.35839429109116],"name":"Y -> U2","mode":"lines","line":{"color":"red","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"frame":null},{"x":[0,1.16666666666667],"y":[0,1.66666666666667],"z":[0,2.16666666666667],"name":"Yhat","mode":"lines","line":{"color":"orange","width":5},"type":"scatter3d","marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"frame":null},{"x":[1,1.16666666666667],"y":[2,1.66666666666667],"z":[2,2.16666666666667],"name":"e","mode":"lines","line":{"color":"maroon2","width":5},"type":"scatter3d","marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"frame":null},{"x":[1.29212679213629,1.16666666666667],"y":[0.550199583855897,1.66666666666667],"z":[-0.191727624424499,2.16666666666667],"name":"Y -> U","mode":"lines","line":{"color":"orange","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"frame":null},{"x":[-0.125460125469624,1.16666666666667],"y":[1.11646708281077,1.66666666666667],"z":[2.35839429109116,2.16666666666667],"name":"Y -> U","mode":"lines","line":{"color":"orange","width":5,"dash":"dash"},"type":"scatter3d","marker":{"color":"rgba(227,119,194,1)","line":{"color":"rgba(227,119,194,1)"}},"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="error" class="section level3" number="5.3.4">
 <h3><span class="header-section-number">5.3.4</span> Error</h3>
-<p>Note, that it is also clear from the equation in the derivation of the least squares solution that the residual is orthogonal on the column space:</p>
+<p>Note, that it is also clear from the equation in the derivation of
+the least squares solution that the residual is orthogonal on the column
+space:</p>
 <p><span class="math display">\[
- -2 \mathbf{X}^T(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}) = 0
+-2 \mathbf{X}^T(\mathbf{Y}-\mathbf{X}\boldsymbol{\beta}) = 0
 \]</span></p>
 <hr />
 </div>
 </div>
 <div id="variance-estimator" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Variance Estimator?</h2>
+<h2><span class="header-section-number">5.4</span> Variance
+Estimator?</h2>
 <p><span class="math display">\[
 \begin{array}{ccl}
 \hat{\boldsymbol{\Sigma}}_{\hat{\mathbf{\beta}}}
@@ -1351,10 +1518,14 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 </div>
 <div id="contrasts" class="section level2" number="5.5">
 <h2><span class="header-section-number">5.5</span> Contrasts</h2>
-<p>Hypotheses often involve linear combinations of the model parameters!</p>
+<p>Hypotheses often involve linear combinations of the model
+parameters!</p>
 <p>e.g.</p>
 <ul>
-<li><p><span class="math inline">\(H_0: \log_2{FC}_{g3n1-g1n1}= \beta_{g3} + \hat\beta_{g3n1}=0\)</span> <span class="math inline">\(\rightarrow\)</span> “grade3+grade3:node1 = 0”</p></li>
+<li><p><span class="math inline">\(H_0: \log_2{FC}_{g3n1-g1n1}=
+\beta_{g3} + \hat\beta_{g3n1}=0\)</span> <span
+class="math inline">\(\rightarrow\)</span> “grade3+grade3:node1 =
+0”</p></li>
 <li><p>Let <span class="math display">\[
 \boldsymbol{\beta} = \left[
 \begin{array}{c}
@@ -1364,25 +1535,32 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 \beta_{g3:n1}
 \end{array}
 \right]\]</span></p></li>
-<li><p>we can write that contrast using a contrast matrix: <span class="math display">\[
-\mathbf{L}=\left[\begin{array}{c}0\\1\\0\\1\end{array}\right] \rightarrow \mathbf{L}^T\boldsymbol{\beta} \]</span></p></li>
+<li><p>we can write that contrast using a contrast matrix: <span
+class="math display">\[
+\mathbf{L}=\left[\begin{array}{c}0\\1\\0\\1\end{array}\right]
+\rightarrow \mathbf{L}^T\boldsymbol{\beta} \]</span></p></li>
 <li><p>Then the variance becomes: <span class="math display">\[
-\text{var}_{\mathbf{L}^T\boldsymbol{\hat\beta}}= \mathbf{L}^T \boldsymbol{\Sigma}_{\boldsymbol{\hat\beta}}\mathbf{L}
+\text{var}_{\mathbf{L}^T\boldsymbol{\hat\beta}}= \mathbf{L}^T
+\boldsymbol{\Sigma}_{\boldsymbol{\hat\beta}}\mathbf{L}
 \]</span></p></li>
 </ul>
 <hr />
 </div>
 </div>
-<div id="homework-adopt-the-gene-analysis-on-log-scale-in-matrix-form" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Homework: Adopt the gene analysis on log scale in matrix form!</h1>
+<div id="homework-adopt-the-gene-analysis-on-log-scale-in-matrix-form"
+class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Homework: Adopt the
+gene analysis on log scale in matrix form!</h1>
 <ol style="list-style-type: decimal">
-<li><p>Study the solution of the exercise to understand the analysis in R</p></li>
+<li><p>Study the solution of the exercise to understand the analysis in
+R</p></li>
 <li><p>Calculate</p></li>
 </ol>
 <ul>
 <li>model parameters and contrasts of interest</li>
 <li>standard errors, standard errors on contrasts</li>
-<li>t-test statistics on the model parameters and contrasts of interest</li>
+<li>t-test statistics on the model parameters and contrasts of
+interest</li>
 </ul>
 <ol start="3" style="list-style-type: decimal">
 <li>Compare your results with the output of the lm(.) function</li>
@@ -1390,7 +1568,9 @@ RSS(\mathbf{\beta})&amp;=&amp;(\mathbf{Y}-\mathbf{X\beta})^T(\mathbf{Y}-\mathbf{
 <hr />
 <div id="inspiration" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Inspiration</h2>
-<p>Tip: details on the implementation can be found in the book of Faraway (chapter 2). <a href="https://people.bath.ac.uk/jjf23/book/" class="uri">https://people.bath.ac.uk/jjf23/book/</a></p>
+<p>Tip: details on the implementation can be found in the book of
+Faraway (chapter 2). <a href="https://people.bath.ac.uk/jjf23/book/"
+class="uri">https://people.bath.ac.uk/jjf23/book/</a></p>
 <ul>
 <li>Design matrix</li>
 </ul>

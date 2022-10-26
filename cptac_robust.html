@@ -508,23 +508,50 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Introduction to proteomics data analysis: robust summarization</h1>
+<h1 class="title toc-ignore">Introduction to proteomics data analysis:
+robust summarization</h1>
 <h4 class="author">Lieven Clement</h4>
-<h4 class="date">statOmics, Ghent University (<a href="https://statomics.github.io" class="uri">https://statomics.github.io</a>)</h4>
+<h4 class="date">statOmics, Ghent University (<a
+href="https://statomics.github.io"
+class="uri">https://statomics.github.io</a>)</h4>
 
 </div>
 
 
 <p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a></p>
-<p>This is part of the online course <a href="https://statomics.github.io/PDA22GTPB/">Proteomics Data Analysis (PDA)</a></p>
+<p>This is part of the online course <a
+href="https://statomics.github.io/PDA22GTPB/">Proteomics Data Analysis
+(PDA)</a></p>
 <div id="background" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Background</h1>
-<p>This case-study is a subset of the data of the 6th study of the Clinical Proteomic Technology Assessment for Cancer (CPTAC). In this experiment, the authors spiked the Sigma Universal Protein Standard mixture 1 (UPS1) containing 48 different human proteins in a protein background of 60 ng/<span class="math inline">\(\mu\)</span>L Saccharomyces cerevisiae strain BY4741. Two different spike-in concentrations were used: 6A (0.25 fmol UPS1 proteins/<span class="math inline">\(\mu\)</span>L) and 6B (0.74 fmol UPS1 proteins/<span class="math inline">\(\mu\)</span>L) [5]. We limited ourselves to the data of LTQ-Orbitrap W at site 56. The data were searched with MaxQuant version 1.5.2.8, and detailed search settings were described in Goeminne et al. (2016) [1]. Three replicates are available for each concentration.</p>
+<p>This case-study is a subset of the data of the 6th study of the
+Clinical Proteomic Technology Assessment for Cancer (CPTAC). In this
+experiment, the authors spiked the Sigma Universal Protein Standard
+mixture 1 (UPS1) containing 48 different human proteins in a protein
+background of 60 ng/<span class="math inline">\(\mu\)</span>L
+Saccharomyces cerevisiae strain BY4741. Two different spike-in
+concentrations were used: 6A (0.25 fmol UPS1 proteins/<span
+class="math inline">\(\mu\)</span>L) and 6B (0.74 fmol UPS1
+proteins/<span class="math inline">\(\mu\)</span>L) [5]. We limited
+ourselves to the data of LTQ-Orbitrap W at site 56. The data were
+searched with MaxQuant version 1.5.2.8, and detailed search settings
+were described in Goeminne et al. (2016) [1]. Three replicates are
+available for each concentration.</p>
 </div>
 <div id="data" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Data</h1>
-<p>We first import the data from peptideRaws.txt file. This is the file containing your peptideRaw-level intensities. For a MaxQuant search [6], this peptideRaws.txt file can be found by default in the “path_to_raw_files/combined/txt/” folder from the MaxQuant output, with “path_to_raw_files” the folder where the raw files were saved. In this vignette, we use a MaxQuant peptideRaws file which is a subset of the cptac study. This data is available in the <code>msdata</code> package. To import the data we use the <code>QFeatures</code> package.</p>
-<p>We generate the object peptideRawFile with the path to the peptideRaws.txt file. Using the <code>grepEcols</code> function, we find the columns that contain the expression data of the peptideRaws in the peptideRaws.txt file.</p>
+<p>We first import the data from peptideRaws.txt file. This is the file
+containing your peptideRaw-level intensities. For a MaxQuant search [6],
+this peptideRaws.txt file can be found by default in the
+“path_to_raw_files/combined/txt/” folder from the MaxQuant output, with
+“path_to_raw_files” the folder where the raw files were saved. In this
+vignette, we use a MaxQuant peptideRaws file which is a subset of the
+cptac study. This data is available in the <code>msdata</code> package.
+To import the data we use the <code>QFeatures</code> package.</p>
+<p>We generate the object peptideRawFile with the path to the
+peptideRaws.txt file. Using the <code>grepEcols</code> function, we find
+the columns that contain the expression data of the peptideRaws in the
+peptideRaws.txt file.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(limma)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(QFeatures)</span>
@@ -543,12 +570,15 @@ div.tocify {
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fnames =</span> <span class="dv">1</span>,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ecol =</span> ecols,</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">&quot;peptideRaw&quot;</span>, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span></code></pre></div>
-<p>The QFeatures object pe currently contains a single assay, named peptideRaw.</p>
-<p>We extract the column names from the peptideRaw assay and see that this contains information about the spike-in condition.</p>
+<p>The QFeatures object pe currently contains a single assay, named
+peptideRaw.</p>
+<p>We extract the column names from the peptideRaw assay and see that
+this contains information about the spike-in condition.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]])</span></code></pre></div>
 <pre><code>## [1] &quot;Intensity.6A_7&quot; &quot;Intensity.6A_8&quot; &quot;Intensity.6A_9&quot; &quot;Intensity.6B_7&quot;
 ## [5] &quot;Intensity.6B_8&quot; &quot;Intensity.6B_9&quot;</code></pre>
-<p>We rename the colnames by dropping the “Intensity.” from the name.</p>
+<p>We rename the colnames by dropping the “Intensity.” from the
+name.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(newNames <span class="ot">&lt;-</span>  <span class="fu">sub</span>(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;Intensity</span><span class="sc">\\</span><span class="st">.&quot;</span>, </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>,</span>
@@ -561,7 +591,8 @@ div.tocify {
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">renamePrimary</span>(pe, newNames)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]])</span></code></pre></div>
 <pre><code>## [1] &quot;6A_7&quot; &quot;6A_8&quot; &quot;6A_9&quot; &quot;6B_7&quot; &quot;6B_8&quot; &quot;6B_9&quot;</code></pre>
-<p>In the following code chunk, we add the spikein condition that we can read in the raw file name to the colData.</p>
+<p>In the following code chunk, we add the spikein condition that we can
+read in the raw file name to the colData.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(pe)<span class="sc">$</span>condition <span class="ot">&lt;-</span>  </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]]) <span class="sc">%&gt;%</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">substr</span>(<span class="at">start =</span> <span class="dv">2</span>, <span class="at">stop =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
@@ -569,25 +600,30 @@ div.tocify {
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(pe)<span class="sc">$</span>condition</span></code></pre></div>
 <pre><code>## [1] A A A B B B
 ## Levels: A B</code></pre>
-<p>We calculate how many non zero intensities we have per peptide and this will be useful for filtering.</p>
+<p>We calculate how many non zero intensities we have per peptide and
+this will be useful for filtering.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]])<span class="sc">$</span>nNonZero <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(<span class="fu">assay</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]]) <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code></pre></div>
-<p>Peptides with zero intensities are missing peptides and should be represent with a <code>NA</code> value rather than <code>0</code>.</p>
+<p>Peptides with zero intensities are missing peptides and should be
+represent with a <code>NA</code> value rather than <code>0</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">zeroIsNA</span>(pe, <span class="st">&quot;peptideRaw&quot;</span>) <span class="co"># convert 0 to NA</span></span></code></pre></div>
 <div id="data-exploration" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Data exploration</h2>
-<p>45% of all peptide intensities are missing and for some peptides we do not even measure a signal in any sample.</p>
+<p>45% of all peptide intensities are missing and for some peptides we
+do not even measure a signal in any sample.</p>
 </div>
 </div>
 <div id="preprocessing" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Preprocessing</h1>
-<p>This section preforms preprocessing for the peptide data. This include</p>
+<p>This section preforms preprocessing for the peptide data. This
+include</p>
 <ul>
 <li>log transformation,</li>
 <li>filtering and</li>
 <li>summarisation of the data.</li>
 </ul>
 <div id="log-transform-the-data" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Log transform the data</h2>
+<h2><span class="header-section-number">3.1</span> Log transform the
+data</h2>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">logTransform</span>(pe, <span class="at">base =</span> <span class="dv">2</span>, <span class="at">i =</span> <span class="st">&quot;peptideRaw&quot;</span>, <span class="at">name =</span> <span class="st">&quot;peptideLog&quot;</span>)</span></code></pre></div>
 </div>
 <div id="filtering" class="section level2" number="3.2">
@@ -595,12 +631,14 @@ div.tocify {
 <ol style="list-style-type: decimal">
 <li>Handling overlapping protein groups</li>
 </ol>
-<p>In our approach a peptide can map to multiple proteins, as long as there is none of these proteins present in a smaller subgroup.</p>
+<p>In our approach a peptide can map to multiple proteins, as long as
+there is none of these proteins present in a smaller subgroup.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe, <span class="sc">~</span> Proteins <span class="sc">%in%</span> <span class="fu">smallestUniqueGroups</span>(<span class="fu">rowData</span>(pe[[<span class="st">&quot;peptideLog&quot;</span>]])<span class="sc">$</span>Proteins))</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Remove reverse sequences (decoys) and contaminants</li>
 </ol>
-<p>We now remove the contaminants and peptides that map to decoy sequences.</p>
+<p>We now remove the contaminants and peptides that map to decoy
+sequences.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe,<span class="sc">~</span>Reverse <span class="sc">!=</span> <span class="st">&quot;+&quot;</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe,<span class="sc">~</span> Potential.contaminant <span class="sc">!=</span> <span class="st">&quot;+&quot;</span>)</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
@@ -612,18 +650,26 @@ div.tocify {
 <pre><code>## [1] 7011</code></pre>
 <p>We keep 7011 peptides upon filtering.</p>
 </div>
-<div id="normalize-the-data-using-median-centering" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Normalize the data using median centering</h2>
-<p>We normalize the data by substracting the sample median from every intensity for peptide <span class="math inline">\(p\)</span> in a sample <span class="math inline">\(i\)</span>:</p>
-<p><span class="math display">\[y_{ip}^\text{norm} = y_{ip} - \hat\mu_i\]</span></p>
-<p>with <span class="math inline">\(\hat\mu_i\)</span> the median intensity over all observed peptides in sample <span class="math inline">\(i\)</span>.</p>
+<div id="normalize-the-data-using-median-centering"
+class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Normalize the data
+using median centering</h2>
+<p>We normalize the data by substracting the sample median from every
+intensity for peptide <span class="math inline">\(p\)</span> in a sample
+<span class="math inline">\(i\)</span>:</p>
+<p><span class="math display">\[y_{ip}^\text{norm} = y_{ip} -
+\hat\mu_i\]</span></p>
+<p>with <span class="math inline">\(\hat\mu_i\)</span> the median
+intensity over all observed peptides in sample <span
+class="math inline">\(i\)</span>.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">normalize</span>(pe, </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">i =</span> <span class="st">&quot;peptideLog&quot;</span>, </span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">name =</span> <span class="st">&quot;peptideNorm&quot;</span>, </span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;center.median&quot;</span>)</span></code></pre></div>
 </div>
 <div id="explore-normalized-data" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Explore normalized data</h2>
+<h2><span class="header-section-number">3.4</span> Explore normalized
+data</h2>
 <p>Upon the normalisation the density curves are nicely registered</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pe[[<span class="st">&quot;peptideNorm&quot;</span>]] <span class="sc">%&gt;%</span> </span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  assay <span class="sc">%&gt;%</span></span>
@@ -634,18 +680,25 @@ div.tocify {
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>()</span></code></pre></div>
 <pre><code>## Warning: Removed 8167 rows containing non-finite values (stat_density).</code></pre>
 <p><img src="cptac_robust_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<p>We can visualize our data using a Multi Dimensional Scaling plot, eg. as provided by the <code>limma</code> package.</p>
+<p>We can visualize our data using a Multi Dimensional Scaling plot, eg.
+as provided by the <code>limma</code> package.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pe[[<span class="st">&quot;peptideNorm&quot;</span>]] <span class="sc">%&gt;%</span> </span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  assay <span class="sc">%&gt;%</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  limma<span class="sc">::</span><span class="fu">plotMDS</span>(<span class="at">col =</span> <span class="fu">as.numeric</span>(<span class="fu">colData</span>(pe)<span class="sc">$</span>condition))</span></code></pre></div>
 <p><img src="cptac_robust_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<p>The first axis in the plot is showing the leading log fold changes (differences on the log scale) between the samples.</p>
-<p>We notice that the leading differences (log FC) in the peptide data seems to be driven by technical variability. Indeed, the samples do not seem to be clearly separated according to the spike-in condition.</p>
+<p>The first axis in the plot is showing the leading log fold changes
+(differences on the log scale) between the samples.</p>
+<p>We notice that the leading differences (log FC) in the peptide data
+seems to be driven by technical variability. Indeed, the samples do not
+seem to be clearly separated according to the spike-in condition.</p>
 </div>
-<div id="summarization-to-protein-level" class="section level2" number="3.5">
-<h2><span class="header-section-number">3.5</span> Summarization to protein level</h2>
+<div id="summarization-to-protein-level" class="section level2"
+number="3.5">
+<h2><span class="header-section-number">3.5</span> Summarization to
+protein level</h2>
 <ul>
-<li>By default robust summarization is used: <code>fun = MsCoreUtils::robustSummary()</code></li>
+<li>By default robust summarization is used:
+<code>fun = MsCoreUtils::robustSummary()</code></li>
 </ul>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">aggregateFeatures</span>(pe,</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">i =</span> <span class="st">&quot;peptideNorm&quot;</span>,</span>
@@ -657,29 +710,44 @@ div.tocify {
 ## effects of missing values on data aggregation.</code></pre>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMDS</span>(<span class="fu">assay</span>(pe[[<span class="st">&quot;protein&quot;</span>]]), <span class="at">col =</span> <span class="fu">as.numeric</span>(<span class="fu">colData</span>(pe)<span class="sc">$</span>condition))</span></code></pre></div>
 <p><img src="cptac_robust_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-<p>Note that the samples upon robust summarisation show a clear separation according to the spike-in condition in the second dimension of the MDS plot.</p>
+<p>Note that the samples upon robust summarisation show a clear
+separation according to the spike-in condition in the second dimension
+of the MDS plot.</p>
 </div>
 </div>
 <div id="data-analysis" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Data Analysis</h1>
 <div id="estimation" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Estimation</h2>
-<p>We model the protein level expression values using <code>msqrob</code>. By default <code>msqrob2</code> estimates the model parameters using robust regression.</p>
-<p>We will model the data with a different group mean. The group is incoded in the variable <code>condition</code> of the colData. We can specify this model by using a formula with the factor condition as its predictor: <code>formula = ~condition</code>.</p>
+<p>We model the protein level expression values using
+<code>msqrob</code>. By default <code>msqrob2</code> estimates the model
+parameters using robust regression.</p>
+<p>We will model the data with a different group mean. The group is
+incoded in the variable <code>condition</code> of the colData. We can
+specify this model by using a formula with the factor condition as its
+predictor: <code>formula = ~condition</code>.</p>
 <p>Note, that a formula always starts with a symbol ‘~’.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">msqrob</span>(<span class="at">object =</span> pe, <span class="at">i =</span> <span class="st">&quot;protein&quot;</span>, <span class="at">formula =</span> <span class="sc">~</span>condition)</span></code></pre></div>
 </div>
 <div id="inference" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Inference</h2>
-<p>First, we extract the parameter names of the model by looking at the first model. The models are stored in the row data of the assay under the default name msqrobModels.</p>
+<p>First, we extract the parameter names of the model by looking at the
+first model. The models are stored in the row data of the assay under
+the default name msqrobModels.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getCoef</span>(<span class="fu">rowData</span>(pe[[<span class="st">&quot;protein&quot;</span>]])<span class="sc">$</span>msqrobModels[[<span class="dv">1</span>]])</span></code></pre></div>
 <pre><code>## (Intercept)  conditionB 
 ##   -2.672396    1.513682</code></pre>
-<p>We can also explore the design of the model that we specified using the the package <code>ExploreModelMatrix</code></p>
+<p>We can also explore the design of the model that we specified using
+the the package <code>ExploreModelMatrix</code></p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ExploreModelMatrix)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">VisualizeDesign</span>(<span class="fu">colData</span>(pe),<span class="sc">~</span>condition)<span class="sc">$</span>plotlist[[<span class="dv">1</span>]]</span></code></pre></div>
 <p><img src="cptac_robust_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
-<p>Spike-in condition <code>A</code> is the reference class. So the mean log2 expression for samples from condition A is ‘(Intercept). The mean log2 expression for samples from condition B is’(Intercept)+conditionB’. Hence, the average log2 fold change between condition b and condition a is modelled using the parameter ‘conditionB’. Thus, we assess the contrast ‘conditionB = 0’ with our statistical test.</p>
+<p>Spike-in condition <code>A</code> is the reference class. So the mean
+log2 expression for samples from condition A is ‘(Intercept). The mean
+log2 expression for samples from condition B is’(Intercept)+conditionB’.
+Hence, the average log2 fold change between condition b and condition a
+is modelled using the parameter ‘conditionB’. Thus, we assess the
+contrast ‘conditionB = 0’ with our statistical test.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">makeContrast</span>(<span class="st">&quot;conditionB=0&quot;</span>, <span class="at">parameterNames =</span> <span class="fu">c</span>(<span class="st">&quot;conditionB&quot;</span>))</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">hypothesisTest</span>(<span class="at">object =</span> pe, <span class="at">i =</span> <span class="st">&quot;protein&quot;</span>, <span class="at">contrast =</span> L)</span></code></pre></div>
 </div>
@@ -697,18 +765,22 @@ div.tocify {
 </div>
 <div id="heatmap" class="section level3" number="4.3.2">
 <h3><span class="header-section-number">4.3.2</span> Heatmap</h3>
-<p>We first select the names of the proteins that were declared signficant.</p>
+<p>We first select the names of the proteins that were declared
+signficant.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>sigNames <span class="ot">&lt;-</span> <span class="fu">rowData</span>(pe[[<span class="st">&quot;protein&quot;</span>]])<span class="sc">$</span>conditionB <span class="sc">%&gt;%</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">&quot;protein&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(adjPval<span class="sc">&lt;</span><span class="fl">0.05</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(protein)</span>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(<span class="fu">assay</span>(pe[[<span class="st">&quot;protein&quot;</span>]])[sigNames, ])</span></code></pre></div>
 <p><img src="cptac_robust_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
-<p>The majority of the proteins are indeed UPS proteins. 1 yeast protein is returned. Note, that the yeast protein indeed shows evidence for differential abundance.</p>
+<p>The majority of the proteins are indeed UPS proteins. 1 yeast protein
+is returned. Note, that the yeast protein indeed shows evidence for
+differential abundance.</p>
 </div>
 <div id="boxplots" class="section level3" number="4.3.3">
 <h3><span class="header-section-number">4.3.3</span> Boxplots</h3>
-<p>We make boxplot of the log2 FC and stratify according to the whether a protein is spiked or not.</p>
+<p>We make boxplot of the log2 FC and stratify according to the whether
+a protein is spiked or not.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(pe[[<span class="st">&quot;protein&quot;</span>]])<span class="sc">$</span>conditionB <span class="sc">%&gt;%</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="at">var =</span> <span class="st">&quot;protein&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="fu">grepl</span>(<span class="st">&quot;UPS&quot;</span>,protein),<span class="at">y=</span>logFC)) <span class="sc">+</span></span>
@@ -741,7 +813,8 @@ div.tocify {
 </div>
 <div id="detail-plots" class="section level3" number="4.3.4">
 <h3><span class="header-section-number">4.3.4</span> Detail plots</h3>
-<p>We first extract the normalized peptideRaw expression values for a particular protein.</p>
+<p>We first extract the normalized peptideRaw expression values for a
+particular protein.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (protName <span class="cf">in</span> sigNames)</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>{</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>pePlot <span class="ot">&lt;-</span> pe[protName, , <span class="fu">c</span>(<span class="st">&quot;peptideNorm&quot;</span>,<span class="st">&quot;protein&quot;</span>)]</span>
@@ -773,13 +846,18 @@ div.tocify {
 <span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p2)</span>
 <span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p><img src="cptac_robust_files/figure-html/unnamed-chunk-25-1.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-2.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-3.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-4.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-5.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-6.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-7.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-8.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-9.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-10.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-11.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-12.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-13.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-14.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-15.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-16.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-17.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-18.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-19.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-20.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-21.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-22.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-23.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-24.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-25.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-26.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-27.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-28.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-29.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-30.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-31.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-32.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-33.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-34.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-35.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-36.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-37.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-38.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-39.png" width="672" /><img src="cptac_robust_files/figure-html/unnamed-chunk-25-40.png" width="672" /></p>
-<p>Note, that the yeast protein is only covered by 3 peptides. Only one peptide is picked up in condition A. This peptide is also only once observed in spike-in condition B. This puts a considerable burden upon the inference and could be avoided by more stringent filtering.</p>
+<p>Note, that the yeast protein is only covered by 3 peptides. Only one
+peptide is picked up in condition A. This peptide is also only once
+observed in spike-in condition B. This puts a considerable burden upon
+the inference and could be avoided by more stringent filtering.</p>
 </div>
 </div>
 </div>
 <div id="session-info" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Session Info</h1>
-<p>With respect to reproducibility, it is highly recommended to include a session info in your script so that readers of your output can see your particular setup of R.</p>
+<p>With respect to reproducibility, it is highly recommended to include
+a session info in your script so that readers of your output can see
+your particular setup of R.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
 <pre><code>## R version 4.2.1 (2022-06-23)
 ## Platform: x86_64-pc-linux-gnu (64-bit)

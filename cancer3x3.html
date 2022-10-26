@@ -510,21 +510,38 @@ div.tocify {
 
 <h1 class="title toc-ignore">Cancer</h1>
 <h4 class="author">Lieven Clement</h4>
-<h4 class="date">statOmics, Ghent University (<a href="https://statomics.github.io" class="uri">https://statomics.github.io</a>)</h4>
+<h4 class="date">statOmics, Ghent University (<a
+href="https://statomics.github.io"
+class="uri">https://statomics.github.io</a>)</h4>
 
 </div>
 
 
 <p><a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a></p>
-<p>This is part of the online course <a href="https://statomics.github.io/PDA/">Proteomics Data Analysis (PDA)</a></p>
+<p>This is part of the online course <a
+href="https://statomics.github.io/PDA/">Proteomics Data Analysis
+(PDA)</a></p>
 <div id="background" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Background</h1>
-<p>Twelve Estrogen Receptor Positive Breast cancer tissues from from patients treated with tamoxifen upon recurrence have been assessed in a proteomics study. Six patients had a good outcome (OR) and the other Six had a poor outcome (PD). The proteomes have been assessed using an LTQ-Orbitrap and the thermo output .RAW files were searched with MaxQuant (version 1.4.1.2) against the human proteome database (FASTA version 2012-09, human canonical proteome).</p>
+<p>Twelve Estrogen Receptor Positive Breast cancer tissues from from
+patients treated with tamoxifen upon recurrence have been assessed in a
+proteomics study. Six patients had a good outcome (OR) and the other Six
+had a poor outcome (PD). The proteomes have been assessed using an
+LTQ-Orbitrap and the thermo output .RAW files were searched with
+MaxQuant (version 1.4.1.2) against the human proteome database (FASTA
+version 2012-09, human canonical proteome).</p>
 </div>
 <div id="data" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Data</h1>
-<p>We first import the data from peptide.txt file. This is the file containing your peptide-level intensities. For a MaxQuant search [6], this peptide.txt file can be found by default in the “path_to_raw_files/combined/txt/” folder from the MaxQuant output, with “path_to_raw_files” the folder where the raw files were saved.</p>
-<p>We generate the object peptideFile with the path to the peptide.txt file. Using the <code>grepEcols</code> function, we find the columns that contain the expression data of the peptide in the peptide.txt file.</p>
+<p>We first import the data from peptide.txt file. This is the file
+containing your peptide-level intensities. For a MaxQuant search [6],
+this peptide.txt file can be found by default in the
+“path_to_raw_files/combined/txt/” folder from the MaxQuant output, with
+“path_to_raw_files” the folder where the raw files were saved.</p>
+<p>We generate the object peptideFile with the path to the peptide.txt
+file. Using the <code>grepEcols</code> function, we find the columns
+that contain the expression data of the peptide in the peptide.txt
+file.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(limma)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(QFeatures)</span>
@@ -543,12 +560,15 @@ div.tocify {
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">fnames =</span> <span class="dv">1</span>,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ecol =</span> ecols,</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">&quot;peptideRaw&quot;</span>, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span></code></pre></div>
-<p>The QFeatures object pe currently contains a single assay, named peptideRaw.</p>
-<p>We extract the column names from the peptideRaw assay and see that this contains information about the prognosis.</p>
+<p>The QFeatures object pe currently contains a single assay, named
+peptideRaw.</p>
+<p>We extract the column names from the peptideRaw assay and see that
+this contains information about the prognosis.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]])</span></code></pre></div>
 <pre><code>## [1] &quot;Intensity.OR.01&quot; &quot;Intensity.OR.04&quot; &quot;Intensity.OR.07&quot; &quot;Intensity.PD.02&quot;
 ## [5] &quot;Intensity.PD.03&quot; &quot;Intensity.PD.04&quot;</code></pre>
-<p>We rename the colnames by dropping the “Intensity.” from the name.</p>
+<p>We rename the colnames by dropping the “Intensity.” from the
+name.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(newNames <span class="ot">&lt;-</span>  <span class="fu">sub</span>(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">&quot;Intensity</span><span class="sc">\\</span><span class="st">.&quot;</span>, </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>,</span>
@@ -561,7 +581,8 @@ div.tocify {
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">renamePrimary</span>(pe, newNames)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]])</span></code></pre></div>
 <pre><code>## [1] &quot;OR.01&quot; &quot;OR.04&quot; &quot;OR.07&quot; &quot;PD.02&quot; &quot;PD.03&quot; &quot;PD.04&quot;</code></pre>
-<p>In the following code chunk, we add the prognosis of the patients that we can read in the raw file name to the colData.</p>
+<p>In the following code chunk, we add the prognosis of the patients
+that we can read in the raw file name to the colData.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(pe)<span class="sc">$</span>prognosis <span class="ot">&lt;-</span>  </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]]) <span class="sc">%&gt;%</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">substr</span>(<span class="at">start =</span> <span class="dv">1</span>, <span class="at">stop =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
@@ -569,11 +590,14 @@ div.tocify {
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colData</span>(pe)<span class="sc">$</span>prognosis</span></code></pre></div>
 <pre><code>## [1] OR OR OR PD PD PD
 ## Levels: OR PD</code></pre>
-<p>We calculate how many non zero intensities we have per peptide and this will be useful for filtering.</p>
+<p>We calculate how many non zero intensities we have per peptide and
+this will be useful for filtering.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rowData</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]])<span class="sc">$</span>nNonZero <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(<span class="fu">assay</span>(pe[[<span class="st">&quot;peptideRaw&quot;</span>]]) <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code></pre></div>
-<p>Peptides with zero intensities are missing peptides and should be represent with a <code>NA</code> value rather than <code>0</code>.</p>
+<p>Peptides with zero intensities are missing peptides and should be
+represent with a <code>NA</code> value rather than <code>0</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">zeroIsNA</span>(pe, <span class="st">&quot;peptideRaw&quot;</span>) <span class="co"># convert 0 to NA</span></span></code></pre></div>
-<p>Look at the column names of the data to know the variables that you can use for filtering.</p>
+<p>Look at the column names of the data to know the variables that you
+can use for filtering.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pe[[<span class="st">&quot;peptideRaw&quot;</span>]] <span class="sc">%&gt;%</span> rowData <span class="sc">%&gt;%</span> names</span></code></pre></div>
 <pre><code>##  [1] &quot;Sequence&quot;               &quot;Proteins&quot;               &quot;Leading.razor.protein&quot; 
 ##  [4] &quot;Gene.names&quot;             &quot;Protein.names&quot;          &quot;Unique..Groups.&quot;       
@@ -588,22 +612,26 @@ div.tocify {
 ## [31] &quot;Contaminant&quot;            &quot;id&quot;                     &quot;Protein.group.IDs&quot;     
 ## [34] &quot;Mod..peptide.IDs&quot;       &quot;Evidence.IDs&quot;           &quot;MS.MS.IDs&quot;             
 ## [37] &quot;Best.MS.MS&quot;             &quot;Oxidation..M..site.IDs&quot; &quot;nNonZero&quot;</code></pre>
-<p>So we will filter on the “Reverse”, “Contaminant” and “nNonZero” column.</p>
+<p>So we will filter on the “Reverse”, “Contaminant” and “nNonZero”
+column.</p>
 <div id="data-exploration" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Data exploration</h2>
-<p>44% of all peptide intensities are missing and for some peptides we do not even measure a signal in any sample.</p>
+<p>44% of all peptide intensities are missing and for some peptides we
+do not even measure a signal in any sample.</p>
 </div>
 </div>
 <div id="preprocessing" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Preprocessing</h1>
-<p>This section preforms preprocessing for the peptide data. This include</p>
+<p>This section preforms preprocessing for the peptide data. This
+include</p>
 <ul>
 <li>log transformation,</li>
 <li>filtering and</li>
 <li>summarisation of the data.</li>
 </ul>
 <div id="log-transform-the-data" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Log transform the data</h2>
+<h2><span class="header-section-number">3.1</span> Log transform the
+data</h2>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">logTransform</span>(pe, <span class="at">base =</span> <span class="dv">2</span>, <span class="at">i =</span> <span class="st">&quot;peptideRaw&quot;</span>, <span class="at">name =</span> <span class="st">&quot;peptideLog&quot;</span>)</span></code></pre></div>
 </div>
 <div id="filtering" class="section level2" number="3.2">
@@ -611,12 +639,14 @@ div.tocify {
 <ol style="list-style-type: decimal">
 <li>Handling overlapping protein groups</li>
 </ol>
-<p>In our approach a peptide can map to multiple proteins, as long as there is none of these proteins present in a smaller subgroup.</p>
+<p>In our approach a peptide can map to multiple proteins, as long as
+there is none of these proteins present in a smaller subgroup.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe, <span class="sc">~</span> Proteins <span class="sc">%in%</span> <span class="fu">smallestUniqueGroups</span>(<span class="fu">rowData</span>(pe[[<span class="st">&quot;peptideLog&quot;</span>]])<span class="sc">$</span>Proteins))</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Remove reverse sequences (decoys) and contaminants</li>
 </ol>
-<p>We now remove the contaminants and peptides that map to decoy sequences.</p>
+<p>We now remove the contaminants and peptides that map to decoy
+sequences.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe,<span class="sc">~</span>Reverse <span class="sc">!=</span> <span class="st">&quot;+&quot;</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">filterFeatures</span>(pe,<span class="sc">~</span> Contaminant <span class="sc">!=</span> <span class="st">&quot;+&quot;</span>)</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
@@ -628,18 +658,26 @@ div.tocify {
 <pre><code>## [1] 22413</code></pre>
 <p>We keep 22413 peptides upon filtering.</p>
 </div>
-<div id="normalize-the-data-using-median-centering" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Normalize the data using median centering</h2>
-<p>We normalize the data by substracting the sample median from every intensity for peptide <span class="math inline">\(p\)</span> in a sample <span class="math inline">\(i\)</span>:</p>
-<p><span class="math display">\[y_{ip}^\text{norm} = y_{ip} - \hat\mu_i\]</span></p>
-<p>with <span class="math inline">\(\hat\mu_i\)</span> the median intensity over all observed peptides in sample <span class="math inline">\(i\)</span>.</p>
+<div id="normalize-the-data-using-median-centering"
+class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Normalize the data
+using median centering</h2>
+<p>We normalize the data by substracting the sample median from every
+intensity for peptide <span class="math inline">\(p\)</span> in a sample
+<span class="math inline">\(i\)</span>:</p>
+<p><span class="math display">\[y_{ip}^\text{norm} = y_{ip} -
+\hat\mu_i\]</span></p>
+<p>with <span class="math inline">\(\hat\mu_i\)</span> the median
+intensity over all observed peptides in sample <span
+class="math inline">\(i\)</span>.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">normalize</span>(pe, </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">i =</span> <span class="st">&quot;peptideLog&quot;</span>, </span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">name =</span> <span class="st">&quot;peptideNorm&quot;</span>, </span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;center.median&quot;</span>)</span></code></pre></div>
 </div>
 <div id="explore-normalized-data" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Explore normalized data</h2>
+<h2><span class="header-section-number">3.4</span> Explore normalized
+data</h2>
 <p>Upon the normalisation the density curves are nicely registered</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pe[[<span class="st">&quot;peptideNorm&quot;</span>]] <span class="sc">%&gt;%</span> </span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  assay <span class="sc">%&gt;%</span></span>
@@ -650,17 +688,22 @@ div.tocify {
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>()</span></code></pre></div>
 <pre><code>## Warning: Removed 34599 rows containing non-finite values (stat_density).</code></pre>
 <p><img src="cancer3x3_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<p>We can visualize our data using a Multi Dimensional Scaling plot, eg. as provided by the <code>limma</code> package.</p>
+<p>We can visualize our data using a Multi Dimensional Scaling plot, eg.
+as provided by the <code>limma</code> package.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pe[[<span class="st">&quot;peptideNorm&quot;</span>]] <span class="sc">%&gt;%</span> </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  assay <span class="sc">%&gt;%</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  limma<span class="sc">::</span><span class="fu">plotMDS</span>(<span class="at">col =</span> <span class="fu">as.numeric</span>(<span class="fu">colData</span>(pe)<span class="sc">$</span>prognosis))</span></code></pre></div>
 <p><img src="cancer3x3_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
-<p>The first axis in the plot is showing the leading log fold changes (differences on the log scale) between the samples.</p>
+<p>The first axis in the plot is showing the leading log fold changes
+(differences on the log scale) between the samples.</p>
 </div>
-<div id="summarization-to-protein-level" class="section level2" number="3.5">
-<h2><span class="header-section-number">3.5</span> Summarization to protein level</h2>
+<div id="summarization-to-protein-level" class="section level2"
+number="3.5">
+<h2><span class="header-section-number">3.5</span> Summarization to
+protein level</h2>
 <ul>
-<li>By default robust summarization is used: <code>fun = MsCoreUtils::robustSummary()</code></li>
+<li>By default robust summarization is used:
+<code>fun = MsCoreUtils::robustSummary()</code></li>
 </ul>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">aggregateFeatures</span>(pe,</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">i =</span> <span class="st">&quot;peptideNorm&quot;</span>,</span>
@@ -672,30 +715,45 @@ div.tocify {
 ## effects of missing values on data aggregation.</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMDS</span>(<span class="fu">assay</span>(pe[[<span class="st">&quot;protein&quot;</span>]]), <span class="at">col =</span> <span class="fu">as.numeric</span>(<span class="fu">colData</span>(pe)<span class="sc">$</span>prognosis))</span></code></pre></div>
 <p><img src="cancer3x3_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
-<p>Note that the samples upon robust summarisation show a separation according to the prognosis.</p>
+<p>Note that the samples upon robust summarisation show a separation
+according to the prognosis.</p>
 </div>
 </div>
 <div id="data-analysis" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Data Analysis</h1>
 <div id="estimation" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Estimation</h2>
-<p>We model the protein level expression values using <code>msqrob</code>. By default <code>msqrob2</code> estimates the model parameters using robust regression.</p>
-<p>We will model the data with a different group mean. The group is incoded in the variable <code>prognosis</code> of the colData. We can specify this model by using a formula with the factor condition as its predictor: <code>formula = ~prognosis</code>.</p>
+<p>We model the protein level expression values using
+<code>msqrob</code>. By default <code>msqrob2</code> estimates the model
+parameters using robust regression.</p>
+<p>We will model the data with a different group mean. The group is
+incoded in the variable <code>prognosis</code> of the colData. We can
+specify this model by using a formula with the factor condition as its
+predictor: <code>formula = ~prognosis</code>.</p>
 <p>Note, that a formula always starts with a symbol ‘~’.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">msqrob</span>(<span class="at">object =</span> pe, <span class="at">i =</span> <span class="st">&quot;protein&quot;</span>, <span class="at">formula =</span> <span class="sc">~</span>prognosis)</span></code></pre></div>
 </div>
 <div id="inference" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Inference</h2>
-<p>First, we extract the parameter names of the model by looking at the first model. The models are stored in the row data of the assay under the default name msqrobModels.</p>
+<p>First, we extract the parameter names of the model by looking at the
+first model. The models are stored in the row data of the assay under
+the default name msqrobModels.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getCoef</span>(<span class="fu">rowData</span>(pe[[<span class="st">&quot;protein&quot;</span>]])<span class="sc">$</span>msqrobModels[[<span class="dv">1</span>]])</span></code></pre></div>
 <pre><code>## (Intercept) prognosisPD 
 ##  -1.5083003   0.8795213</code></pre>
-<p>We can also explore the design of the model that we specified using the the package <code>ExploreModelMatrix</code></p>
+<p>We can also explore the design of the model that we specified using
+the the package <code>ExploreModelMatrix</code></p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ExploreModelMatrix)</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">VisualizeDesign</span>(<span class="fu">colData</span>(pe),<span class="sc">~</span>prognosis)<span class="sc">$</span>plotlist</span></code></pre></div>
 <pre><code>## [[1]]</code></pre>
 <p><img src="cancer3x3_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
-<p>Spike-in condition <code>A</code> is the reference class. So the mean log2 expression for samples from good prognosis (OR) is ‘(Intercept). The mean log2 expression for samples from poor prognosis (PD) is’(Intercept)+prognosisPD’. Hence, the average log2 fold change between prognosis PD and prognosis OR is modelled using the parameter ‘conditionPD’. Thus, we assess the contrast ‘conditionPD = 0’ with our statistical test.</p>
+<p>Spike-in condition <code>A</code> is the reference class. So the mean
+log2 expression for samples from good prognosis (OR) is ‘(Intercept).
+The mean log2 expression for samples from poor prognosis (PD)
+is’(Intercept)+prognosisPD’. Hence, the average log2 fold change between
+prognosis PD and prognosis OR is modelled using the parameter
+‘conditionPD’. Thus, we assess the contrast ‘conditionPD = 0’ with our
+statistical test.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">makeContrast</span>(<span class="st">&quot;prognosisPD=0&quot;</span>, <span class="at">parameterNames =</span> <span class="fu">c</span>(<span class="st">&quot;prognosisPD&quot;</span>))</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">hypothesisTest</span>(<span class="at">object =</span> pe, <span class="at">i =</span> <span class="st">&quot;protein&quot;</span>, <span class="at">contrast =</span> L)</span></code></pre></div>
 </div>
@@ -713,7 +771,9 @@ div.tocify {
 </div>
 <div id="heatmap" class="section level3" number="4.3.2">
 <h3><span class="header-section-number">4.3.2</span> Heatmap</h3>
-<p>There were no proteins significantly differentially abundant at the 5% FDR level. We will therefore make an heatmap for the top 10 DE proteins. Note, however that they are not statistically significant!</p>
+<p>There were no proteins significantly differentially abundant at the
+5% FDR level. We will therefore make an heatmap for the top 10 DE
+proteins. Note, however that they are not statistically significant!</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#sigNames &lt;- rowData(pe[[&quot;protein&quot;]])$prognosisPD %&gt;%</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  rownames_to_column(&quot;protein&quot;) %&gt;%</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  filter(adjPval&lt;0.05) %&gt;%</span></span>
@@ -729,7 +789,9 @@ div.tocify {
 </div>
 <div id="detail-plots" class="section level3" number="4.3.3">
 <h3><span class="header-section-number">4.3.3</span> Detail plots</h3>
-<p>We make detail plots for the top 10 proteins. Note, however that their fold changes are not statistically significant at the 5% FDR level.</p>
+<p>We make detail plots for the top 10 proteins. Note, however that
+their fold changes are not statistically significant at the 5% FDR
+level.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#for (protName in sigNames)</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (protName <span class="cf">in</span> orderProt[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>])</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>{</span>
@@ -767,7 +829,9 @@ div.tocify {
 </div>
 <div id="session-info" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Session Info</h1>
-<p>With respect to reproducibility, it is highly recommended to include a session info in your script so that readers of your output can see your particular setup of R.</p>
+<p>With respect to reproducibility, it is highly recommended to include
+a session info in your script so that readers of your output can see
+your particular setup of R.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
 <pre><code>## R version 4.2.1 (2022-06-23)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
