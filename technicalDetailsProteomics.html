@@ -459,6 +459,16 @@ div.tocify {
     <li>
       <a href="pda_blocking_wrapup.html">2.3.2. Wrap-up DA - Blocking</a>
     </li>
+    <li>
+      <a href="technicalDetailsProteomics.html">2.3.3 Technical Details</a>
+    </li>
+    <li class="dropdown-header">---- MODULE I PROTEOMICS ----</li>
+    <li>
+      <a href="sequencing_intro.html">1.1.  Introduction to RNA-seq</a>
+    </li>
+    <li>
+      <a href="sequencing_countData.html">1.2.  Working with count data and GLMs</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -1103,8 +1113,8 @@ model</h3>
 <span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code></pre></div>
 <p><img src="technicalDetailsProteomics_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(mEst<span class="sc">$</span>w,<span class="dv">3</span>)</span></code></pre></div>
-<pre><code>##  [1] 1.000 1.000 1.000 1.000 1.000 1.000 1.000 1.000 1.000 1.000 1.000 1.000
-## [13] 1.000 1.000 0.752 0.643 0.805 1.000 1.000 0.193</code></pre>
+<pre><code>##  [1] 1.000 1.000 1.000 0.441 1.000 1.000 1.000 1.000 1.000 1.000 1.000 1.000
+## [13] 1.000 0.606 1.000 1.000 1.000 1.000 1.000 0.189</code></pre>
 <p>The plot clearly shows that the outlier has a high impact on the
 slope estimate. This is because the outlier is at a high leverage point,
 i.e. far from the average covariate pattern.</p>
@@ -1125,9 +1135,9 @@ variance estimator to calculate the z</h4>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> lmMod<span class="sc">$</span>res</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>stdev <span class="ot">&lt;-</span> <span class="fu">mad</span>(res)</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>stdev</span></code></pre></div>
-<pre><code>## [1] 1.191855</code></pre>
+<pre><code>## [1] 0.7986229</code></pre>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(<span class="fu">abs</span>(res<span class="sc">-</span><span class="fu">median</span>(res)))<span class="sc">*</span><span class="fl">1.4826</span></span></code></pre></div>
-<pre><code>## [1] 1.191855</code></pre>
+<pre><code>## [1] 0.7986229</code></pre>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> res<span class="sc">/</span>stdev</span></code></pre></div>
 </div>
 <div id="calculate-weights-use-psi.huber-function"
@@ -1425,7 +1435,7 @@ fitted mean in the experiment but with standard deviation of 1.</p>
 <li>We observe a large variability in the individual protein level
 standard deviation estimates.</li>
 <li>We simulated proteins with standard deviation of 1, but the protein
-estimates vary from 0.23, … , 1.92.</li>
+estimates vary from 0.19, … , 1.92.</li>
 <li>Large uncertainty on the estimation of variances in small
 samples</li>
 <li>The empirical Bayes method, however, recognises that all proteins
@@ -1438,7 +1448,7 @@ simulation.</li>
 </ul>
 <p>Note, that the prior degrees of freedom are also set to infinity:</p>
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getDF</span>(<span class="fu">rowData</span>(sims[[<span class="st">&quot;sim_equalVar&quot;</span>]])<span class="sc">$</span>msqrobModels[[<span class="dv">1</span>]])</span></code></pre></div>
-<pre><code>## [1] 5.794365</code></pre>
+<pre><code>## [1] 5.876173</code></pre>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getDfPosterior</span>(<span class="fu">rowData</span>(sims[[<span class="st">&quot;sim_equalVar&quot;</span>]])<span class="sc">$</span>msqrobModels[[<span class="dv">1</span>]])</span></code></pre></div>
 <pre><code>## [1] Inf</code></pre>
 <p>which imposes shrinkage to the prior standard deviation!</p>
