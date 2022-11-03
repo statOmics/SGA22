@@ -1,14 +1,14 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.11.2)  2 NOV 2022 23:27
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.11.3)  3 NOV 2022 09:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **sequencing_intro.tex
 (./sequencing_intro.tex
-LaTeX2e <2022-06-01> patch level 5
+LaTeX2e <2022-11-01>
 L3 programming layer <2022-10-26> (/home/runner/.TinyTeX/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
 (/home/runner/.TinyTeX/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+File: size10.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count181
 \c@section=\count182
@@ -20,7 +20,7 @@ File: size10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 \c@table=\count188
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
-\bibindent=\dimen138
+\bibindent=\dimen140
 ) (/home/runner/.TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2022/04/08 v2.17n AMS math features
 \@mathmargin=\skip49
@@ -30,10 +30,10 @@ Package: amstext 2021/08/26 v2.01 AMS text
 (/home/runner/.TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks16
-\ex@=\dimen139
+\ex@=\dimen141
 )) (/home/runner/.TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen140
+\pmbraise@=\dimen142
 ) (/home/runner/.TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
@@ -54,7 +54,7 @@ LaTeX Info: Redefining \big on input line 722.
 LaTeX Info: Redefining \Big on input line 723.
 LaTeX Info: Redefining \bigg on input line 724.
 LaTeX Info: Redefining \Bigg on input line 725.
-\big@size=\dimen141
+\big@size=\dimen143
 LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
 \macc@depth=\count194
@@ -72,12 +72,12 @@ LaTeX Info: Redefining \Relbar on input line 971.
 \column@=\count199
 \maxfields@=\count266
 \andhelp@=\toks18
-\eqnshift@=\dimen142
-\alignsep@=\dimen143
-\tagshift@=\dimen144
-\tagwidth@=\dimen145
-\totwidth@=\dimen146
-\lineht@=\dimen147
+\eqnshift@=\dimen144
+\alignsep@=\dimen145
+\tagshift@=\dimen146
+\tagwidth@=\dimen147
+\totwidth@=\dimen148
+\lineht@=\dimen149
 \@envbody=\toks19
 \multlinegap=\skip50
 \multlinetaggap=\skip51
@@ -161,9 +161,9 @@ Package: fontspec-xetex 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
 \l__fontspec_emdef_int=\count279
 \l__fontspec_strong_int=\count280
 \l__fontspec_strongdef_int=\count281
-\l__fontspec_tmpa_dim=\dimen148
-\l__fontspec_tmpb_dim=\dimen149
-\l__fontspec_tmpc_dim=\dimen150
+\l__fontspec_tmpa_dim=\dimen150
+\l__fontspec_tmpb_dim=\dimen151
+\l__fontspec_tmpc_dim=\dimen152
 (/home/runner/.TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 ) (/home/runner/.TinyTeX/texmf-dist/tex/latex/fontspec/fontspec.cfg))) (/home/runner/.TinyTeX/texmf-dist/tex/latex/base/fix-cm.sty
@@ -184,8 +184,6 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 Package xcolor Info: Driver file: xetex.def on input line 227.
 (/home/runner/.TinyTeX/texmf-dist/tex/latex/graphics-def/xetex.def
 File: xetex.def 2022/09/22 v5.0n Graphics/color driver for xetex
-\stockwidth=\dimen151
-\stockheight=\dimen152
 ) (/home/runner/.TinyTeX/texmf-dist/tex/latex/graphics/mathcolor.ltx)
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1353.
 Package xcolor Info: Model `RGB' extended on input line 1369.
@@ -268,7 +266,7 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@lastruleclass=\count299
 \@thisrulewidth=\dimen178
 ) (/home/runner/.TinyTeX/texmf-dist/tex/latex/tools/array.sty
-Package: array 2022/03/10 v2.5f Tabular extension package (FMi)
+Package: array 2022/09/04 v2.5g Tabular extension package (FMi)
 \col@sep=\dimen179
 \ar@mcellbox=\box60
 \extrarowheight=\dimen180
@@ -1554,10 +1552,10 @@ Package rerunfilecheck Info: File `sequencing_intro.out' has not changed.
 (rerunfilecheck)             Checksum: F993F53EB2BE192D0BCC53144EF172E2;2351.
  ) 
 Here is how much of TeX's memory you used:
- 17896 strings out of 477738
- 336351 string characters out of 5843672
- 857919 words of memory out of 5000000
- 38697 multiletter control sequences out of 15000+600000
+ 17891 strings out of 477647
+ 336171 string characters out of 5841136
+ 859511 words of memory out of 5000000
+ 38783 multiletter control sequences out of 15000+600000
  475694 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  86i,6n,121p,711b,452s stack positions out of 10000i,1000n,20000p,200000b,200000s
