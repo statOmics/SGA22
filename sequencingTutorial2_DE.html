@@ -399,6 +399,29 @@ href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/D
 vignette</a></li>
 </ol>
 </div>
+<div id="parathyroid-example" class="section level3">
+<h3>3. Parathyroid example</h3>
+<p>The data were presented in the article “Evidence of a Functional
+Estrogen Receptor in Parathyroid Adenomas” by Haglund F, Ma R, Huss M,
+Sulaiman L, Lu M, Nilsson IL, Hoog A, Juhlin CC, Hartman J, Larsson C, J
+Clin Endocrinol Metab. jc.2012-2484, Epub 2012 Sep 28, PMID: 23024189.
+The sequencing was performed on tumor cultures from 4 patients at 2 time
+points over 3 conditions (DPN, OHT and control). One control sample was
+omitted by the paper authors due to low quality. The package vignette
+describes the creation of objects from raw sequencing data provided by
+NCBI Gene Expression Omnibus under accession number GSE37211. The gene
+and exon features are the GRCh37 Ensembl annotations, release 66.</p>
+<p>The data can be loaded by
+<code>data("parathyroidGenesSE", package="parathyroidSE")</code></p>
+<ol style="list-style-type: decimal">
+<li>Summarize technical repeats</li>
+<li>Preprocess the data</li>
+<li>Model the data using edgeR and DESeq2</li>
+<li>Perform statistical tests to assess the effect of the stimuli at the
+early timepoint, the late timepoint and if the effect of the stimulus
+changes over time.</li>
+</ol>
+</div>
 
 
 
