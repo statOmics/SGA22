@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.11.12)  12 NOV 2022 11:47
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2022.11.24)  24 NOV 2022 12:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -307,7 +307,7 @@ Package graphics Info: Driver file: xetex.def on input line 107.
 \Gin@req@height=\dimen184
 \Gin@req@width=\dimen185
 ) (/home/runner/.TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2022-09-22 v7.00t Hypertext links for LaTeX
+Package: hyperref 2022-11-13 v7.00u Hypertext links for LaTeX
 (/home/runner/.TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
 ) (/home/runner/.TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
@@ -345,7 +345,7 @@ Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 \Hy@linkcounter=\count305
 \Hy@pagecounter=\count306
 (/home/runner/.TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2022-09-22 v7.00t Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2022-11-13 v7.00u Hyperref: PDFDocEncoding definition (HO)
 ) (/home/runner/.TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 ) (/home/runner/.TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.sty
@@ -353,7 +353,7 @@ Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
 \Hy@SavedSpaceFactor=\count307
 (/home/runner/.TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2022-09-22 v7.00t Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2022-11-13 v7.00u Hyperref: PDF Unicode definition (HO)
 )
 Package hyperref Info: Option `unicode' set `true' on input line 4045.
 Package hyperref Info: Hyper figures OFF on input line 4162.
@@ -395,7 +395,7 @@ package with kernel methods
 )
 Package hyperref Info: Driver (autodetected): hxetex.
 (/home/runner/.TinyTeX/texmf-dist/tex/latex/hyperref/hxetex.def
-File: hxetex.def 2022-09-22 v7.00t Hyperref driver for XeTeX
+File: hxetex.def 2022-11-13 v7.00u Hyperref driver for XeTeX
 (/home/runner/.TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
@@ -1552,10 +1552,10 @@ Package rerunfilecheck Info: File `sequencing_intro.out' has not changed.
 (rerunfilecheck)             Checksum: F993F53EB2BE192D0BCC53144EF172E2;2351.
  ) 
 Here is how much of TeX's memory you used:
- 17891 strings out of 477643
- 336171 string characters out of 5841019
- 859596 words of memory out of 5000000
- 38787 multiletter control sequences out of 15000+600000
+ 17893 strings out of 477643
+ 336199 string characters out of 5841019
+ 859574 words of memory out of 5000000
+ 38789 multiletter control sequences out of 15000+600000
  475694 words of font info for 79 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  86i,6n,121p,711b,452s stack positions out of 10000i,1000n,20000p,200000b,200000s
